@@ -1,0 +1,8 @@
+MP 'mhinz/vim-startify'
+MP 'vim-airline/vim-airline'
+MP 'liuchengxu/vim-which-key'
+MP 'preservim/nerdtree'
+MP 'Xuyuanp/nerdtree-git-plugin'
+MP 'liuchengxu/vista.vim'
+MP 'romainl/vim-qf'
+MP 'ryanoasis/vim-devicons'
