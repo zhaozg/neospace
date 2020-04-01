@@ -1,5 +1,5 @@
 MP 'preservim/nerdcommenter'
-MP 'Yggdroot/indentLine'
+MP 'nathanaelkane/vim-indent-guides'
 MP 'sbdchd/neoformat'
 MP 'unblevable/quick-scope'
 MP 'justinmk/vim-sneak'

@@ -1,12 +1,11 @@
 let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 
-" indentLine {
-" ¦, ┆, │, ⎸, or ▏
-let g:indentLine_char                     = '│'
-let g:indentLine_enabled                  = 1
-let g:indentLine_concealcursor            = 'vc'      " default 'inc'
-let g:indentLine_fileTypeExclude          = ['help', 'startify', 'vimfiler', 'qf', 'nerdtree', 'calendar']
-" }
+" vim_indent_guides { "
+let g:indent_guides_enable_on_vim_startup = 0
+let g:indent_guides_guide_size = 1
+let g:indent_guides_default_mapping = 0
+nmap <silent> <Leader>ti <Plug>IndentGuidesToggle
+" } vim_indent_guides "
 
 " Not use default NERDcommenter mapping
 let g:NERDCreateDefaultMappings = 0
