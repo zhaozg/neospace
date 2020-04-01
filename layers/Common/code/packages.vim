@@ -12,4 +12,7 @@ MP 'sheerun/vim-polyglot'
 
 MP 'SirVer/ultisnips'
 MP 'honza/vim-snippets'
+
+if has('nvim-0.5')
 MP 'haorenW1025/completion-nvim'
+endif

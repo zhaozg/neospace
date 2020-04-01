@@ -32,6 +32,7 @@ nnoremap <Leader>cp :Printf<CR>
 nmap<Leader>hm <SID>Man
 
 " completion-nvim {{{
+if has('nvim-0.5')
 autocmd BufEnter * lua require'completion'.on_attach()
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -53,5 +54,6 @@ inoremap <silent><expr> <TAB>
 let g:completion_enable_snippet = 'UltiSnips'
 let g:completion_enable_in_comment = 1
 let g:completion_trigger_character = ['.', '::', '->']
+endif
 " }}}
 
