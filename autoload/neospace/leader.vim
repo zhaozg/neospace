@@ -25,6 +25,10 @@
 let g:neospace_map  = get(g:, 'neospace_map', {})
 let g:neospace_lmap = get(g:, 'neospace_lmap', {})
 
+let g:neospace_leader_map = {}
+let g:neospace_leader_map[g:mapleader] = g:neospace_map
+let g:neospace_leader_map[g:maplocalleader] = g:neospace_lmap
+
 "for s:i in range(1, 9)
 "    let g:neospace_map[s:i] = [ s:i.'wincmd w', 'windows '.s:i ]
 "endfor
@@ -177,6 +181,6 @@ function neospace#leader#register(key, options, local)
   end
 endfunction
 
-function neospace#leader#active(key)
-  lua require('neospace').leader(key)
+function neospace#leader#active(leader)
+  call luaeval("require('neospace.leader').leader(_A)", a:leader)
 endfunction

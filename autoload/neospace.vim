@@ -62,8 +62,8 @@ function s:check_dot_neospace()
     if exists('g:neospace_layers')
       let g:neospace.loaded = g:neospace.loaded + g:neospace_layers
     endif
-    let g:mapleader = get(g:, 'neospace_leader', "\<Space>")
-    let g:maplocalleader = get(g:, 'neospace_localleader', ',')
+    let g:mapleader       = get(g:, 'mapleader',      " ")
+    let g:maplocalleader  = get(g:, 'maplocalleader', ',')
   else
     call neospace#util#err('.neospace does not exist! Exiting...')
     finish

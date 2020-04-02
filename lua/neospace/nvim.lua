@@ -1,7 +1,7 @@
 local nvim = require'nvim'
 local vim = nvim.vim
 
-local unpack = unpack or table.unpack
+local unpack = _G.unpack or table.unpack
 
 local function new_buf_lines_accessor(bufnr)
   local function get(k)

@@ -1,6 +1,5 @@
 scriptencoding=utf-8
 
-" whichKey {{{
 function! StartifyEntryFormat()
   if exists('g:loaded_webdevicons')
     return 'WebDevIconsGetFileTypeSymbol(absolute_path) ." ". entry_path'
@@ -9,21 +8,17 @@ function! StartifyEntryFormat()
   endif
 endfunction
 
-let g:mapleader = "\<Space>"
+" neospace leader { "
+let g:mapleader  = " "
 let g:maplocalleader = ','
-let g:neospace_leader_hspace = 4
-let g:nepspace_leader_sep = '▸'
-let g:neospace_leader_floating_opts = { 'row': '-1' }
+let g:neospace_leader_sep = '▸'
 
+nnoremap <silent> <leader>      :call neospace#leader#active(g:mapleader)<CR>
+nnoremap <silent> <localleader> :call neospace#leader#active(g:maplocalleader)<CR>
 
-nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
-nnoremap <silent> <localleader> :<c-u>WhichKey ','<CR>
-
-vnoremap <silent> <leader>      :<c-u>WhichKeyVisual '<Space>'<CR>
-vnoremap <silent> <localleader> :<c-u>WhichKeyVisual ','<CR>
-
-autocmd VimEnter * call which_key#register(' ', "g:neospace_map")
-autocmd VimEnter * call which_key#register(',', "g:neospace_lmap")
+vnoremap <silent> <leader>      :call neospace#leader#active(g:mapleader)<CR>
+vnoremap <silent> <localleader> :call neospace#leader#active(g:maplocalleader)<CR>
+" } neospace leader "
 
 " for quickfix
 nnoremap <leader>tq <Plug>(qf_qf_toggle)
@@ -34,14 +29,6 @@ autocmd FileType gitcommit  noremap <buffer> <leader> <Plug>leaderguide-buffer
 
 " for vista
 autocmd BufEnter __vista__ noremap <buffer> <leader> <Plug>leaderguide-buffer
-
-highlight default link WhichKey          Function
-highlight default link WhichKeySeperator DiffAdded
-highlight default link WhichKeyGroup     Keyword
-highlight default link WhichKeyDesc      Identifier
-
-highlight default link WhichKeyFloating Pmenu
-" }}}
 
 autocmd StdinReadPre * let s:std_in=1
 
