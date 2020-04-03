@@ -10,6 +10,11 @@ let g:neospace.timer        = exists('*timer_start')
 let g:neospace.gui          = has('gui_running')
 let g:neospace.tmux         = !empty($TMUX)
 
+let g:neospace.defer_long   = 800
+let g:neospace.defer_normal = 400
+let g:neospace.defer_short  = 200
+let g:neospace.defer_now    = 100
+
 let g:neospace.loaded   = []
 let g:neospace.excluded = []
 let g:neospace.plugins  = []
@@ -50,7 +55,7 @@ endfunction
 
 function s:define_command()
   " MP means MyPlugin
-  command! -nargs=+ -bar MP          call s:my_plugin(<args>)
+  command! -nargs=+ -bar MP          call s:load_plugin(<args>)
   command! -nargs=+ -bar Layer       call s:layer(<args>)
   command! -nargs=0 -bar LayerCache  call neospace#cache#init()
   command! -nargs=0 -bar LayerStatus call neospace#layer#status()
@@ -110,7 +115,7 @@ function s:parse_options(arg)
 endfunction
 
 " This is an only one possible extra argument: plug option, dict
-function s:my_plugin(plugin, ...)
+function s:load_plugin(plugin, ...)
   if index(g:neospace.plugins, a:plugin) < 0
     call add(g:neospace.plugins, a:plugin)
   endif

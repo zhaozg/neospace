@@ -8,7 +8,7 @@ MP 'AndrewRadev/splitjoin.vim'
 MP 'tpope/vim-sleuth'
 MP 'zhaozg/vim-printf'
 MP 'sgur/vim-editorconfig'
-MP 'sheerun/vim-polyglot'
+MP 'sheerun/vim-polyglot',            {'defer': 1000}
 
 MP 'SirVer/ultisnips'
 MP 'honza/vim-snippets'

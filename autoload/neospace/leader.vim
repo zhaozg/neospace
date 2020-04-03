@@ -91,7 +91,7 @@ let g:neospace_map['t'] = { 'name' : '+toggle'             ,
       \ 'i' : ['IndentLinesToggle'                  , 'IndentLine']     ,
       \ 'p' : ['setlocal paste!'                    , 'paste']          ,
       \ 'r' : ['neospace#util#ToggleColorColumn()'  , 'RangeColumn']    ,
-      \ 't' : ['vista#sidebar#Toggle()'             , 'Vista']          ,
+      \ 't' : ['Vista!!'                            , 'Vista']          ,
       \ }
 
 nnoremap <Plug>(window_w) <C-W>w

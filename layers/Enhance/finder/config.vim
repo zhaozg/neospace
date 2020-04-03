@@ -93,7 +93,7 @@ call neospace#leader#register('fZ', ['History/'     , 'Search'],0)
 " leader->setting->Colors
 call neospace#leader#register('sc', ['Colors'       , 'ColorSchema'], 0)
 
-call neospace#leader#register('f',  {'name': 'finder'}, 1)
+call neospace#leader#register('f',  {'name':          'finder'}, 1)
 call neospace#leader#register('ff', ['Findr'        , 'FindrFile'], 1)
 call neospace#leader#register('fb', ['FindrBuffers' , 'FindrBuffers'], 1)
 call neospace#leader#register('fl', ['FindrLocList' , 'FindrLocList'], 1)

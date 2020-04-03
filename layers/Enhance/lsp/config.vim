@@ -1,4 +1,4 @@
-function s:load_lsp()
+function s:load_lsp(timer)
   if executable('bash-language-server')
     lua require'neospace.lsp'.setup('bashls', {})
   endif
@@ -41,4 +41,4 @@ EOF
   endif
 endfunction
 
-call s:load_lsp()
+call timer_start(500, function('s:load_lsp'))

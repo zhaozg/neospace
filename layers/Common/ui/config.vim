@@ -111,14 +111,17 @@ function! Get_asyncrun_running()
   return async_status
 endfunction
 
-call airline#parts#define_function('asyncrun_status', 'Get_asyncrun_running')
-let g:airline_section_warning = airline#section#create([
+function Neospace_update_airline(timer)
+  call airline#parts#define_function('asyncrun_status', 'Get_asyncrun_running')
+  let g:airline_section_warning = airline#section#create([
       \ 'asyncrun_status',
       \ 'ycm_warning_count',
       \ 'syntastic-warn',
       \ 'neomake_warning_count',
       \ 'ale_warning_count',
       \ 'whitespace'])
+endfunction
+call timer_start(2*g:neospace.defer_long, 'Neospace_update_airline')
 
 function! s:TogBG()
   let &background = ( &background == "dark"? "light" : "dark" )
