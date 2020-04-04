@@ -40,7 +40,8 @@ M.execute = function(cmd)
     cmd = ':execute "normal \\'..cmd..'"'
     nvim.command(cmd)
     return true
-  elseif nvim.fn.exists(':'..cmds[1])==1 then
+  elseif nvim.fn.exists(':'..cmds[1]:gsub('!', ''))~=0 then
+    --Vista!!
     nvim.command(cmd)
     return true
   else
@@ -53,7 +54,6 @@ M.execute = function(cmd)
     end
     return true
   end
-  return false
 end
 
 M.select = function(filter)
@@ -159,14 +159,15 @@ M.show = function(lines, wopts)
     M.win, M.buf = window.float(wopts)
 
     nvim.bo[M.buf].filetype = 'nofile'
-    nvim.buf_set_keymap(M.buf, 'n', '\\<ESC>', 'q\\<CR>', {silent=true})
   end
   nvim.bl[M.buf][0] = {-1, true, lines}
+  nvim.command('redraw')
 end
 
 M.active = function(key, wopts)
   local lines = M.menu(wopts.width, key)
   if type(lines) == 'boolean' or lines==nil or #lines==0 then
+    M.hide()
     return
   end
 
@@ -180,14 +181,12 @@ M.active = function(key, wopts)
     end
 
     M.timer:start(100, 0, vim.schedule_wrap(function ()
-      M.timer:stop()
       M.timer:close()
       M.timer = nil
       M.show(lines, wopts)
     end))
   end
 
-  nvim.command('redraw')
   local userAction = nvim.fn.getchar()
   userAction = nvim.fn.nr2char(userAction)
 

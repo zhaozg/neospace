@@ -1,3 +1,5 @@
-if neospace#has#plugin('airline')
-  autocmd filetype markdown,vimwiki let g:airline#extensions#wordcount#formatter = 'cnfmt'
-endif
+function! s:wordcount()
+    return wordcount()['chars'] . '字 ' . wordcount()['words'] . '句'
+endfunction
+
+command! WordCount echo s:wordcount()

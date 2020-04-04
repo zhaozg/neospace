@@ -1,4 +1,3 @@
-local vim  = vim
 local nvim = require'nvim'
 
 local M = {}
@@ -33,13 +32,11 @@ function M.float(wopts, bopts)
   wopts.width = wopts.width or width
   wopts.height = wopts.height or height * 2 / 3
 
-  local buf = nvim.create_buf(false, true)
-  local win = nvim.open_win(buf, true, wopts)
+  local buf = nvim.create_buf(false, false)
+  local win = nvim.open_win(buf, false, wopts)
 
   bopts = bopts or {}
   bopts.buftype='nofile'
-  bopts.buflisted=false
-  bopts.bufhidden='hide'
 
   for k,v in pairs(bopts) do
     nvim.bo[buf][k] = v
