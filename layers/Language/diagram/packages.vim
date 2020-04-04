@@ -1,4 +1,4 @@
-MP 'wannesm/wmgraphviz.vim', { 'for': 'dot' }
+MP 'wannesm/wmgraphviz.vim',  {'for': 'dot'}
 MP 'zhaozg/vim-flow-diagram'
-MP 'zhaozg/vim-diagram'
+MP 'zhaozg/vim-diagram',      {'defer': 600}
 

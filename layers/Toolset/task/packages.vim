@@ -1,1 +1,1 @@
-MP 'CrispyDrone/vim-tasks'
+MP 'CrispyDrone/vim-tasks',  {'defer': 600}

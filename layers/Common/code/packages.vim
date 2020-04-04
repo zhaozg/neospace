@@ -7,9 +7,10 @@ MP 'wellle/targets.vim'
 MP 'AndrewRadev/splitjoin.vim'
 MP 'tpope/vim-sleuth'
 MP 'zhaozg/vim-printf'
-MP 'sgur/vim-editorconfig'
+MP 'sgur/vim-editorconfig',           {'defer': 1000}
 MP 'sheerun/vim-polyglot',            {'defer': 1000}
 
+MP 'luochen1990/rainbow'
 MP 'SirVer/ultisnips'
 MP 'honza/vim-snippets'
 

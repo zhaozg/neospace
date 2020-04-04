@@ -93,7 +93,7 @@ function neospace#util#OpenPluginHomepage() abort
 endfunction
 
 let s:hidden_all = 0
-function neospace#util#ToggleHiddleAll()
+function neospace#util#ToggleHiddenAll()
   if s:hidden_all == 0
     let s:hidden_all = 1
     setlocal noshowmode noruler noshowcmd laststatus=0 cmdheight=1

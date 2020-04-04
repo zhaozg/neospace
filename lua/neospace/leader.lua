@@ -36,14 +36,22 @@ end
 M.execute = function(cmd)
   M.hide()
   local cmds = nvim.vim.split(cmd, ' \t')
-  if nvim.fn.exists(':'..cmds[1]) then
-    vim.api.nvim_command(cmd)
+  if cmd:find('<Plug>', 1, true)==1 then
+    cmd = ':execute "normal \\'..cmd..'"'
+    nvim.command(cmd)
     return true
-  elseif cmd:find('^<Plug>', true)==1 then
-    vim.api.nvim_feedkeys(cmd)
+  elseif nvim.fn.exists(':'..cmds[1])==1 then
+    nvim.command(cmd)
     return true
   else
-    nvim.print("E492: Not an editor command: " .. cmd)
+    cmd = table.remove(cmds, 1)
+    cmd = cmd:gsub('%(%)','')
+    if #cmds >0 then
+      nvim.fn[cmd](cmds)
+    else
+      nvim.fn[cmd]()
+    end
+    return true
   end
   return false
 end

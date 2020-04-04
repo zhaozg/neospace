@@ -1,26 +1,3 @@
-" [?] allMaps
-" whichKey layout
-" [$] shells
-" [a] +align
-" [b] +buffers
-" [c] +code
-" [d] +doc/debug
-" [e] +errors
-" [f] +file/find
-" [g] +git/github
-" [h] +help/hunk
-" [i] +intend
-" [j] jump
-" [m] move
-" [p] project
-" [l] language
-" [s] search
-" [t] toggle
-" [w] windows
-" [x] text
-" [z] fold
-"
-
 " Define prefix dictionary
 let g:neospace_map  = get(g:, 'neospace_map', {})
 let g:neospace_lmap = get(g:, 'neospace_lmap', {})
@@ -59,21 +36,21 @@ let g:neospace_map['b'] = { 'name' : '+buffer' ,
 " code Splitjoin, cscope, NERDCommenter
 let g:neospace_map['c'] = { 'name' : '+code' }
 
-let g:neospace_map['d'] = { 'name' : '+docs/debug' }
+let g:neospace_map['d'] = { 'name' : '+docs/dbg' }
 
 let g:neospace_map['e'] = { 'name' : '+errors' }
 let g:neospace_map['f'] = { 'name' : '+finder' }
-let g:neospace_map['g'] = { 'name' : '+git/github' }
+let g:neospace_map['g'] = { 'name' : '+git' }
 let g:neospace_map['h'] = { 'name' : '+help/hunk' }
 let g:neospace_map['j'] = { 'name' : '+jump'                                     ,
-      \ 'f' : ['feedkeys("\<Plug>(easymotion-overwin-f)")'    , 'easymotion-goto-char']       ,
-      \ 'F' : ['feedkeys("\<Plug>(easymotion-overwin-f2)")'   , 'easymotion-goto-char-2']     ,
-      \ 'l' : ['feedkeys("\<Plug>(easymotion-overwin-line)")' , 'jump-linewise']              ,
-      \ 'j' : ['feedkeys("\<Plug>(easymotion-j)")'            , 'jump-line-above']            ,
-      \ 'k' : ['feedkeys("\<Plug>(easymotion-k)")'            , 'jump-line-under']            ,
-      \ 'w' : ['feedkeys("\<Plug>(easymotion-overwin-w)")'    , 'jump-to-word-bidirectional'] ,
-      \ 'e' : ['feedkeys("\<Plug>(easymotion-prefix)w")'      , 'jump-forward-wordwise']      ,
-      \ 'b' : ['feedkeys("\<Plug>(easymotion-prefix)b")'      , 'jump-backword-wordwise']     ,
+      \ 'f' : ['<Plug>(easymotion-overwin-f)'    , 'easymotion-goto-char']       ,
+      \ 'F' : ['<Plug>(easymotion-overwin-f2)'   , 'easymotion-goto-char-2']     ,
+      \ 'l' : ['<Plug>(easymotion-overwin-line)' , 'jump-linewise']              ,
+      \ 'j' : ['<Plug>(easymotion-j)'            , 'jump-line-above']            ,
+      \ 'k' : ['<Plug>(easymotion-k)'            , 'jump-line-under']            ,
+      \ 'w' : ['<Plug>(easymotion-overwin-w)'    , 'jump-to-word-bidirectional'] ,
+      \ 'e' : ['<Plug>(easymotion-prefix)w'      , 'jump-forward-wordwise']      ,
+      \ 'b' : ['<Plug>(easymotion-prefix)b'      , 'jump-backword-wordwise']     ,
       \ }
 let g:neospace_map['m'] = { 'name' : '+motion' }
 let g:neospace_map['p'] = { 'name' : '+projects' }
@@ -84,13 +61,14 @@ let g:neospace_map['s'] = { 'name' : '+setting',
       \ 'v' : ['source $MYVIMRC'    , 'reload-vimrc']            ,
       \ }
 
-let g:neospace_map['t'] = { 'name' : '+toggle'             ,
-      \ 'c' : ['neospace#util#ToggleCursorColumn()' , 'CursorColumn']   ,
+let g:neospace_map['t'] = { 'name' : '+toggle',
+      \ 'a' : ['neospace#util#ToggleHiddenAll()'            , 'HiddenAll']      ,
+      \ 'c' : ['neospace#util#ToggleColorColumn()'         , 'CursorColumn']   ,
       \ 'f' : ['NERDTreeToggle'                     , 'NERDTree']       ,
       \ 'g' : ['GitGutterToggle'                    , 'GitGutter']      ,
       \ 'i' : ['IndentLinesToggle'                  , 'IndentLine']     ,
       \ 'p' : ['setlocal paste!'                    , 'paste']          ,
-      \ 'r' : ['neospace#util#ToggleColorColumn()'  , 'RangeColumn']    ,
+      \ 'r' : ['neospace#util#ToggleCursorColumn()'          , 'RangeColumn']    ,
       \ 't' : ['Vista!!'                            , 'Vista']          ,
       \ }
 
@@ -116,23 +94,23 @@ nnoremap <Plug>(window_2) <C-W>v
 let g:neospace_map['u'] = { 'name' : '+UI' }
 let g:neospace_map['v'] = { 'name' : '+wiki/web' }
 let g:neospace_map['w'] = { 'name' : '+windows',
-      \ 'w' : ['feedkeys("\<Plug>(window_w)")'  , 'other-window']          ,
-      \ 'd' : ['feedkeys("\<Plug>(window_d)")'  , 'delete-window']         ,
-      \ '-' : ['feedkeys("\<Plug>(window_s1)")' , 'split-window-below']    ,
-      \ '|' : ['feedkeys("\<Plug>(window_v1)")' , 'split-window-right']    ,
-      \ '2' : ['feedkeys("\<Plug>(window_v1)")' , 'layout-double-columns'] ,
-      \ 'h' : ['feedkeys("\<Plug>(window_h)")'  , 'window-left']           ,
-      \ 'j' : ['feedkeys("\<Plug>(window_j)")'  , 'window-below']          ,
-      \ 'l' : ['feedkeys("\<Plug>(window_l)")'  , 'window-right']          ,
-      \ 'k' : ['feedkeys("\<Plug>(window_k)")'  , 'window-up']             ,
-      \ 'H' : ['feedkeys("\<Plug>(window_H)")'  , 'expand-window-left']    ,
-      \ 'J' : ['feedkeys("\<Plug>(window_J)")'  , 'expand-window-below']   ,
-      \ 'L' : ['feedkeys("\<Plug>(window_L)")'  , 'expand-window-right']   ,
-      \ 'K' : ['feedkeys("\<Plug>(window_K)")'  , 'expand-window-up']      ,
-      \ '=' : ['feedkeys("\<Plug>(window_b)")'  , 'balance-window']        ,
-      \ 's' : ['feedkeys("\<Plug>(window_s1)")' , 'split-window-below']    ,
-      \ 'v' : ['feedkeys("\<Plug>(window_v1)")' , 'split-window-below']    ,
-      \ '?' : ['Windows'                        , 'fzf-window']            ,
+      \ 'w' : ['<Plug>(window_w)'  , 'other-window']          ,
+      \ 'd' : ['<Plug>(window_d)'  , 'delete-window']         ,
+      \ '-' : ['<Plug>(window_s1)' , 'split-window-below']    ,
+      \ '|' : ['<Plug>(window_v1)' , 'split-window-right']    ,
+      \ '2' : ['<Plug>(window_v1)' , 'layout-double-columns'] ,
+      \ 'h' : ['<Plug>(window_h)'  , 'window-left']           ,
+      \ 'j' : ['<Plug>(window_j)'  , 'window-below']          ,
+      \ 'l' : ['<Plug>(window_l)'  , 'window-right']          ,
+      \ 'k' : ['<Plug>(window_k)'  , 'window-up']             ,
+      \ 'H' : ['<Plug>(window_H)'  , 'expand-window-left']    ,
+      \ 'J' : ['<Plug>(window_J)'  , 'expand-window-below']   ,
+      \ 'L' : ['<Plug>(window_L)'  , 'expand-window-right']   ,
+      \ 'K' : ['<Plug>(window_K)'  , 'expand-window-up']      ,
+      \ '=' : ['<Plug>(window_b)'  , 'balance-window']        ,
+      \ 's' : ['<Plug>(window_s1)' , 'split-window-below']    ,
+      \ 'v' : ['<Plug>(window_v1)' , 'split-window-below']    ,
+      \ '?' : ['Windows'           , 'fzf-window']            ,
       \ }
 
 let g:neospace_map['x'] = { 'name' : '+text',
@@ -154,8 +132,8 @@ let g:neospace_map['z'] = { 'name' : '+zsh/fold' ,
       \ '7' : ['set foldlevel=7'    , '7-fold-level']          ,
       \ '8' : ['set foldlevel=8'    , '8-fold-level']          ,
       \ '9' : ['set foldlevel=9'    , '9-fold-level']          ,
-      \ 'v' : [':vs term://zsh'     , 'zsh at right']          ,
-      \ 's' : [':split term://zsh'  , 'zsh at bottom']         ,
+      \ 'v' : ['vs term://zsh'      , 'zsh at right']          ,
+      \ 's' : ['sp term://zsh'      , 'zsh at bottom']         ,
       \ }
 
 function neospace#leader#register(key, options, local)

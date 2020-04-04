@@ -1,1 +1,1 @@
-MP 'bfredl/nvim-luadev'
+MP 'bfredl/nvim-luadev', {'for': 'lua'}

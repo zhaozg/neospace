@@ -1,6 +1,6 @@
 MP 'mhinz/vim-startify'
-MP 'vim-airline/vim-airline',     {'defer': 500}
-MP 'preservim/nerdtree',          {'defer': 500}
+MP 'vim-airline/vim-airline',     {'defer': 100}
+MP 'preservim/nerdtree',          {'defer': 100}
 
 MP 'Xuyuanp/nerdtree-git-plugin'
 MP 'liuchengxu/vista.vim'

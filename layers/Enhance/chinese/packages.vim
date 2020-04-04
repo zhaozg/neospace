@@ -1,2 +1,2 @@
-MP 'hotoo/pangu.vim'
+MP 'hotoo/pangu.vim',  {'for': ['markdown', 'vimwiki']}
 
