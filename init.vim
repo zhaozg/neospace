@@ -1,7 +1,8 @@
 scriptencoding utf-8
 
 let g:neospace = get(g:, 'neospace', {})
-let g:neospace.base = $HOME.'/Private/neospace'
+let s:path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+let g:neospace.base = s:path
 let g:neospace.version = '0.0.1'
 
 " Identify platform {
@@ -19,7 +20,7 @@ if g:neospace.os.windows
 endif
 " }
 
-set runtimepath+=$HOME/Private/neospace
+let &runtimepath= g:neospace.base . ',' . &runtimepath
 
 call neospace#begin()
 call neospace#end()

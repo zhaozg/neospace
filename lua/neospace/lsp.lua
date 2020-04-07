@@ -1,10 +1,13 @@
-local vim = require'nvim'.vim
+local nvim = require'nvim'
+local vim = nvim.vim
 local api = vim.api
 
 local nvim_lsp = require('nvim_lsp')
 
 local on_attach = function(client, bufnr)
   bufnr = bufnr or 0
+
+  local resolved_capabilities = client.resolved_capabilities
 
   -- Mappings.
   local opts = {noremap = true, silent = true}
@@ -31,16 +34,13 @@ local on_attach = function(client, bufnr)
   api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e',
                           '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>',
                           opts)
-
-  if client.resolved_capabilities.document_highlight then
+  if resolved_capabilities.document_highlight then
     api.nvim_command [[autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()]]
     api.nvim_command [[autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()]]
   end
   api.nvim_command [[autocmd CursorMoved <buffer> lua vim.lsp.util.buf_clear_references()]]
 
   require'diagnostic'.on_attach(client, bufnr)
--- nvim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
--- nvim.b["ale_enabled"] = 0
 end
 
 local M = {}

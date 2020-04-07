@@ -35,7 +35,7 @@ end
 
 M.execute = function(cmd)
   M.hide()
-  local cmds = nvim.vim.split(cmd, ' \t')
+  local cmds = nvim.vim.split(cmd, '%s')
   if cmd:find('<Plug>', 1, true)==1 then
     cmd = ':execute "normal \\'..cmd..'"'
     nvim.command(cmd)

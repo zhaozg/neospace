@@ -19,9 +19,8 @@ let g:editorconfig_blacklist = {
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsUsePythonVersion    = 2
 let g:UltiSnipsEditSplit           = 'context'
-let g:UltiSnipsSnippetsDir         = $HOME.'/Private/config/ultisnips'
 if exists('g:UltiSnipsSnippetsDir')
-let g:UltiSnipsSnippetDirectories  = [g:UltiSnipsSnippetsDir, 'UltiSnips']
+  let g:UltiSnipsSnippetDirectories  = [g:UltiSnipsSnippetsDir, 'UltiSnips']
 endif
 
 let g:UltiSnipsExpandTrigger       = "<nop>"  "CR will do snips expad, look at package.vim

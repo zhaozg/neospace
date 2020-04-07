@@ -14,8 +14,8 @@ Neospace will be in alpha stage in a long time, and bugs maybe will never be han
 mkdir -p ~/Private && cd ~/Private && git clone https://github.com/zhaozg/neospace
 mkdir ~/.config/nvim ~/.config/neospace
 ln -s ~/Private/neospace/init.vim ~/.config/nvim/init.vim
-vim ~/.config/neospace/init.vim  # custom stage before any layer or plugin load
-vim ~/.config/neospace/after.vim # custom state after all layer or plugins load
+vim ~/.config/neospace/init.vim   # custom stage before any layer or plugin load
+vim ~/.config/neospace/config.vim # custom state after all layer or plugins load
 ```
 
 ## TODO
@@ -33,10 +33,6 @@ vim ~/.config/neospace/after.vim # custom state after all layer or plugins load
 - enhance:
 
   * ☐ use more lua replace vim
-
-## Layers
-
-[Layers](layers/LAYERS.md)
 
 ## Credits
 
