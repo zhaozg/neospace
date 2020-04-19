@@ -28,3 +28,5 @@ let g:UltiSnipsJumpForwardTrigger  = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<S-tab>"
 " }
 
+" By default auto popup is enable, turn it off by
+let g:completion_enable_auto_popup = 0

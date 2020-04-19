@@ -1,25 +1,25 @@
 function s:load_lsp(timer)
-  if executable('bash-language-server')
+  if g:neospace.lsp_enable['sh'] && executable('bash-language-server')
     lua require'neospace.lsp'.setup('bashls', {})
   endif
 
-  if executable('typescript-language-server')
+  if g:neospace.lsp_enable['js'] && executable('typescript-language-server')
     lua require'neospace.lsp'.setup('tsserver', {})
   endif
 
-  if executable('css-languageserver')
+  if g:neospace.lsp_enable['css'] && executable('css-languageserver')
     lua require'neospace.lsp'.setup('cssls', {})
   endif
 
-  if executable('vim-language-server')
+  if g:neospace.lsp_enable['js'] && executable('vim-language-server')
     lua require'neospace.lsp'.setup('vimls', {})
   endif
 
-  if executable('clangd')
+  if g:neospace.lsp_enable['c'] && executable('clangd')
     lua require'neospace.lsp'.setup('clangd', {})
   endif
 
-  if exists("g:neospace_jdtls") && executable(g:neospace_jdtls)
+  if g:neospace.lsp_enable['java'] && exists("g:neospace_jdtls") && executable(g:neospace_jdtls)
 lua << EOF
   require'neospace.lsp'.setup('jdtls', {
       cmd = {require'nvim'.v["neospace_jdtls"]}
@@ -28,7 +28,8 @@ EOF
   endif
 
   " https://github.com/neovim/nvim-lsp/issues/136#issuecomment-596693910
-  if exists('g:neospace_luals_cmd') && exists('g:neospace_luals_main') &&
+  if  g:neospace.lsp_enable['lua'] && exists('g:neospace_luals_cmd') &&
+        \ exists('g:neospace_luals_main') &&
         \ executable(g:neospace_luals_cmd ) && filereadable(g:neospace_luals_main)
 lua << EOF
   local nvim = require'nvim'

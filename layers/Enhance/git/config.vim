@@ -26,3 +26,4 @@ nnoremap <silent> <Leader>gv :GV<CR>
 nnoremap <silent> <Leader>gV :GV!<CR>
 " }
 
+nmap <leader>tB :BlamerToggle<CR>
