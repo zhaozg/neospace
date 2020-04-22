@@ -13,6 +13,7 @@ MP 'sheerun/vim-polyglot',            {'defer': 1000}
 MP 'luochen1990/rainbow'
 MP 'SirVer/ultisnips'
 MP 'honza/vim-snippets'
+MP 'norcalli/nvim-colorizer.lua'
 
 if has('nvim-0.5')
 MP 'haorenW1025/completion-nvim'

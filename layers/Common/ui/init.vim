@@ -143,9 +143,9 @@ let s:list_order = [
             \ 'commands',
             \ ]
 let g:startify_list_order = s:list_order
-let g:startify_change_to_vcs_root = 1
+let g:startify_change_to_vcs_root = 0
 let g:startify_session_autoload = 1
-let g:startify_change_to_dir = 1
+let g:startify_change_to_dir = 0
 
 function! s:filter_header(lines) abort
   let longest_line   = max(map(copy(a:lines), 'strwidth(v:val)'))
