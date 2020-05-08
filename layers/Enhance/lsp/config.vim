@@ -30,11 +30,11 @@ EOF
   " https://github.com/neovim/nvim-lsp/issues/136#issuecomment-596693910
   if  g:neospace.lsp_enable['lua'] && exists('g:neospace_luals_cmd') &&
         \ exists('g:neospace_luals_main') &&
-        \ executable(g:neospace_luals_cmd ) && filereadable(g:neospace_luals_main)
+        \ executable(g:neospace_luals_cmd) && filereadable(g:neospace_luals_main)
 lua << EOF
   local nvim = require'nvim'
-  local luals_cmd = nvim.v['neospace_luals_cmd']
-  local luals_main = nvim.v['neospace_luals_main']
+  local luals_cmd = nvim.g['neospace_luals_cmd']
+  local luals_main = nvim.g['neospace_luals_main']
   require'neospace.lsp'.setup('sumneko_lua', {
     cmd = {luals_cmd, luals_main}
   })

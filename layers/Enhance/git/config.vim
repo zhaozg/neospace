@@ -16,9 +16,9 @@ nnoremap <silent> <Leader>gw :Gwrite<CR>
 "}
 
 " vim-gitgutter {
-nmap <Leader>gt :GitGutterToggle<CR>
-nmap <Leader>gu :GitGutter<CR>
-nmap <leader>gz :GitGutterFold<CR>
+nnoremap <Leader>gt :GitGutterToggle<CR>
+nnoremap <Leader>gu :GitGutter<CR>
+nnoremap <leader>gz :GitGutterFold<CR>
 " }
 
 " gv {
@@ -26,4 +26,5 @@ nnoremap <silent> <Leader>gv :GV<CR>
 nnoremap <silent> <Leader>gV :GV!<CR>
 " }
 
-nmap <leader>tB :BlamerToggle<CR>
+nnoremap <leader>tB :BlamerToggle<CR>
+nnoremap <leader>gB :BlamerToggle<CR>

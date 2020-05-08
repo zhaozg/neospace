@@ -38,11 +38,6 @@ autocmd StdinReadPre * let s:std_in=1
 " open NERDTree automatically when vim starts up on opening a directory
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 
-  " Open quickfix window automatically when something is feeded
-  autocmd QuickFixCmdPost *
-        \ if !len(filter(range(1, winnr('$')), 'getwinvar(v:val, "&ft") == "qf"'))
-        \| copen 8
-        \|endif
 
   " Close vim if the last edit buffer is closed, i.e., close NERDTree,
   " undotree, quickfix etc automatically.

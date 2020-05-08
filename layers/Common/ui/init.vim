@@ -1,10 +1,15 @@
 scriptencoding utf-8
 
 " gruvbox {
-let g:gruvbox_termcolors         = '256'
-let g:gruvbox_italic             = '1'
-let g:gruvbox_italicize_comments = '1'
-let g:gruvbox_improved_strings   = '1'
+let g:gruvbox_bold=1
+let g:gruvbox_italic=1
+let g:gruvbox_undercurl=1
+let g:gruvbox_underline=1
+let g:gruvbox_inverse=1
+let g:gruvbox_improved_strings=1
+let g:gruvbox_improved_warnings=1
+let g:gruvbox_termcolors=256
+let g:gruvbox_invert_indent_guides=1
 " }
 
 " vim-airline {
@@ -105,8 +110,9 @@ let g:DevIconsEnableFolderExtensionPatternMatching = 1
 " } devicons "
 
 " { vista
-let g:vista_icon_indent = ['└▸ ', '├▸ ']
-let g:vista_echo_cursor_strategy = 'scroll'
+let g:vista_icon_indent = ['└➜ ', '├➜ ' ]
+
+let g:vista_echo_cursor_strategy =  'echo'
 " To enable fzf's preview window set g:vista_fzf_preview.
 " The elements of g:vista_fzf_preview will be passed as arguments to fzf#vim#with_preview()
 " For example:
@@ -118,6 +124,12 @@ let g:vista_executive_for = {
     \ 'vimwiki': 'markdown',
     \ 'pandoc': 'markdown',
     \ 'markdown': 'toc',
+    \ 'lua': 'nvim_lsp',
+    \ 'sh': 'nvim_lsp',
+    \ 'css': 'nvim_lsp',
+    \ 'c': 'nvim_lsp',
+    \ 'js': 'nvim_lsp',
+    \ 'java': 'nvim_lsp'
     \ }
 " } vista
 

@@ -1,4 +1,9 @@
 let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+let g:rainbow_conf = {
+\   'separately': {
+\       'cmake': 0,
+\   }
+\}
 
 " vim_indent_guides { "
 let g:indent_guides_enable_on_vim_startup = 0

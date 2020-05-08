@@ -35,6 +35,12 @@ end
 
 M.execute = function(cmd)
   M.hide()
+  if cmd:find('^:') then
+    cmd = cmd:gsub(2, -1)
+    nvim.command(cmd)
+    return true
+  end
+
   local cmds = nvim.vim.split(cmd, '%s')
   if cmd:find('<Plug>', 1, true)==1 then
     cmd = ':execute "normal \\'..cmd..'"'
@@ -91,6 +97,9 @@ M.select = function(filter)
   local results = {}
   fun.each(function(k, v)
     if type(v)=='string' then
+      v = v:gsub('^:', ''):gsub('^<Plug>',''):gsub('^call ','')
+           :gsub('<CR>$',''):gsub('<cr>$','')
+           :gsub('^%((.*)%)','%1')
       results[#results + 1] = string.format('%s %s', k, v)
     else
       results[#results + 1] = string.format('%s %s', k, v.name and v.name or v[2])
@@ -158,7 +167,7 @@ M.show = function(lines, wopts)
   if M.win==nil and M.buf==nil then
     M.win, M.buf = window.float(wopts)
 
-    nvim.bo[M.buf].filetype = 'nofile'
+    nvim.bo[M.buf].filetype = 'leader'
   end
   nvim.bl[M.buf][0] = {-1, true, lines}
   nvim.command('redraw')
