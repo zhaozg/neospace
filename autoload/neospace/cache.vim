@@ -1,6 +1,6 @@
 function neospace#cache#init() abort
-  if has('python') || has('python3')
-    let s:py_exe = has('python') ? get(g:, 'python_host_prog') : get(g:, 'python3_host_prog')
+  if has('python3') || has('python')
+    let s:py_exe = has('python3') ? get(g:, 'python3_host_prog') : get(g:, 'python_host_prog')
     try
       call s:py_init()
     catch

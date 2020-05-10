@@ -241,9 +241,10 @@ endfunction
 
 function s:invoke_plug()
   for l:plugin in g:neospace.plugins
-    let l:plug_options = get(s:plug_options, l:plugin, '')
+    let l:plug_options = get(s:plug_options, l:plugin, {})
     let l:type = type(l:plug_options)
-    if l:type == s:TYPE.dict && has_key(l:plug_options, 'defer')
+    call assert_true(l:type == s:TYPE.dict)
+    if has_key(l:plug_options, 'defer')
       let l:name = split(l:plugin, '/')[1]
       let l:func = substitute(l:name,'-','_','')
 
