@@ -31,6 +31,8 @@ nnoremap <Leader>cp :Printf<CR>
 
 nmap<Leader>hm <SID>Man
 
+lua require'colorizer'.setup()
+
 " completion-nvim {{{
 if has('nvim-0.5')
 autocmd BufEnter * lua require'completion'.on_attach()
@@ -54,6 +56,48 @@ inoremap <silent><expr> <TAB>
 let g:completion_enable_snippet = 'UltiSnips'
 let g:completion_enable_in_comment = 1
 let g:completion_trigger_character = ['.', '::', '->']
+
+"c-n" : i_CTRL-N
+"c-p" : i_CTRL-P
+"cmd" : i_CTRL-X_CTRL-V
+"defs": i_CTRL-X_CTRL-D
+"dict": i_CTRL-X_CTRL-K
+"file": i_CTRL-X_CTRL-F
+"incl": i_CTRL-X_CTRL-I
+"keyn": i_CTRL-X_CTRL-N
+"keyp": i_CTRL-X_CTRL-P
+"line": i_CTRL-X_CTRL-L
+"spel": i_CTRL-X_s
+"tags": i_CTRL-X_CTRL-]
+"thes": i_CTRL-X_CTRL-T
+"user": i_CTRL-X_CTRL-U
+
+let g:completion_chain_complete_list = {
+            \ 'default' : {
+            \   'default': [
+            \       {'complete_items': ['lsp', 'snippet', 'ts']},
+            \       {'mode': '<c-p>'},
+            \       {'mode': '<c-n>'}],
+            \   'comment': [],
+            \   'string' : [
+            \       {'complete_items': ['path']}]
+            \   },
+            \ 'lua' : {
+            \   'default': [
+            \       {'complete_items': ['lsp', 'snippet', 'ts']},
+            \       {'mode': '<c-p>'},
+            \       {'mode': '<c-n>'}],
+            \   'comment': [],
+            \   'string' : [
+            \       {'complete_items': ['path']}]
+            \   },
+            \ 'markdown' : {
+            \   'default': [
+            \       {'mode': 'spel'}],
+            \   'comment': [],
+            \   }
+            \}
+
 endif
 " }}}
 

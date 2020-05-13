@@ -36,7 +36,15 @@ lua << EOF
   local luals_cmd = nvim.g['neospace_luals_cmd']
   local luals_main = nvim.g['neospace_luals_main']
   require'neospace.lsp'.setup('sumneko_lua', {
-    cmd = {luals_cmd, luals_main}
+    cmd = {luals_cmd, luals_main},
+    Lua = {
+      completion = {
+        keywordSnippet = "Disable";
+      };
+      runtime = {
+        version = "LuaJIT";
+      };
+    };
   })
 EOF
   endif

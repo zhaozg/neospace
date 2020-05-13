@@ -9,6 +9,7 @@ let s:neospace_layers_enhance   = [
   \ 'finder',
   \ 'git',
   \ 'github',
+  \ 'treesitter'
   \ ]
 let s:neospace_layers_toolset   = [
   \ 'calendar',
