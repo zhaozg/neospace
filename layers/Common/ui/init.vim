@@ -9,7 +9,7 @@ let g:gruvbox_inverse=1
 let g:gruvbox_improved_strings=1
 let g:gruvbox_improved_warnings=1
 let g:gruvbox_termcolors=256
-let g:gruvbox_invert_indent_guides=1
+let g:gruvbox_invert_indent_guides=0
 " }
 
 " vim-airline {

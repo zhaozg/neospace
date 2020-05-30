@@ -1,4 +1,3 @@
-let g:neospace_plug_home = $HOME . '/.vim/plugged'
 " Let Vim and NeoVim shares the same plugin directory.
 
 let s:neospace_layers_basic     = [ 'async', 'better' ]
@@ -17,6 +16,7 @@ let s:neospace_layers_toolset   = [
   \ 'debug',
   \ 'nvim',
   \ 'wiki',
+  \ 'task'
   \ ]
 let s:neospace_layers_languages = [
   \ 'c',
