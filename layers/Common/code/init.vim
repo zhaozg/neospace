@@ -16,9 +16,7 @@ nmap <silent> <Leader>ti <Plug>IndentGuidesToggle
 let g:NERDCreateDefaultMappings = 0
 
 " EditorConfig
-let g:editorconfig_blacklist = {
-    \ 'filetype': ['git.*', 'fugitive'],
-    \ 'pattern': ['\.un~$','scp://.\*']}
+let g:EditorConfig_exclude_patterns = ['fugitive://.*', 'scp://.*']
 
 " untisnap {
 " If you want :UltiSnipsEdit to split your window.

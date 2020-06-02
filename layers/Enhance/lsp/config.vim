@@ -39,11 +39,14 @@ lua << EOF
     cmd = {luals_cmd, luals_main},
     Lua = {
       completion = {
-        keywordSnippet = "Disable";
-      };
+      },
       runtime = {
-        version = "LuaJIT";
-      };
+        version = "LuaJIT"
+      },
+      workspace = {
+        maxPreload = 256,
+        preloadFileSize = 64
+      }
     };
   })
 EOF

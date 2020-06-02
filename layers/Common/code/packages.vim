@@ -7,7 +7,7 @@ MP 'wellle/targets.vim'
 MP 'AndrewRadev/splitjoin.vim'
 MP 'tpope/vim-sleuth'
 MP 'zhaozg/vim-printf'
-MP 'sgur/vim-editorconfig',           {'defer': 1000}
+MP 'editorconfig/editorconfig-vim'
 MP 'sheerun/vim-polyglot'
 
 MP 'luochen1990/rainbow'
