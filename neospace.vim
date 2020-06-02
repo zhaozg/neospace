@@ -27,7 +27,7 @@ let s:neospace_layers_languages = [
   \ 'objc',
   \ 'xhtml'
   \ ]
-let s:neospace_layers_ultimate  = [ 'workspace', 'xcode' ]
+let s:neospace_layers_ultimate  = [ 'xcode' ]
 
 if has('nvim-0.5')
   call add(s:neospace_layers_enhance, 'lsp')
@@ -38,6 +38,7 @@ let g:neospace_layers = s:neospace_layers_basic
                     \ + s:neospace_layers_enhance
                     \ + s:neospace_layers_languages
                     \ + s:neospace_layers_toolset
+                    \ + s:neospace_layers_ultimate
 
 " Enable the existing layers in neospace
 
