@@ -27,7 +27,7 @@ let s:neospace_layers_languages = [
   \ 'objc',
   \ 'xhtml'
   \ ]
-let s:neospace_layers_ultimate  = [ 'xcode' ]
+let s:neospace_layers_ultimate  = [ 'android', 'xcode' ]
 
 if has('nvim-0.5')
   call add(s:neospace_layers_enhance, 'lsp')
