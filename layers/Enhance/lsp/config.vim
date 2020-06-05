@@ -35,19 +35,31 @@ lua << EOF
   local nvim = require'nvim'
   local luals_cmd = nvim.g['neospace_luals_cmd']
   local luals_main = nvim.g['neospace_luals_main']
-  require'neospace.lsp'.setup('sumneko_lua', {
+  local lsp = require'neospace.lsp'
+  local globals
+  if lsp.lua and lsp.lua.globals then
+    globals = lsp.lua.globals
+  end
+  lsp.setup('sumneko_lua', {
     cmd = {luals_cmd, luals_main},
-    Lua = {
-      completion = {
+    settings = {
+      Lua = {
+        completion = {
+          keywordSnippet = "Disable";
+        };
+        runtime = {
+          version = "LuaJIT";
+          };
+        diagnostics = {
+          enable = true,
+          globals = globals
+        },
+        workspace = {
+          maxPreload = 0,
+          preloadFileSize = 0
+        }
       },
-      runtime = {
-        version = "LuaJIT"
-      },
-      workspace = {
-        maxPreload = 256,
-        preloadFileSize = 64
-      }
-    };
+    }
   })
 EOF
   endif
