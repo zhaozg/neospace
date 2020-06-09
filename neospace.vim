@@ -7,8 +7,7 @@ let s:neospace_layers_enhance   = [
   \ 'chinese',
   \ 'finder',
   \ 'git',
-  \ 'github',
-  \ 'treesitter'
+  \ 'github'
   \ ]
 let s:neospace_layers_toolset   = [
   \ 'calendar',
@@ -32,6 +31,10 @@ let s:neospace_layers_ultimate  = [ 'android', 'xcode' ]
 if has('nvim-0.5')
   call add(s:neospace_layers_enhance, 'lsp')
 endif
+
+if luaeval('vim.treesitter~=nil')
+  " call add(s:neospace_layers_enhance, 'treesitter')
+end
 
 let g:neospace_layers = s:neospace_layers_basic
                     \ + s:neospace_layers_common
