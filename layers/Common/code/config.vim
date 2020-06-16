@@ -77,26 +77,20 @@ let g:completion_chain_complete_list = {
             \   'default': [
             \       {'complete_items': ['lsp', 'snippet', 'ts']},
             \       {'mode': '<c-p>'},
-            \       {'mode': '<c-n>'}],
+            \       {'mode': '<c-n>'}
+            \   ],
             \   'comment': [],
             \   'string' : [
-            \       {'complete_items': ['path']}]
-            \   },
-            \ 'lua' : {
-            \   'default': [
-            \       {'complete_items': ['lsp', 'snippet', 'ts']},
-            \       {'mode': '<c-p>'},
-            \       {'mode': '<c-n>'}],
-            \   'comment': [],
-            \   'string' : [
-            \       {'complete_items': ['path']}]
-            \   },
+            \       {'complete_items': ['path'], 'triggered_only': ['/']}
+            \   ]
+            \ },
             \ 'markdown' : {
             \   'default': [
-            \       {'mode': 'spel'}],
-            \   'comment': [],
+            \       {'mode': 'spel'}
+            \   ],
+            \   'comment': []
             \   }
-            \}
+            \ }
 
 endif
 " }}}
