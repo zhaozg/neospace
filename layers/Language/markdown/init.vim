@@ -61,7 +61,32 @@ let g:mkdp_preview_options = {
     \ 'disable_sync_scroll': 0,
     \ 'sync_scroll_type': 'middle',
     \ 'hide_yaml_meta': 1,
-    \ 'sequence_diagrams': {'theme': 'simple'}
+    \ 'sequence_diagrams': {'theme': 'simple'},
+    \ 'flowchart_diagrams': {
+    \   'x': 0,
+    \   'y': 0,
+    \   'line-width': 2,
+    \   'line-length': 15,
+    \   'text-margin': 10,
+    \   'font-size': 14,
+    \   'font-color': 'black',
+    \   'line-color': 'black',
+    \   'element-color': 'black',
+    \   'fill': 'white',
+    \   'yes-text': 'yes',
+    \   'no-text': 'no',
+    \   'arrow-end': 'block',
+    \   'symbols': {
+    \     'start': {},
+    \     'end': {},
+    \     'condition': {'text-margin': 0.5},
+    \     'inputoutput': {},
+    \     'operation': {},
+    \     'subroutine': {},
+    \     'parallel': {}
+    \   }
+    \ },
+    \ 'content_editable': v:false
     \ }
 
 " use a custom markdown style must be absolute path
