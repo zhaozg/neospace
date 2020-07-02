@@ -1,1 +1,1 @@
-MP 'vimwiki/vimwiki',  {'defer': 1000}
+MP 'vimwiki/vimwiki',  {'on': []}
