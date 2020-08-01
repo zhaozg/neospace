@@ -16,5 +16,5 @@ MP 'honza/vim-snippets'
 MP 'norcalli/nvim-colorizer.lua'
 
 if has('nvim-0.5')
-MP 'haorenW1025/completion-nvim'
+MP 'nvim-lua/completion-nvim'
 endif
