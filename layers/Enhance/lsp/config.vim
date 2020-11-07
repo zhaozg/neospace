@@ -1,3 +1,8 @@
+function! LspStatus() abort
+  let status = luaeval('require("lsp-status").status()')
+  return trim(status)
+endfunction
+
 function s:load_lsp(timer)
   if g:neospace.lsp_enable['sh'] && executable('bash-language-server')
     lua require'neospace.lsp'.setup('bashls', {})
@@ -11,7 +16,7 @@ function s:load_lsp(timer)
     lua require'neospace.lsp'.setup('cssls', {})
   endif
 
-  if g:neospace.lsp_enable['js'] && executable('vim-language-server')
+  if g:neospace.lsp_enable['vim'] && executable('vim-language-server')
     lua require'neospace.lsp'.setup('vimls', {})
   endif
 
@@ -61,8 +66,30 @@ lua << EOF
       },
     }
   })
+
+  local lsp_status = require('lsp-status')
+  lsp_status.register_progress()
+  local kind_labels_mt = {__index = function(_, k) return k end}
+  local kind_labels = {}
+  lsp_status.config({
+    kind_labels = kind_labels,
+    indicator_errors = "?",
+    indicator_warnings = "!",
+    indicator_info = "i",
+    indicator_hint = "?",
+    -- the default is a wide codepoint which breaks absolute and relative
+    -- line counts if placed before airline's Z section
+    status_symbol = "",
+    kind_labels
+  })
 EOF
   endif
+
+  call airline#parts#define_function('lsp_status', 'LspStatus')
+  call airline#parts#define_condition('lsp_status', 'luaeval("#vim.lsp.buf_get_clients() > 0")')
+
+  let g:airline#extensions#nvimlsp#enabled = 1
+  let g:airline_section_warning = airline#section#create_right(['lsp_status'])
 endfunction
 
 call timer_start(500, function('s:load_lsp'))
