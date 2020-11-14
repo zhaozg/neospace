@@ -59,9 +59,9 @@ let g:NERDTreeDirArrowExpandable  = "▸"
 let g:NERDTreeDirArrowCollapsible = "▾"
 let g:NERDTreeNodeDelimiter       = "\u00a0"
 
-let g:NERDTreeShowIgnoredStatus   = 0
-let g:NERDTreeShowHidden          = 0
-let g:NERDTreeAutoDeleteBuffer    = 1
+let g:NERDTreeGitStatusShowIgnored = 0
+let g:NERDTreeShowHidden           = 0
+let g:NERDTreeAutoDeleteBuffer     = 1
 
 " vim-nerdtree-syntax-highlight {
 let g:NERDTreeFileExtensionHighlightFullName = 1
