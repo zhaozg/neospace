@@ -32,8 +32,8 @@ if has('nvim-0.5')
   call add(s:neospace_layers_enhance, 'lsp')
 endif
 
-if luaeval('vim.treesitter~=nil')
-  " call add(s:neospace_layers_enhance, 'treesitter')
+if luaeval("pcall(require, 'vim.treesitter.query')")
+  call add(s:neospace_layers_enhance, 'treesitter')
 end
 
 let g:neospace_layers = s:neospace_layers_basic
