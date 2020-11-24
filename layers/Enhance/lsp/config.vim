@@ -24,49 +24,50 @@ function s:load_lsp(timer)
     lua require'neospace.lsp'.setup('clangd', {})
   endif
 
-  if g:neospace.lsp_enable['java'] && exists("g:neospace_jdtls") && executable(g:neospace_jdtls)
+  if g:neospace.lsp_enable['java']
 lua << EOF
-  require'neospace.lsp'.setup('jdtls', {
-      cmd = {require'nvim'.v["neospace_jdtls"]}
-  })
+    local util = require 'lspconfig/util'
+    local install_dir = util.path.join { util.base_install_dir, 'jdtls'}
+
+    require'neospace.lsp'.setup('jdtls', {
+      root_dir = util.root_pattern('pom.xml', 'project.xml', 'build.gradle', '.git'),
+      init_options = {
+        workspace = util.path.join { install_dir, "workspace" };
+      }
+    })
 EOF
   endif
 
-  " https://github.com/neovim/nvim-lsp/issues/136#issuecomment-596693910
-  if  g:neospace.lsp_enable['lua'] && exists('g:neospace_luals_cmd') &&
-        \ exists('g:neospace_luals_main') &&
+  if g:neospace.lsp_enable['lua'] &&
         \ executable(g:neospace_luals_cmd) && filereadable(g:neospace_luals_main)
 lua << EOF
   local nvim = require'nvim'
   local luals_cmd = nvim.g['neospace_luals_cmd']
   local luals_main = nvim.g['neospace_luals_main']
   local lsp = require'neospace.lsp'
-  local globals
-  if lsp.lua and lsp.lua.globals then
-    globals = lsp.lua.globals
-  end
+  local lsp_lua = require'neospace.lsp.lua'
   lsp.setup('sumneko_lua', {
-    cmd = {luals_cmd, luals_main},
+    cmd = {luals_cmd, '-E', luals_main},
     settings = {
       Lua = {
-        completion = {
-          keywordSnippet = "Disable";
-        };
         runtime = {
-          version = "LuaJIT";
-          };
+          version = "LuaJIT"
+        },
         diagnostics = {
           enable = true,
-          globals = globals
+          globals = lsp_lua.globals
         },
         workspace = {
           maxPreload = 0,
           preloadFileSize = 0
         }
-      },
+      }
     }
   })
+EOF
+  endif
 
+lua << EOF
   local lsp_status = require('lsp-status')
   lsp_status.register_progress()
   local kind_labels_mt = {__index = function(_, k) return k end}
@@ -83,7 +84,6 @@ lua << EOF
     kind_labels
   })
 EOF
-  endif
 
   call airline#parts#define_function('lsp_status', 'LspStatus')
   call airline#parts#define_condition('lsp_status', 'luaeval("#vim.lsp.buf_get_clients() > 0")')

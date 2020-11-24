@@ -75,13 +75,13 @@ let g:completion_trigger_character = ['.', '::', '->']
 let g:completion_chain_complete_list = {
             \ 'default' : {
             \   'default': [
-            \       {'complete_items': ['lsp', 'snippet', 'ts']},
+            \       {'complete_items': ['lsp', 'snippet', 'ts', 'buffer']},
             \       {'mode': '<c-p>'},
             \       {'mode': '<c-n>'}
             \   ],
             \   'comment': [],
             \   'string' : [
-            \       {'complete_items': ['path'], 'triggered_only': ['/']}
+            \       {'complete_items': ['path', 'buffer']}
             \   ]
             \ },
             \ 'markdown' : {

@@ -32,4 +32,8 @@ let g:UltiSnipsJumpBackwardTrigger = "<S-tab>"
 " }
 
 " By default auto popup is enable, turn it off by
-let g:completion_enable_auto_popup = 0
+let g:completion_enable_auto_popup = 1
+
+"	Enable the auto insert parenthesis feature. completion-nvim will
+"	insert parenthesis when completing methods or functions.
+let g:completion_enable_auto_paren = 1
