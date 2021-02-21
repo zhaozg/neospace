@@ -86,7 +86,7 @@ let g:completion_chain_complete_list = {
             \ },
             \ 'markdown' : {
             \   'default': [
-            \       {'mode': 'spel'}
+            \       {'mode': 'buffer'}
             \   ],
             \   'comment': []
             \   }

@@ -20,10 +20,6 @@ vnoremap <silent> <leader>      :call neospace#leader#active(g:mapleader)<CR>
 vnoremap <silent> <localleader> :call neospace#leader#active(g:maplocalleader)<CR>
 " } neospace leader "
 
-" for quickfix
-nnoremap <leader>tq <Plug>(qf_qf_toggle)
-vnoremap <leader>tq <Plug>(qf_qf_toggle)
-
 " for fugitive
 autocmd FileType gitcommit  noremap <buffer> <leader> <Plug>leaderguide-buffer
 
