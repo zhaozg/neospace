@@ -27,6 +27,7 @@ layer:load('text')
 layer:load('code')
 layer:load('finder')
 layer:load('git')
+layer:load('lsp')
 layer:load('treesitter')
 
 -- load plugins

@@ -30,6 +30,9 @@ local function run_install_hook(pack)
     gen_helptags(pack)
     if pack.install then
       chdir_do_fun(pack.install_path, pack.install)
+      if vim.notify then
+        vim.notify(string.format('install %s done', pack.name))
+      end
     end
   end
 end
@@ -40,6 +43,9 @@ local function run_update_hook(pack)
     gen_helptags(pack)
     if pack.update then
       chdir_do_fun(pack.install_path, pack.update)
+      if vim.notify then
+        vim.notify(string.format('update %s done', pack.name))
+      end
     end
     pack.hash = hash
   end
