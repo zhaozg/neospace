@@ -13,6 +13,10 @@ g.neospace.linux = fn.has('unix') and (not fn.has('macunix'))
                                   and not fn.has('win32unix')
 g.neospace.windows = fn.has('win32') or fn.has('win64')
 
+if vim.fn.filereadable('.nvimrc')==1 then
+  vim.cmd("source .nvimrc")
+end
+
 -- map leader to Space
 vim.cmd("let mapleader = ' '")
 vim.cmd('let maplocalleader = ","')
