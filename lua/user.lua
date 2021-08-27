@@ -21,7 +21,7 @@ local function use(args)
     pack.config = args.config
 
     pack.install = args.install
-    pack.update = args.update
+    pack.update = args.update~=nil and args.update or true
 
     if type(args.after) == "string" then
       pack.after = { args.after }

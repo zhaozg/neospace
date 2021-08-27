@@ -1,12 +1,11 @@
 local vim = vim
-local cmd = vim.cmd  -- to execute Vim commands e.g. cmd('pwd')
 local fn  = vim.fn   -- to call Vim functions e.g. fn.bufnr()
 local g   = vim.g
 local o   = vim.o
 
 local fun = require'neospace.fun'
 
-local M = {
+return {
   {
     'mhinz/vim-startify',
     init = function()
@@ -65,6 +64,9 @@ local M = {
        '             [ neospace   .. nver ..  ＠ . s:version . '
       }
       g.startify_custom_header = fix_header(custom_header)
+    end,
+    config = function()
+      vim.cmd[[autocmd User Startified colorscheme gruvbox]]
     end
   },
 
@@ -154,6 +156,29 @@ local M = {
   --tag at right
   {
     'liuchengxu/vista.vim',
+    init = function()
+      g.vista_icon_indent = {'└➜ ', '├➜ ' }
+
+      g.vista_echo_cursor_strategy =  'echo'
+      -- To enable fzf's preview window set g:vista_fzf_preview.
+      -- The elements of g:vista_fzf_preview will be passed as arguments to fzf#vim#with_preview()
+      -- For example:
+      g.vista_fzf_preview = {'right:50%'}
+      -- Ensure you have installed some decent font to show these pretty symbols, then you can enable icon for the kind.
+      g['vista#renderer#enable_icon'] = 1
+
+      g.vista_executive_for = {
+        ['vimwiki'] = 'markdown',
+        ['pandoc'] = 'markdown',
+        ['markdown'] = 'toc',
+        ['lua'] = 'nvim_lsp',
+        ['sh'] = 'nvim_lsp',
+        ['css'] = 'nvim_lsp',
+        ['c'] = 'nvim_lsp',
+        ['js'] = 'nvim_lsp',
+        ['java'] = 'nvim_lsp'
+      }
+    end,
     config = function()
       vim.cmd("map <leader>tt <cmd>Vista!!<CR>")
     end
@@ -163,23 +188,20 @@ local M = {
   {
     'hoob3rt/lualine.nvim',
     after = 'tabline.nvim',
-    init = function()
-      --local gradle_status = require('lualine.components.gradle_status')
-    end,
     config = function()
       local tabline = require'tabline'
+      local gradle_status = require('lualine.components.gradle_status')
 
       require('lualine').setup({
-          --[[
         sections = {
           lualine_a = {'mode', 'asyncrun_status'},
           lualine_c = {'filename', 'lsp_progress'},
-          --lualine_y = {'progress',
-          --  {
-          --    'gradle_status',
-          --    condition = gradle_status.isEnabled
-          --  }
-          --},
+          lualine_y = {'progress',
+            {
+              'gradle_status',
+              condition = gradle_status.isEnabled
+            }
+          },
           lualine_z = {
             {
               'diagnostics',
@@ -189,7 +211,6 @@ local M = {
             'location'
           },
         },
-          --]]
 
         tabline = {
           lualine_a = {},
@@ -207,8 +228,25 @@ local M = {
     end
   },
 
-  'ryanoasis/vim-devicons',
-  'kyazdani42/nvim-web-devicons',
+  {
+    'kyazdani42/nvim-web-devicons',
+    config = function()
+      require'nvim-web-devicons'.setup {
+        -- your personnal icons can go here (to override)
+        -- DevIcon will be appended to `name`
+        override = {
+          zsh = {
+            icon = "",
+            color = "#428850",
+            name = "Zsh"
+          }
+        };
+        -- globally enable default icons (default to false)
+        -- will get overriden by `get_icons` option
+        default = true;
+      }
+    end
+  },
 
   {
     'folke/trouble.nvim',
@@ -283,65 +321,4 @@ local M = {
     end
   }
 }
-
-function M:init()
-  -- nvim-tree {{
--- }}
-
--- devicons {{ "
-
-  -- specify OS to decide an icon for unix fileformat (not defined by default)
-  -- this is useful for avoiding unnecessary system() call. see #135 for further details.
-  g.WebDevIconsOS = g.neospace.macos and 'Darwin' or g.WebDevIconsOS
-
-  g.DevIconsAppendArtifactFix = 0
-  g.DevIconsArtifactFixChar = ''
-
-  -- use double-width(1) or single-width(0) glyphs
-  -- only manipulates padding, has no effect on terminal or set(guifont) font
-  g.WebDevIconsUnicodeGlyphDoubleWidth = 1
-
-  -- whether or not to show the nerdtree brackets around flags
-  g.webdevicons_conceal_nerdtree_brackets = 0
-
-  -- enable folder/directory glyph flag (disabled by default with 0)
-  g.WebDevIconsUnicodeDecorateFolderNodes = 1
-
-  -- enable open and close folder/directory glyph flags (disabled by default with 0)
-  g.DevIconsEnableFoldersOpenClose = 1
-
-  -- enable file extension pattern matching glyphs on folder/directory (disabled by default with 0)
-  g.DevIconsEnableFolderExtensionPatternMatching = 1
-
--- }} devicons
---
-  -- { vista
-  g.vista_icon_indent = {'└➜ ', '├➜ ' }
-
-  g.vista_echo_cursor_strategy =  'echo'
-  -- To enable fzf's preview window set g:vista_fzf_preview.
-  -- The elements of g:vista_fzf_preview will be passed as arguments to fzf#vim#with_preview()
-  -- For example:
-  g.vista_fzf_preview = {'right:50%'}
-  -- Ensure you have installed some decent font to show these pretty symbols, then you can enable icon for the kind.
-  g['vista#renderer#enable_icon'] = 1
-
-  g.vista_executive_for = {
-    ['vimwiki'] = 'markdown',
-    ['pandoc'] = 'markdown',
-    ['markdown'] = 'toc',
-    ['lua'] = 'nvim_lsp',
-    ['sh'] = 'nvim_lsp',
-    ['css'] = 'nvim_lsp',
-    ['c'] = 'nvim_lsp',
-    ['js'] = 'nvim_lsp',
-    ['java'] = 'nvim_lsp'
-  }
-  -- } vista
-end
-
-
-vim.cmd[[autocmd User Startified colorscheme gruvbox]]
-
-return M
 

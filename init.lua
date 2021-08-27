@@ -13,6 +13,10 @@ g.neospace.linux = fn.has('unix') and (not fn.has('macunix'))
                                   and not fn.has('win32unix')
 g.neospace.windows = fn.has('win32') or fn.has('win64')
 
+if vim.fn.exists("g:neovide") then
+  vim.o.guifont='FiraCode Nerd Font Mono:h16'
+end
+
 if vim.fn.filereadable('.nvimrc')==1 then
   vim.cmd("source .nvimrc")
 end
@@ -33,6 +37,7 @@ layer:load('finder')
 layer:load('git')
 layer:load('lsp')
 layer:load('treesitter')
+layer:load('ale')
 
 -- load plugins
 local user = require("user")
