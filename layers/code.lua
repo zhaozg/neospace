@@ -1,3 +1,4 @@
+local vim = _G.vim
 local g = vim.g
 
 --vim.cmd("nnoremap <SID>Man :Man <C-R><C-W><CR>")
@@ -26,14 +27,23 @@ return {
     end
   },
   {
-    'nathanaelkane/vim-indent-guides',
-    init = function()
-      g.indent_guides_enable_on_vim_startup = 0
-      g.indent_guides_guide_size = 1
-      g.indent_guides_default_mapping = 0
-    end,
+    'lukas-reineke/indent-blankline.nvim',
     config = function()
-      vim.cmd("nmap <silent> <Leader>ti <Plug>IndentGuidesToggle")
+
+      require("indent_blankline").setup {
+        char = "⋅",
+        enabled = false,
+        show_first_indent_level = false,
+        show_end_of_line = true,
+        show_current_context = true,
+        buftype_exclude = {"terminal"},
+        show_trailing_blankline_indent = true,
+        char_highlight_list = {
+          "IndentBlanklineIndent1",
+          "IndentBlanklineIndent2",
+        },
+      }
+      vim.cmd("nmap <silent> <Leader>ti <cmd>IndentBlanklineToggle<CR>")
     end
   },
   {
