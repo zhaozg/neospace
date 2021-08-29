@@ -25,6 +25,9 @@ end
 vim.cmd("let mapleader = ' '")
 vim.cmd('let maplocalleader = ","')
 
+-- active map
+require'neospace.leader'
+
 -- active default layer --
 local layer = require'neospace.layer'
 layer:load('better')

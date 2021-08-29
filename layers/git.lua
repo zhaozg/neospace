@@ -71,7 +71,7 @@ return {
           diffview = true
         }
       }
-      vim.cmd("nnoremap <silent> <Leader>gn :Neogit<CR>")
+      vim.cmd("nnoremap <silent> <Leader>gn :Neogit kind=vsplit<CR>")
     end
   },
 
