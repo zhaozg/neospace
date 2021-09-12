@@ -19,7 +19,7 @@ local function _update()
 end
 local function progress_callback(_, _, msg, client_id)
 	local val = msg.value
-	if val.kind then
+	if val and val.kind then
 		if val.kind == 'begin' then
 			if not _clients[client_id] then
 				_clients[client_id]= {
