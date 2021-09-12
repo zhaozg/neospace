@@ -82,18 +82,18 @@ return {
 
       require'diffview'.setup {
         diff_binaries = false,    -- Show diffs for binaries
+        use_icons = true,         -- Requires nvim-web-devicons
         file_panel = {
           position = "left",      -- One of 'left', 'right', 'top', 'bottom'
           width = 35,             -- Only applies when position is 'left' or 'right'
-          height = 10,            -- Only applies when position is 'top' or 'bottom'
-          use_icons = true        -- Requires nvim-web-devicons
+          height = 10             -- Only applies when position is 'top' or 'bottom'
         },
         key_bindings = {
           disable_defaults = false,                   -- Disable the default key bindings
           -- The `view` bindings are active in the diff buffers, only when the current
           -- tabpage is a Diffview.
           view = {
-            ["<tab>"]     = cb("select_next_entry"),  -- Open the diff for the next file 
+            ["<tab>"]     = cb("select_next_entry"),  -- Open the diff for the next file
             ["<s-tab>"]   = cb("select_prev_entry"),  -- Open the diff for the previous file
             ["<leader>e"] = cb("focus_files"),        -- Bring focus to the files panel
             ["<leader>b"] = cb("toggle_files"),       -- Toggle the files panel.
