@@ -1,11 +1,46 @@
 local Deque = require("user.deque").Deque
+local vim = vim
 
 local function gen_helptags(pack)
   vim.api.nvim_command("silent! helptags "..vim.fn.fnameescape(pack.install_path).."/doc")
 end
 
-local function git_head_hash(pack)
-  return vim.fn.system([[git -C "]]..pack.install_path..[[" rev-parse HEAD]])
+local function async_run(cmd, args, callback)
+  local uv = vim.loop
+  local stdout = uv.new_pipe(false)
+
+  local handle, chunks
+  handle = uv.spawn(cmd, {
+    args = args,
+    stdio = {nil, stdout},
+  }, function (code, signal)
+    uv.close(handle)
+    if callback then
+      callback(code, chunks and table.concat(chunks) or nil, signal)
+    end
+  end)
+
+
+  uv.read_start(stdout, function (err, chunk)
+    assert(not err, err)
+    if chunk then
+      chunks = chunks or {}
+      chunks[#chunks+1] = chunk
+    else
+      uv.close(stdout)
+    end
+  end)
+end
+
+local function git_head_hash(pack, callback)
+  async_run('git', {
+    '-C',
+    pack.install_path,
+    'rev-parse',
+    'HEAD'
+  }, function(code, hash)
+    callback(hash, code)
+  end)
 end
 
 local function packadd(pack)
@@ -30,25 +65,22 @@ local function run_install_hook(pack)
     gen_helptags(pack)
     if pack.install then
       chdir_do_fun(pack.install_path, pack.install)
-      if vim.notify then
-        vim.notify(string.format('install %s done', pack.name))
-      end
+      vim.notify(string.format('install %s done', pack.name))
     end
   end
 end
 
 local function run_update_hook(pack)
-  local hash = git_head_hash(pack)
-  if pack.hash and pack.hash ~= hash then
-    gen_helptags(pack)
-    if pack.update then
-      chdir_do_fun(pack.install_path, pack.update)
-      if vim.notify then
+  git_head_hash(pack, function(hash)
+    if pack.hash and pack.hash ~= hash then
+      --gen_helptags(pack)
+      if pack.update then
+        chdir_do_fun(pack.install_path, pack.update)
         vim.notify(string.format('update %s done', pack.name))
       end
+      pack.hash = hash
     end
-    pack.hash = hash
-  end
+  end)
 end
 
 local PackMan = {}
@@ -56,7 +88,8 @@ local PackMan = {}
 function PackMan:new(args)
   args = args or {}
   local packman = {
-    path = (args.path and vim.fn.resolve(vim.fn.fnamemodify(args.path, ":p"))) or vim.fn.stdpath("data").."/site/pack/user/",
+    path = (args.path and vim.fn.resolve(vim.fn.fnamemodify(args.path, ":p")))
+      or vim.fn.stdpath("data").."/site/pack/user",
 
     packs = {},
 
@@ -166,15 +199,26 @@ function PackMan:do_config_queue()
 end
 
 function PackMan:update()
+
+  local function update_pack(pack)
+    local path = vim.fn.shellescape(pack.install_path)
+    git_head_hash(pack, function(hash)
+      if not hash then return end
+      async_run('git', {
+        "-C",
+        path,
+        "pull",
+        "--quiet"
+      }, function()
+        pack.hash = hash
+        run_update_hook(pack)
+      end)
+    end)
+  end
+
   for _, pack in pairs(self.packs) do
-    pack.hash = git_head_hash(pack)
-    local command = "git -C "..vim.fn.shellescape(pack.install_path).." pull --quiet"
-    if self.parallel then
-      pack.job = io.popen(command, "r")
-    else
-      os.execute(command)
-      run_update_hook(pack)
-    end
+    if not pack.update then return end
+    update_pack(pack)
   end
 end
 
