@@ -6,7 +6,7 @@ local g = vim.g
 
 return {
   {
-    'preservim/nerdcommenter',
+    "preservim/nerdcommenter",
     init = function()
       g.NERDCreateDefaultMappings = 0
     end,
@@ -24,87 +24,134 @@ return {
       vim.cmd("vmap <Leader>cI  <Plug>NERDCommenterInvert")
       vim.cmd("vmap <Leader>cA  <Plug>NERDCommenterAppend")
       vim.cmd("vmap <Leader>c$  <Plug>NERDCommenterToEOL")
-    end
+    end,
   },
   {
-    'lukas-reineke/indent-blankline.nvim',
+    "lukas-reineke/indent-blankline.nvim",
     config = function()
-
-      require("indent_blankline").setup {
+      require("indent_blankline").setup({
         char = "⋅",
         enabled = false,
         show_first_indent_level = false,
         show_end_of_line = true,
         show_current_context = true,
-        buftype_exclude = {"terminal"},
+        buftype_exclude = { "terminal" },
         show_trailing_blankline_indent = true,
         char_highlight_list = {
           "IndentBlanklineIndent1",
           "IndentBlanklineIndent2",
         },
-      }
+      })
       vim.cmd("nmap <silent> <Leader>ti <cmd>IndentBlanklineToggle<CR>")
-    end
+    end,
   },
   {
-    'sbdchd/neoformat',
+    "mhartington/formatter.nvim",
     config = function()
-      vim.cmd("xmap <Leader>xf :Neoformat<CR>")
-      vim.cmd("nmap <Leader>xf :Neoformat<CR>")
-    end
+      require("formatter").setup({
+        filetype = {
+          javascript = {
+            -- prettier
+            function()
+              return {
+                exe = "prettier",
+                args = { "--stdin-filepath", vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), "--single-quote" },
+                stdin = true,
+              }
+            end,
+          },
+          sh = {
+            -- Shell Script Formatter
+            function()
+              return {
+                exe = "shfmt",
+                args = { "-i", 2 },
+                stdin = true,
+              }
+            end,
+          },
+          lua = {
+            function()
+              return {
+                exe = "stylua",
+                args = {
+                  "--config-path " .. (os.getenv("XDG_CONFIG_HOME") or "~/.config") .. "/stylua/stylua.toml",
+                  "-",
+                },
+                stdin = true,
+              }
+            end,
+          },
+          cpp = {
+            -- clang-format
+            function()
+              return {
+                exe = "clang-format",
+                args = { "--assume-filename", vim.api.nvim_buf_get_name(0) },
+                stdin = true,
+                cwd = vim.fn.expand("%:p:h"),  -- Run clang-format in cwd of the file.
+              }
+            end,
+          },
+        },
+      })
+
+      vim.cmd("xmap <Leader>xf :Format<CR>")
+      vim.cmd("nmap <Leader>xf :Format<CR>")
+    end,
   },
-  'unblevable/quick-scope',
-  'wellle/targets.vim',
+  "unblevable/quick-scope",
+  "wellle/targets.vim",
   {
-    'AndrewRadev/splitjoin.vim',
+    "AndrewRadev/splitjoin.vim",
     init = function()
-      g.splitjoin_join_mapping  = ''
-      g.splitjoin_split_mapping = ''
+      g.splitjoin_join_mapping = ""
+      g.splitjoin_split_mapping = ""
     end,
     config = function()
       vim.cmd("nmap <Leader>cJ <plug>SplitjoinJoin")
       vim.cmd("nmap <Leader>cS <Plug>SplitjoinSplit")
-    end
+    end,
   },
-  'tpope/vim-sleuth',
+  "tpope/vim-sleuth",
   {
-    'zhaozg/vim-printf',
+    "zhaozg/vim-printf",
     config = function()
       vim.cmd("nnoremap <Leader>cp :Printf<CR>")
-    end
+    end,
   },
   {
-    'editorconfig/editorconfig-vim',
+    "editorconfig/editorconfig-vim",
     init = function()
-      g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*'}
-    end
+      g.EditorConfig_exclude_patterns = { "fugitive://.*", "scp://.*" }
+    end,
   },
-  'sheerun/vim-polyglot',
+  "sheerun/vim-polyglot",
 
   {
-    'SirVer/ultisnips',
+    "SirVer/ultisnips",
     init = function()
-      g.UltiSnipsUsePythonVersion    = 2
-      g.UltiSnipsEditSplit           = 'context'
+      g.UltiSnipsUsePythonVersion = 2
+      g.UltiSnipsEditSplit = "context"
       --CR will do snips expad, look at package.vim
-      g.UltiSnipsExpandTrigger       = "<nop>"
-      g.UltiSnipsJumpForwardTrigger  = "<tab>"
+      g.UltiSnipsExpandTrigger = "<nop>"
+      g.UltiSnipsJumpForwardTrigger = "<tab>"
       g.UltiSnipsJumpBackwardTrigger = "<S-tab>"
-      if vim.fn.exists('g:UltiSnipsSnippetsDir') then
-        g.UltiSnipsSnippetDirectories  = { vim.fn.get(g, 'UltiSnipsSnippetsDir'), 'UltiSnips'}
+      if vim.fn.exists("g:UltiSnipsSnippetsDir") then
+        g.UltiSnipsSnippetDirectories = { vim.fn.get(g, "UltiSnipsSnippetsDir"), "UltiSnips" }
       end
-    end
+    end,
   },
-  'honza/vim-snippets',
+  "honza/vim-snippets",
   {
-    'norcalli/nvim-colorizer.lua',
+    "norcalli/nvim-colorizer.lua",
     config = function()
-      require'colorizer'.setup()
-    end
+      require("colorizer").setup()
+    end,
   },
 
   {
-    'nvim-lua/completion-nvim',
+    "nvim-lua/completion-nvim",
     init = function()
       -- By default auto popup is enable, turn it off by
       g.completion_enable_auto_popup = 1
@@ -113,9 +160,9 @@ return {
       --	insert parenthesis when completing methods or functions.
       g.completion_enable_auto_paren = 1
 
-      g.completion_enable_snippet = 'UltiSnips'
+      g.completion_enable_snippet = "UltiSnips"
       g.completion_enable_in_comment = 1
-      g.completion_trigger_character = {'.', '::', '->'}
+      g.completion_trigger_character = { ".", "::", "->" }
 
       --"c-n" : i_CTRL-N
       --"c-p" : i_CTRL-P
@@ -135,21 +182,21 @@ return {
       g.completion_chain_complete_list = {
         default = {
           default = {
-            {complete_items = {'lsp', 'snippet', 'ts', 'buffer'}},
-            {mode= '<c-p>'},
-            {mode= '<c-n>'}
+            { complete_items = { "lsp", "snippet", "ts", "buffer" } },
+            { mode = "<c-p>" },
+            { mode = "<c-n>" },
           },
           comment = {},
           string = {
-            { complete_items= {'path', 'buffer'} }
-          }
+            { complete_items = { "path", "buffer" } },
+          },
         },
         markdown = {
           default = {
-            {mode= 'buffers'}
-          }
+            { mode = "buffers" },
+          },
         },
-        comment= {}
+        comment = {},
       }
     end,
     config = function()
@@ -157,33 +204,32 @@ return {
       vim.cmd('inoremap <expr> <S-Tab> pumvisible() ? "<C-p>" : "<S-Tab>"')
 
       -- Set completeopt to have a better completion experience
-      vim.o.completeopt = 'menuone,noinsert,noselect'
+      vim.o.completeopt = "menuone,noinsert,noselect"
 
       vim.cmd("imap <tab> <Plug>(completion_smart_tab)")
       vim.cmd("imap <s-tab> <Plug>(completion_smart_s_tab)")
       vim.defer_fn(function()
         vim.cmd("autocmd BufEnter * lua require'completion'.on_attach()")
       end, 100)
-    end
+    end,
   },
-  'steelsojka/completion-buffers',
+  "steelsojka/completion-buffers",
   {
-    'windwp/nvim-autopairs',
+    "windwp/nvim-autopairs",
     config = function()
-      local npairs = require('nvim-autopairs')
+      local npairs = require("nvim-autopairs")
       npairs.setup({
         check_ts = false,
         map_cr = true, --  map <CR> on insert mode
         map_complete = true, -- it will auto insert `(` after select function or method item
         ts_config = {
-          lua = {'string'},-- it will not add pair on that treesitter node
-          javascript = {'template_string'},
-          java = false,-- don't check treesitter on java
-        }
+          lua = { "string" }, -- it will not add pair on that treesitter node
+          javascript = { "template_string" },
+          java = false, -- don't check treesitter on java
+        },
       })
       --look at https://github.com/windwp/nvim-autopairs/wiki/Endwise
       --npairs.add_rules(require('nvim-autopairs.rules.endwise-lua'))
-  end
-  }
+    end,
+  },
 }
-
