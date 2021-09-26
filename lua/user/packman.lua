@@ -73,7 +73,7 @@ end
 local function run_update_hook(pack)
   git_head_hash(pack, function(hash)
     if pack.hash and pack.hash ~= hash then
-      --gen_helptags(pack)
+      gen_helptags(pack)
       if pack.update then
         chdir_do_fun(pack.install_path, pack.update)
         vim.notify(string.format('update %s done', pack.name))
