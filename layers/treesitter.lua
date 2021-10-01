@@ -1,6 +1,12 @@
 return {
   {
     'nvim-treesitter/nvim-treesitter',
+    after = {
+      "JoosepAlviste/nvim-ts-context-commentstring",
+      'nvim-treesitter/completion-treesitter',
+      'p00f/nvim-ts-rainbow',
+      'romgrk/nvim-treesitter-context'
+    },
     opt = true,
     config = function()
       require'nvim-treesitter.configs'.setup {
@@ -14,11 +20,16 @@ return {
         incremental_selection = {
             enable = true,
             -- disable = { 'cpp', 'lua' },
-            keymaps = {                 -- mappings for incremental selection (visual mappings)
-              init_selection = 'gnn',   -- maps in normal mode to init the node/scope selection
-              node_incremental = "grn", -- increment to the upper named parent
-              scope_incremental = "grc",-- increment to the upper scope (as defined in locals.scm)
-              scope_decremental = "grm",-- decrement to the previous scope
+            -- mappings for incremental selection (visual mappings)
+            keymaps = {
+              -- maps in normal mode to init the node/scope selection
+              init_selection = 'gnn',
+              -- increment to the upper named parent
+              node_incremental = "grn",
+              -- increment to the upper scope (as defined in locals.scm)
+              scope_incremental = "grc",
+              -- decrement to the previous scope
+              scope_decremental = "grm",
             }
         },
         node_movement = {                     -- allows cursor movement in node hierarchy
@@ -31,9 +42,9 @@ return {
               previous_scope = "<a-l>",
             }
         },
-        indent = {
-          enable = true
-        },
+        -- indent = {
+        --   enable = true
+        -- },
         rainbow = {
           enable = true,
           -- Also highlight non-bracket delimiters like html tags,
@@ -43,6 +54,10 @@ return {
           colors = {}, -- table of hex strings
           termcolors = {} -- table of colour name strings
         },
+        context_commentstring = {
+          enable = true,
+          enable_autocmd = false,
+        },
         ensure_installed = "maintained",
         -- {'c', 'lua'}
         -- ensure_installed = 'all' -- one of 'all', 'language', or a list of languages
@@ -51,10 +66,14 @@ return {
   },
   {
     'nvim-treesitter/completion-treesitter',
-    opt = true
+  },
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring"
   },
   {
     'p00f/nvim-ts-rainbow',
-    opt = true
+  },
+  {
+    'romgrk/nvim-treesitter-context'
   }
 }

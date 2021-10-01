@@ -2,7 +2,9 @@ local Deque = require("user.deque").Deque
 local vim = vim
 
 local function gen_helptags(pack)
-  vim.api.nvim_command("silent! helptags "..vim.fn.fnameescape(pack.install_path).."/doc")
+  vim.schedule(function()
+    vim.api.nvim_command("silent! helptags "..vim.fn.fnameescape(pack.install_path).."/doc")
+  end)
 end
 
 local function async_run(cmd, args, callback)

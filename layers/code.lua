@@ -1,46 +1,67 @@
-local vim = _G.vim
+local vim = vim
 local g = vim.g
-
---vim.cmd("nnoremap <SID>Man :Man <C-R><C-W><CR>")
---vim.cmd("nmap<Leader>hm <SID>Man")
 
 return {
   {
-    "preservim/nerdcommenter",
-    init = function()
-      g.NERDCreateDefaultMappings = 0
-    end,
+    "terrortylor/nvim-comment",
+    after = "JoosepAlviste/nvim-ts-context-commentstring",
     config = function()
-      vim.cmd("xmap <Leader>tS :UltiSnipsEdit<CR>")
-      vim.cmd("nmap <Leader>tS :UltiSnipsEdit<CR>")
-      vim.cmd("vmap <Leader>cZ  <Plug>NERDCommenterAltDelims")
-      vim.cmd("vmap <Leader>cU  <Plug>NERDCommenterUncomment")
-      vim.cmd("vmap <Leader>cL  <Plug>NERDCommenterAlignLeft")
-      vim.cmd("vmap <Leader>cB  <Plug>NERDCommenterAlignBoth")
-      vim.cmd("vmap <Leader>cM  <Plug>NERDCommenterMinimal")
-      vim.cmd("vmap <Leader>cC  <Plug>NERDCommenterComment")
-      vim.cmd("vmap <Leader>c<Space>  <Plug>NERDCommenterToggle")
-      vim.cmd("vmap <Leader>cN  <Plug>NERDCommenterNested")
-      vim.cmd("vmap <Leader>cI  <Plug>NERDCommenterInvert")
-      vim.cmd("vmap <Leader>cA  <Plug>NERDCommenterAppend")
-      vim.cmd("vmap <Leader>c$  <Plug>NERDCommenterToEOL")
+      require('nvim_comment').setup({
+        -- Linters prefer comment and line to have a space in between markers
+        marker_padding = true,
+        -- should comment out empty or whitespace only lines
+        comment_empty = false,
+        -- Should key mappings be created
+        create_mappings = true,
+        -- Normal mode mapping left hand side
+        line_mapping = "<leader>c ",
+        -- Visual/Operator mapping left hand side
+        operator_mapping = "<leader>cc",
+        -- Hook function to call before commenting takes place
+        hook = function()
+          require("ts_context_commentstring.internal").update_commentstring()
+        end
+      })
     end,
   },
   {
-    "lukas-reineke/indent-blankline.nvim",
+    'folke/todo-comments.nvim',
+    requires = "nvim-lua/plenary.nvim",
     config = function()
+      require("todo-comments").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    init = function()
+      vim.opt.termguicolors = true
+      vim.g.indent_blankline_use_treesitter = true
+      vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
+      vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
+
+      vim.opt.list = true
+      vim.opt.listchars:append("space: ")
+      vim.opt.listchars:append("eol:↴")
+    end,
+    config = function()
+      require("indent_blankline").init()
       require("indent_blankline").setup({
-        char = "⋅",
+        char = '┊',
+        space_char_blankline = " ",
         enabled = false,
         show_first_indent_level = false,
         show_end_of_line = true,
         show_current_context = true,
-        buftype_exclude = { "terminal" },
+        buftype_exclude = { "startify" },
         show_trailing_blankline_indent = true,
-        char_highlight_list = {
-          "IndentBlanklineIndent1",
-          "IndentBlanklineIndent2",
-        },
       })
       vim.cmd("nmap <silent> <Leader>ti <cmd>IndentBlanklineToggle<CR>")
     end,
