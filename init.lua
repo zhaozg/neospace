@@ -41,6 +41,7 @@ layer:load('git')
 layer:load('lsp')
 layer:load('treesitter')
 layer:load('ale')
+layer:load('lang/markdown')
 
 -- load plugins
 local user = require("user")

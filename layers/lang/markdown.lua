@@ -1,21 +1,20 @@
+local vim = vim
 local g = vim.g
 
 return {
   {
-    'plasticboy/vim-markdown',
-    for = {'markdown', 'vimwiki'}
-  }
-
-  {
-    'zhaozg/markdown-preview.nvim',
-    for = {'markdown', 'vimwiki'},
-    run = 'npm install && npm run-script build-app',
+    'iamcco/markdown-preview.nvim',
+    install = function()
+      vim.cmd('mkdp#util#install()')
+    end,
     init = function()
 
       g.mkdp_preview_options = {
         disable_sync_scroll = 0,
         hide_yaml_meta = 1,
-        sequence_diagrams = {'theme': 'simple'},
+        sequence_diagrams = {
+          theme= 'simple'
+        },
         flowchart_diagrams = {
           x= 0,
           y= 0,
@@ -32,7 +31,7 @@ return {
           fill = 'white',
           symbols = {
             start= {},
-            end= {},
+            ['end']= {},
             condition= {['text-margin'] = 0.5},
             inputoutput= {},
             operation= {},
@@ -40,7 +39,7 @@ return {
             parallel= {}
           }
         },
-        ['content_editable'] = v:false
+        ['content_editable'] = false
       }
 
       g.mkdp_page_title = '「${name}」'
