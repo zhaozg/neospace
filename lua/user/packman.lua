@@ -164,27 +164,40 @@ function PackMan:do_config_queue()
 end
 
 function PackMan:update()
-  for _, pack in pairs(self.packs) do
-    -- update_pack(pack)
+  local update_pack
+  local names = {}
+
+  for k in pairs(self.packs) do
+    names[#names+1] = k
+  end
+
+  update_pack = function(pack)
     git.head_hash(pack, function(hash, code)
       assert(code==0)
       git.update(pack, function(nhash, ncode)
         if ncode~=0 then
           vim.notify(string.format('update %s fail with %d', pack.name, ncode))
         end
-        if nhash==hash then return end
-        pack.hash = nhash
-        run_update_hook(pack)
-        git.head_hash(pack, function(hash, code)
-          print('remote:', hash, code)
-        end, true)
+        if nhash~=hash then
+          pack.hash = nhash
+          run_update_hook(pack)
+        end
 
+        git.head_hash(pack, function(hash, code)
+          local name = table.remove(names)
+          if name then
+            update_pack(self.packs[name])
+          else
+            vim.notify(string.format('All update done'))
+          end
+        end, true)
       end)
     end)
-    if _==1 then
-      break
-    end
   end
+
+  local name = table.remove(names)
+  update_pack(self.packs[name])
+
 end
 
 return { PackMan = PackMan }

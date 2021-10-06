@@ -30,7 +30,6 @@ function M.head_hash(pack, callback, remote)
         '@{u}'
       }, function(code1, hash)
         assert(code1==0)
-        print("****", pack.name, code1, hash)
         callback(hash, code)
       end)
     end)
