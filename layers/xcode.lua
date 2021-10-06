@@ -1,7 +1,7 @@
 local P = {}
 local ffi = require'ffi'
 
-if ffi.os = 'macos' then
+if ffi.os == 'macos' then
   P[#P+1] = {
     'zhaozg/vim-xcode',
     opt = true,

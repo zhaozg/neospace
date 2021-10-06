@@ -1,47 +1,10 @@
 local Deque = require("user.deque").Deque
+local git = require('user.git')
 local vim = vim
 
 local function gen_helptags(pack)
   vim.schedule(function()
     vim.api.nvim_command("silent! helptags "..vim.fn.fnameescape(pack.install_path).."/doc")
-  end)
-end
-
-local function async_run(cmd, args, callback)
-  local uv = vim.loop
-  local stdout = uv.new_pipe(false)
-
-  local handle, chunks
-  handle = uv.spawn(cmd, {
-    args = args,
-    stdio = {nil, stdout},
-  }, function (code, signal)
-    uv.close(handle)
-    if callback then
-      callback(code, chunks and table.concat(chunks) or nil, signal)
-    end
-  end)
-
-
-  uv.read_start(stdout, function (err, chunk)
-    assert(not err, err)
-    if chunk then
-      chunks = chunks or {}
-      chunks[#chunks+1] = chunk
-    else
-      uv.close(stdout)
-    end
-  end)
-end
-
-local function git_head_hash(pack, callback)
-  async_run('git', {
-    '-C',
-    pack.install_path,
-    'rev-parse',
-    'HEAD'
-  }, function(code, hash)
-    callback(hash, code)
   end)
 end
 
@@ -73,7 +36,7 @@ local function run_install_hook(pack)
 end
 
 local function run_update_hook(pack)
-  git_head_hash(pack, function(hash)
+  git.head_hash(pack, function(hash)
     if pack.hash and pack.hash ~= hash then
       gen_helptags(pack)
       if pack.update then
@@ -201,26 +164,26 @@ function PackMan:do_config_queue()
 end
 
 function PackMan:update()
-
-  local function update_pack(pack)
-    local path = vim.fn.shellescape(pack.install_path)
-    git_head_hash(pack, function(hash)
-      if not hash then return end
-      async_run('git', {
-        "-C",
-        path,
-        "pull",
-        "--quiet"
-      }, function()
-        pack.hash = hash
+  for _, pack in pairs(self.packs) do
+    -- update_pack(pack)
+    git.head_hash(pack, function(hash, code)
+      assert(code==0)
+      git.update(pack, function(nhash, ncode)
+        if ncode~=0 then
+          vim.notify(string.format('update %s fail with %d', pack.name, ncode))
+        end
+        if nhash==hash then return end
+        pack.hash = nhash
         run_update_hook(pack)
+        git.head_hash(pack, function(hash, code)
+          print('remote:', hash, code)
+        end, true)
+
       end)
     end)
-  end
-
-  for _, pack in pairs(self.packs) do
-    if not pack.update then return end
-    update_pack(pack)
+    if _==1 then
+      break
+    end
   end
 end
 

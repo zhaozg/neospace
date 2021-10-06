@@ -38,7 +38,7 @@ local function use(args)
   end
 
   if pack.repo or string.match(pack.name, "^[^/]+/[^/]+$") then
-    pack.repo = pack.repo or "https://github.com/"..pack.name..".git"
+    pack.repo = pack.repo or ("https://github.com/"..pack.name..".git")
     return packman:request(pack)
   end
 
