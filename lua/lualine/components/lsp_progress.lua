@@ -1,7 +1,9 @@
 -- https://github.com/arkav/lualine-lsp-progress/blob/master/lua/lualine/components/lsp_progress.lua
 -- displays the status of active lsp clients
 local vim = vim
-local LspProgress = require('lualine.component'):new()
+
+local LspProgress = require('lualine.component'):extend()
+
 local _clients = {}
 local _status = ''
 local function _update()
@@ -17,6 +19,7 @@ local function _update()
 	end
 	return status
 end
+
 local function progress_callback(_, _, msg, client_id)
 	local val = msg.value
 	if val and val.kind then
@@ -46,7 +49,11 @@ end
 
 vim.lsp.handlers['$/progress'] = progress_callback
 
-LspProgress.update_status = function()
+function LspProgress:init(options)
+    LspProgress.super.init(self, options)
+end
+
+function LspProgress:update_status()
 	return _status
 end
 

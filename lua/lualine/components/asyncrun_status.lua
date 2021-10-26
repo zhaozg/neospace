@@ -1,8 +1,13 @@
 -- displays the status of asyncrun
 local vim = vim
-local AsyncRunStatus = require('lualine.component'):new()
+local AsyncRunStatus = require('lualine.component'):extend()
 
-AsyncRunStatus.update_status = function()
+
+function AsyncRunStatus:init(options)
+    AsyncRunStatus.super.init(self, options)
+end
+
+function AsyncRunStatus:update_status()
   local async_status = vim.g.asyncrun_status
 
   if async_status == 'running' then
@@ -13,7 +18,7 @@ AsyncRunStatus.update_status = function()
     async_status = ''
   end
 
-	return async_status
+  return async_status
 end
 
 return AsyncRunStatus
