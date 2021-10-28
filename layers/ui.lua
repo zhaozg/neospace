@@ -4,6 +4,7 @@ local g   = vim.g
 local o   = vim.o
 
 local fun = require'neospace.fun'
+local neospace = require'neospace'
 
 return {
   {
@@ -47,8 +48,8 @@ return {
       end
 
       local function version()
-         local s = vim.cmd('version')
-	 print(s:find('NVIM ([^\n]+)'))
+         local t = vim.version()
+	 return string.format("v%d.%d.%d%s", t.major, t.minor, t.patch, t.api_prerelease and "-dev" or "");
       end
       --version()
 
@@ -61,7 +62,7 @@ return {
         [[| | \   || (      | |   | |      ) || (      | (   ) || |      | (]],
         [[| )  \  || (____/\| (___) |/\____) || )      | )   ( || (____/\| (____/\]],
         [[|/    )_)(_______/(_______)\_______)|/       |/     \|(_______/(_______/]],
-       '             [ neospace   .. nver ..  ＠ . s:version . '
+       '                  neospace ' .. neospace.version .. ' ＠ nvim ' .. version()
       }
       g.startify_custom_header = fix_header(custom_header)
     end,
@@ -166,8 +167,6 @@ return {
         hijack_cursor       = false,
         -- updates the root directory of the tree on `DirChanged` (when your run `:cd` usually)
         update_cwd          = false,
-        -- show lsp diagnostics in the signcolumn
-        lsp_diagnostics     = false,
         -- update the focused file on `BufEnter`, un-collapses the folders recursively until it finds the file
         update_focused_file = {
           -- enables the feature

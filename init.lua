@@ -1,17 +1,9 @@
 local vim = vim
-local cmd = vim.cmd  -- to execute Vim commands e.g. cmd('pwd')
 local fn  = vim.fn   -- to call Vim functions e.g. fn.bufnr()
-local g   = vim.g
 
+local neospace = require'neospace'
 -- set neospace
-g.neospace = g.neospace or {}
-g.neospace.base = fn.fnamemodify(fn.resolve(fn.expand('<sfile>:p')), ':h')
-g.neospace.version = '0.1.0'
-
-g.neospace.macos = fn.has('macunix')
-g.neospace.linux = fn.has('unix') and (not fn.has('macunix'))
-                                  and not fn.has('win32unix')
-g.neospace.windows = fn.has('win32') or fn.has('win64')
+neospace.base = fn.fnamemodify(fn.resolve(fn.expand('<sfile>:p')), ':h')
 
 if vim.fn.exists("g:neovide") then
   vim.o.guifont='FiraCode Nerd Font Mono:h16'
