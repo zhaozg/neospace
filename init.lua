@@ -1,6 +1,13 @@
 local vim = vim
 local fn  = vim.fn   -- to call Vim functions e.g. fn.bufnr()
 
+vim.g.loaded_python_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_node_provider = 0
+
+vim.g.python3_host_prog = 'python3'
+
 local neospace = require'neospace'
 -- set neospace
 neospace.base = fn.fnamemodify(fn.resolve(fn.expand('<sfile>:p')), ':h')
