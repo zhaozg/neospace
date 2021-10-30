@@ -1,25 +1,27 @@
+local vim = vim
 
 return {
   {
     'neovim/nvim-lspconfig',
   },
   {
-    'kabouzeid/nvim-lspinstall',
+    'williamboman/nvim-lsp-installer',
     after = {"nvim-lspconfig"},
     config = function()
-      vim.defer_fn(function()
-        local setup_servers = require'neospace.lsp'.setup_servers
+      local lsp_installer = require("nvim-lsp-installer")
 
-        require'lspinstall'.setup()
+      lsp_installer.on_server_ready(function(server)
+          local opts = {}
 
-        setup_servers()
+          -- (optional) Customize the options passed to the server
+          -- if server.name == "tsserver" then
+          --     opts.root_dir = function() ... end
+          -- end
 
-        -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
-        require'lspinstall'.post_install_hook = function ()
-          setup_servers() -- reload installed servers
-          vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
-        end
-      end, 200)
+          -- This setup() function is exactly the same as lspconfig's setup function (:help lspconfig-quickstart)
+          server:setup(opts)
+          vim.cmd [[ do User LspAttachBuffers ]]
+      end)
     end
   },
   {
