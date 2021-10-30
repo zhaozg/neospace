@@ -172,7 +172,7 @@ return {
   },
 
   {
-    "nvim-lua/completion-nvim",
+    "zhaozg/completion-nvim",
     init = function()
       -- By default auto popup is enable, turn it off by
       g.completion_enable_auto_popup = 1
