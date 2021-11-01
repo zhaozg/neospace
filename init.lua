@@ -13,7 +13,9 @@ local neospace = require'neospace'
 neospace.base = fn.fnamemodify(fn.resolve(fn.expand('<sfile>:p')), ':h')
 
 if vim.fn.exists("g:neovide") then
-  vim.o.guifont='FiraCode Nerd Font Mono:h16'
+  vim.o.guifont='FiraCode Nerd Font Mono:h18'
+  vim.g.neovide_fullscreen = true
+  vim.g.neovide_cursor_vfx_mode = "railgun"
 end
 
 if vim.fn.filereadable('.nvimrc')==1 then
