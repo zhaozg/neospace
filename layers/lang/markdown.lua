@@ -3,6 +3,18 @@ local g = vim.g
 
 return {
   {
+    'kvrohit/tasks.nvim',
+    config = function()
+      local wk = require('which-key')
+      wk.register({
+         t = {":ToggleTask<CR>", 'ToggleTask'},
+         x = {":CancelTask<CR>", 'CancelTask'},
+         u = {":UndoTask<CR>", 'UndoTask'}
+      },
+      { prefix="<localleader>" })
+    end
+  },
+  {
     'iamcco/markdown-preview.nvim',
     install = function()
       vim.cmd('call mkdp#util#install()')
@@ -60,16 +72,14 @@ return {
         g.neoformat_enabled_markdown= {'prettier'}
         g.neoformat_enabled_vimnote= {'prettier'}
       end
-      vim.cmd([[
-augroup fmtmarkdown
-  autocmd!
-  autocmd filetype markdown,vimwiki nmap <buffer> <localleader>p <Plug>MarkdownPreview
-  autocmd filetype markdown,vimwiki nmap <buffer> <localleader>s <Plug>MarkdownPreviewStop
-  autocmd filetype markdown,vimwiki nmap <buffer> <localleader>t <Plug>MarkdownPreviewToggle
-  autocmd filetype markdown,vimwiki nmap <buffer> <localleader>f :TableFormat<CR>
-augroup END
-      ]])
 
+      local wk = require('which-key')
+      wk.register({
+         p = {"<Plug>MarkdownPreview<CR>", 'MarkdownPreview'},
+         s = {"<Plug>MarkdownPreviewStop<CR>", 'MarkdownPreviewStop'},
+         f = {":TableFormat<CR>", 'TableFormat'}
+      },
+      { prefix="<localleader>" })
     end
   }
 }
