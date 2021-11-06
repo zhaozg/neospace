@@ -1,6 +1,8 @@
+local vim = vim
 local g = vim.g
 
 return {
+  'justinmk/vim-sneak',
   'ggandor/lightspeed.nvim',
   'tpope/vim-surround',
   {
