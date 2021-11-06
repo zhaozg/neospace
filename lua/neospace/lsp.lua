@@ -60,14 +60,15 @@ end
 local settings = {}
 
 -- Configure lua language server for neovim development
-settings.lua = {
-  Lua = {
+settings.sumneko_lua = { settings = {
+   Lua = {
     runtime = {
       -- LuaJIT in the case of Neovim
       version = 'LuaJIT',
       path = vim.split(package.path, ';'),
     },
     diagnostics = {
+      enable = true,
       -- Get the language server to recognize the `vim` global
       globals = {'vim'},
     },
@@ -78,7 +79,11 @@ settings.lua = {
         [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
       },
     },
-  }
+  },
+}}
+
+settings.clangd = {
+  filetypes = {"c", "cpp"}; -- we don't want objective-c and objective-cpp!
 }
 
 local function setup_servers()
@@ -92,12 +97,7 @@ local function setup_servers()
     local config = make_config()
 
     -- language specific config
-    if server == "lua" then
-      config.settings = settings.lua
-    end
-    if server == "clangd" then
-      config.filetypes = {"c", "cpp"}; -- we don't want objective-c and objective-cpp!
-    end
+    vim.tbl_extend('force', config, settings[server])
 
     require'lspconfig'[server].setup(config)
   end
@@ -109,5 +109,11 @@ return {
   on_attach = on_attach,
   make_config = make_config,
   setup_servers = setup_servers,
-  settings = settings
+  setting = function(name, opts)
+    if opts==nil then
+      return settings[name] or {}
+    else
+      settings[name] = vim.tbl_extend('force', settings[name], opts)
+    end
+  end
 }
