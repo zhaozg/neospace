@@ -67,12 +67,7 @@ return {
         'sequence-diagrams=sequence'
       }
     end,
-    confog = function()
-      if vim.fn.executable('prettier') then
-        g.neoformat_enabled_markdown= {'prettier'}
-        g.neoformat_enabled_vimnote= {'prettier'}
-      end
-
+    config = function()
       local wk = require('which-key')
       wk.register({
          p = {"<Plug>MarkdownPreview<CR>", 'MarkdownPreview'},

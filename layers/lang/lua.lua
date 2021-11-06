@@ -1,10 +1,6 @@
-vim.g.neoformat_lua_luaformatter= {
-  exe = 'lua-format'
-}
-
-if vim.fn.filereadable(os.getenv('HOME') .. '/.lua-format') then
-  vim.g.neoformat_lua_luaformatter= {
-    exe = 'lua-format',
-    args = {''-c' .. os.getenv('HOME') .. '/.lua-format'}
-  }
-end
+vim.cmd[[
+augroup fmtlua
+  autocmd!
+  autocmd filetype lua setlocal ts=2 sw=2 et tw=79 fen fdm=syntax
+augroup END
+]]
