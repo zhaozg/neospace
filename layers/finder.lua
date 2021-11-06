@@ -32,6 +32,7 @@ P[#P + 1] = {
 
         T = { builtin.treesitter,                    "treesitter"},
 
+        N = { ":Telescope notify<CR>",               "notify"},
       },
     }, { prefix="<leader>" })
  end
