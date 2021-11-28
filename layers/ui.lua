@@ -98,8 +98,6 @@ return {
   {
     'kyazdani42/nvim-tree.lua',
     init = function()
-      -- 0 by default
-      g.nvim_tree_gitignore = 1
       -- empty by default, don't auto open tree on specific filetypes.
       g.nvim_tree_auto_ignore_ft = { 'startify', 'dashboard' }
       g.nvim_tree_indent_markers = 1 --0 by default, this option shows indent markers when folders are open
@@ -192,6 +190,10 @@ return {
           args = {}
         },
 
+        {
+          -- 0 by default
+          ignore = 1
+        },
         view = {
           -- width of the window, can be either a number (columns) or a string in `%`, for left or right side placement
           width = 30,
