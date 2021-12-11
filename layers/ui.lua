@@ -268,7 +268,7 @@ return {
           lualine_z = {
             {
               'diagnostics',
-              sources = {'nvim_lsp'},
+              sources = {'nvim_diagnostic'},
               sections = {'error', 'warn', 'info'}
             },
             'location'
