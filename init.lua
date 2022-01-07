@@ -8,6 +8,9 @@ vim.g.loaded_node_provider = 0
 
 vim.g.python3_host_prog = 'python3'
 
+--embed impatient comes from https://github.com/lewis6991/impatient.nvim
+require('impatient')
+
 local neospace = require'neospace'
 -- set neospace
 neospace.base = fn.fnamemodify(fn.resolve(fn.expand('<sfile>:p')), ':h')
