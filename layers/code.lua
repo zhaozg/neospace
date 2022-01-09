@@ -60,7 +60,7 @@ return {
         show_first_indent_level = false,
         show_end_of_line = true,
         show_current_context = true,
-        buftype_exclude = { "startify" },
+        buftype_exclude = { "alpha" },
         show_trailing_blankline_indent = true,
       })
       vim.cmd("nmap <silent> <Leader>ti <cmd>IndentBlanklineToggle<CR>")

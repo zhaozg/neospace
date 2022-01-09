@@ -8,52 +8,29 @@ local neospace = require'neospace'
 
 return {
   {
-    'mhinz/vim-startify',
-    init = function()
-      g.startify_list_order = {
-        {'   Project:'},
-        'dir',
-        {'   Recent Files:'},
-        'files',
-        {'   Sessions:'},
-        'sessions',
-        {'   Bookmarks:'},
-        'bookmarks',
-        {'   Commands:'},
-        'commands',
-      }
-      g.startify_change_to_vcs_root = 0
-      g.startify_session_autoload = 1
-      g.startify_change_to_dir = 0
-
-      --function! s:get_nvim_version()
-      --  redir => l:s
-      --  silent! version
-      --  redir END
-      --  return matchstr(l:s, 'NVIM v\zs[^\n]*')
-      --endfunction
-      --let s:version = 'nvim '.s:get_nvim_version() : 'vim '.v:version
+    'goolord/alpha-nvim',
+    config = function()
+      local alpha = require'alpha'
+      local startify = require'alpha.themes.startify'
 
       local function fix_header(lines)
-	local lval = fun.max_by(function(a, b)
-	  return fn.strwidth(a) > fn.strwidth(b) and a or b
-	end, lines)
-	lval = fn.strwidth(lval)
+        local lval = fun.max_by(function(a, b)
+          return fn.strwidth(a) > fn.strwidth(b) and a or b
+	      end, lines)
+	      lval = fn.strwidth(lval)
 
-	local centered = fun.totable(fun.map(function(line)
-	  line = string.rep(' ', (o.columns/2)-(lval/2)) .. line
-	  return line
-	end, lines))
-	return centered
+        local centered = fun.totable(fun.map(function(line)
+          line = string.rep(' ', (o.columns/2)-(lval/2)) .. line
+          return line
+        end, lines))
+        return centered
       end
-
       local function version()
          local t = vim.version()
-	 return string.format("v%d.%d.%d%s", t.major, t.minor, t.patch, t.api_prerelease and "-dev" or "");
+          return string.format("v%d.%d.%d%s", t.major, t.minor, t.patch, t.api_prerelease and "-dev" or "");
       end
-      --version()
 
-      local custom_header = {
+      startify.section.header.val = {
         [[ _        _______  _______  _______  _______  _______  _______  _______]],
         [[( (    /|(  ____ \(  ___  )(  ____ \(  ____ )(  ___  )(  ____ \(  ____ \]],
         [[|  \  ( || (    \/| (   ) || (    \/| (    )|| (   ) || (    \/| (    \/]],
@@ -64,20 +41,13 @@ return {
         [[|/    )_)(_______/(_______)\_______)|/       |/     \|(_______/(_______/]],
        '                  neospace ' .. neospace.version .. ' ＠ nvim ' .. version()
       }
-      g.startify_custom_header = fix_header(custom_header)
-    end,
-    config = function()
-      vim.cmd[[autocmd User Startified colorscheme gruvbox]]
+      alpha.setup(startify.opts)
     end
   },
 
   --tabline at top
   {
     'kdheepak/tabline.nvim',
-    init = function()
-      g.tabline_show_bufnr = false
-      g.tabline_show_filename_only = true
-    end,
     config = function()
       local tabline = require'tabline'
       tabline.setup {
@@ -99,7 +69,7 @@ return {
     'kyazdani42/nvim-tree.lua',
     init = function()
       -- empty by default, don't auto open tree on specific filetypes.
-      g.nvim_tree_auto_ignore_ft = { 'startify', 'dashboard' }
+      g.nvim_tree_auto_ignore_ft = { 'alpha', 'dashboard' }
       g.nvim_tree_indent_markers = 1 --0 by default, this option shows indent markers when folders are open
       --"0 by default, will enable file highlight for git attributes (can be used without the icons).
       g.nvim_tree_git_hl = 1
