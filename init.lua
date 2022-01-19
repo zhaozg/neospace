@@ -19,6 +19,7 @@ if vim.fn.exists("g:neovide") then
   --vim.o.guifont='FiraCode Nerd Font Mono:h16.5'
   vim.o.guifont='Hack Nerd Font Mono:style=Book:h16.5'
   vim.g.neovide_fullscreen = true
+  vim.g.neovide_cursor_antialiasing = false
   vim.g.neovide_cursor_vfx_mode = "railgun"
 end
 
