@@ -3,7 +3,6 @@ return {
     'nvim-treesitter/nvim-treesitter',
     after = {
       "JoosepAlviste/nvim-ts-context-commentstring",
-      'nvim-treesitter/completion-treesitter',
       'p00f/nvim-ts-rainbow',
       'romgrk/nvim-treesitter-context'
     },
@@ -63,9 +62,6 @@ return {
         -- ensure_installed = 'all' -- one of 'all', 'language', or a list of languages
       }
     end
-  },
-  {
-    'nvim-treesitter/completion-treesitter',
   },
   {
     "JoosepAlviste/nvim-ts-context-commentstring"

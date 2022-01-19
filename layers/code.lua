@@ -6,7 +6,7 @@ return {
     "terrortylor/nvim-comment",
     after = "JoosepAlviste/nvim-ts-context-commentstring",
     config = function()
-      require('nvim_comment').setup({
+      require("nvim_comment").setup({
         -- Linters prefer comment and line to have a space in between markers
         marker_padding = true,
         -- should comment out empty or whitespace only lines
@@ -20,32 +20,32 @@ return {
         -- Hook function to call before commenting takes place
         hook = function()
           require("ts_context_commentstring.internal").update_commentstring()
-        end
+        end,
       })
     end,
   },
   {
-    'folke/todo-comments.nvim',
+    "folke/todo-comments.nvim",
     requires = "nvim-lua/plenary.nvim",
     config = function()
-      require("todo-comments").setup {
+      require("todo-comments").setup({
         -- your configuration comes here
         -- or leave it empty to use the default settings
         -- refer to the configuration section below
-      }
-    end
+      })
+    end,
   },
   {
     "lukas-reineke/indent-blankline.nvim",
     init = function()
       vim.opt.termguicolors = true
       vim.g.indent_blankline_use_treesitter = true
-      vim.cmd [[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]]
-      vim.cmd [[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]]
-      vim.cmd [[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]]
-      vim.cmd [[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]]
-      vim.cmd [[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]]
-      vim.cmd [[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]]
+      vim.cmd([[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]])
+      vim.cmd([[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]])
+      vim.cmd([[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]])
+      vim.cmd([[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]])
+      vim.cmd([[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]])
+      vim.cmd([[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]])
 
       vim.opt.list = true
       vim.opt.listchars:append("space: ")
@@ -54,7 +54,7 @@ return {
     config = function()
       require("indent_blankline").init()
       require("indent_blankline").setup({
-        char = '┊',
+        char = "┊",
         space_char_blankline = " ",
         enabled = false,
         show_first_indent_level = false,
@@ -110,7 +110,7 @@ return {
                 exe = "clang-format",
                 args = { "--assume-filename", vim.api.nvim_buf_get_name(0) },
                 stdin = true,
-                cwd = vim.fn.expand("%:p:h"),  -- Run clang-format in cwd of the file.
+                cwd = vim.fn.expand("%:p:h"), -- Run clang-format in cwd of the file.
               }
             end,
           },
@@ -147,23 +147,7 @@ return {
       g.EditorConfig_exclude_patterns = { "fugitive://.*", "scp://.*" }
     end,
   },
-  "sheerun/vim-polyglot",
 
-  {
-    "SirVer/ultisnips",
-    init = function()
-      g.UltiSnipsUsePythonVersion = 2
-      g.UltiSnipsEditSplit = "context"
-      --CR will do snips expad, look at package.vim
-      g.UltiSnipsExpandTrigger = "<nop>"
-      g.UltiSnipsJumpForwardTrigger = "<tab>"
-      g.UltiSnipsJumpBackwardTrigger = "<S-tab>"
-      if vim.fn.exists("g:UltiSnipsSnippetsDir") then
-        g.UltiSnipsSnippetDirectories = { vim.fn.get(g, "UltiSnipsSnippetsDir"), "UltiSnips" }
-      end
-    end,
-  },
-  "honza/vim-snippets",
   {
     "norcalli/nvim-colorizer.lua",
     config = function()
@@ -171,70 +155,186 @@ return {
     end,
   },
 
+  "sheerun/vim-polyglot",
+
+  "honza/vim-snippets",
   {
-    "zhaozg/completion-nvim",
+    "SirVer/ultisnips",
+    after = "vim-snippets",
     init = function()
-      -- By default auto popup is enable, turn it off by
-      g.completion_enable_auto_popup = 1
+      g.UltiSnipsUsePythonVersion = 3
+      g.UltiSnipsExpandTrigger = "<Plug>(ultisnips_expand)"
+      g.UltiSnipsJumpForwardTrigger = "<Plug>(ultisnips_jump_forward)"
+      g.UltiSnipsJumpBackwardTrigger = "<Plug>(ultisnips_jump_backward)"
+      g.UltiSnipsListSnippets = "<c-x><c-s>"
+      g.UltiSnipsRemoveSelectModeMappings = E06C75
+      g.UltiSnipsEditSplit = "context"
+      if vim.fn.exists("g:UltiSnipsSnippetsDir") then
+        g.UltiSnipsSnippetDirectories = { vim.fn.get(g, "UltiSnipsSnippetsDir"), "UltiSnips" }
+      end
+    end,
+  },
 
-      --	Enable the auto insert parenthesis feature. completion-nvim will
-      --	insert parenthesis when completing methods or functions.
-      g.completion_enable_auto_paren = 1
+  "hrsh7th/cmp-nvim-lsp",
+  "hrsh7th/cmp-buffer",
+  "hrsh7th/cmp-path",
+  "hrsh7th/cmp-cmdline",
+  "quangnguyen30192/cmp-nvim-ultisnips",
 
-      g.completion_enable_snippet = "UltiSnips"
-      g.completion_enable_in_comment = 1
-      g.completion_trigger_character = { ".", "::", "->" }
-
-      --"c-n" : i_CTRL-N
-      --"c-p" : i_CTRL-P
-      --"cmd" : i_CTRL-X_CTRL-V
-      --"defs": i_CTRL-X_CTRL-D
-      --"dict": i_CTRL-X_CTRL-K
-      --"file": i_CTRL-X_CTRL-F
-      --"incl": i_CTRL-X_CTRL-I
-      --"keyn": i_CTRL-X_CTRL-N
-      --"keyp": i_CTRL-X_CTRL-P
-      --"line": i_CTRL-X_CTRL-L
-      --"spel": i_CTRL-X_s
-      --"tags": i_CTRL-X_CTRL-]
-      --"thes": i_CTRL-X_CTRL-T
-      --"user": i_CTRL-X_CTRL-U
-
-      g.completion_chain_complete_list = {
-        default = {
-          default = {
-            { complete_items = { "lsp", "snippet", "ts", "buffer" } },
-            { mode = "<c-p>" },
-            { mode = "<c-n>" },
-          },
-          comment = {},
-          string = {
-            { complete_items = { "path", "buffer" } },
-          },
-        },
-        markdown = {
-          default = {
-            { mode = "buffers" },
-          },
-        },
-        comment = {},
-      }
+  {
+    "hrsh7th/nvim-cmp",
+    init = function()
     end,
     config = function()
-      vim.cmd('inoremap <expr> <Tab>   pumvisible() ? "<C-n>" : "<Tab>"')
-      vim.cmd('inoremap <expr> <S-Tab> pumvisible() ? "<C-p>" : "<S-Tab>"')
+      local cmp = require("cmp")
+
+      cmp.setup({
+        snippet = {
+          expand = function(args)
+            vim.fn["UltiSnips#Anon"](args.body)
+          end,
+        },
+        mapping = {
+          ["<Tab>"] = cmp.mapping({
+            c = function()
+              if cmp.visible() then
+                cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+              else
+                cmp.complete()
+              end
+            end,
+            i = function(fallback)
+              if cmp.visible() then
+                cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+              elseif vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
+                vim.api.nvim_feedkeys(t("<Plug>(ultisnips_jump_forward)"), "m", true)
+              else
+                fallback()
+              end
+            end,
+            s = function(fallback)
+              if vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
+                vim.api.nvim_feedkeys(t("<Plug>(ultisnips_jump_forward)"), "m", true)
+              else
+                fallback()
+              end
+            end,
+          }),
+          ["<S-Tab>"] = cmp.mapping({
+            c = function()
+              if cmp.visible() then
+                cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+              else
+                cmp.complete()
+              end
+            end,
+            i = function(fallback)
+              if cmp.visible() then
+                cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+              elseif vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
+                return vim.api.nvim_feedkeys(t("<Plug>(ultisnips_jump_backward)"), "m", true)
+              else
+                fallback()
+              end
+            end,
+            s = function(fallback)
+              if vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
+                return vim.api.nvim_feedkeys(t("<Plug>(ultisnips_jump_backward)"), "m", true)
+              else
+                fallback()
+              end
+            end,
+          }),
+          ["<Down>"] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), { "i" }),
+          ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), { "i" }),
+          ["<C-n>"] = cmp.mapping({
+            c = function()
+              if cmp.visible() then
+                cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+              else
+                vim.api.nvim_feedkeys(t("<Down>"), "n", true)
+              end
+            end,
+            i = function(fallback)
+              if cmp.visible() then
+                cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+              else
+                fallback()
+              end
+            end,
+          }),
+          ["<C-p>"] = cmp.mapping({
+            c = function()
+              if cmp.visible() then
+                cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+              else
+                vim.api.nvim_feedkeys(t("<Up>"), "n", true)
+              end
+            end,
+            i = function(fallback)
+              if cmp.visible() then
+                cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+              else
+                fallback()
+              end
+            end,
+          }),
+          ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
+          ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
+          ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+          ["<C-e>"] = cmp.mapping({ i = cmp.mapping.close(), c = cmp.mapping.close() }),
+          ["<CR>"] = cmp.mapping({
+            i = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
+            c = function(fallback)
+              if cmp.visible() then
+                cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+              else
+                fallback()
+              end
+            end,
+          }),
+        },
+        -- ... Your other configuration ...
+        sources = cmp.config.sources({
+          { name = "nvim_lsp" },
+          { name = "ultisnips" }, -- For ultisnips users.
+        }, {
+          { name = "buffer" },
+        }),
+      })
+
+      -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+      cmp.setup.cmdline("/", {
+        completion = { autocomplete = false },
+        sources = {
+          { name = 'buffer', opts = { keyword_pattern = [=[[^[:blank:]].*]=] } }
+        },
+      })
+
+      -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+      cmp.setup.cmdline(":", {
+        completion = { autocomplete = false },
+        sources = cmp.config.sources({
+          { name = "path" },
+        }, {
+          { name = "cmdline" },
+        }),
+      })
+
+      -- Setup lspconfig.
+      --[[
+      local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+      -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+      require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
+        capabilities = capabilities
+      }
+      --]]
 
       -- Set completeopt to have a better completion experience
       vim.o.completeopt = "menuone,noinsert,noselect"
-
-      vim.cmd("imap <tab> <Plug>(completion_smart_tab)")
-      vim.cmd("imap <s-tab> <Plug>(completion_smart_s_tab)")
-      vim.defer_fn(function()
-        vim.cmd("autocmd BufEnter * lua require'completion'.on_attach()")
-      end, 100)
     end,
   },
-  "steelsojka/completion-buffers",
+
   {
     "windwp/nvim-autopairs",
     config = function()
