@@ -72,7 +72,7 @@ return {
       wk.register({
          p = {"<Plug>MarkdownPreview<CR>", 'MarkdownPreview'},
          s = {"<Plug>MarkdownPreviewStop<CR>", 'MarkdownPreviewStop'},
-         f = {":TableFormat<CR>", 'TableFormat'}
+         f = {"<Plug>(EasyAlign)ip*|", 'TableFormat'}
       },
       { prefix="<localleader>" })
     end
