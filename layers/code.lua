@@ -103,6 +103,16 @@ return {
               }
             end,
           },
+          c = {
+            -- clang-format
+            function()
+              return {
+                exe = "astyle",
+                stdin = true,
+                cwd = vim.fn.expand("%:p:h"), -- Run clang-format in cwd of the file.
+              }
+            end,
+          },
           cpp = {
             -- clang-format
             function()
@@ -307,7 +317,7 @@ return {
       cmp.setup.cmdline("/", {
         completion = { autocomplete = false },
         sources = {
-          { name = 'buffer', opts = { keyword_pattern = [=[[^[:blank:]].*]=] } }
+          { name = 'buffer', option = { keyword_pattern = [=[[^[:blank:]].*]=] } }
         },
       })
 
