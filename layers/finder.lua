@@ -1,13 +1,21 @@
-local P = {}
+local P = {
+  'nvim-telescope/telescope-project.nvim'
+}
 
 P[#P + 1] = {
   'nvim-telescope/telescope.nvim',
+  after='telescope-project.nvim',
   opt = true,
   config = function()
     require('telescope').setup{
     }
     local wk = require('which-key')
     local builtin = require('telescope.builtin')
+    local function project(opts)
+      opts = opts or {}
+      require'telescope'.extensions.project.project(opts)
+    end
+
 
     wk.register({
       f = {
@@ -33,6 +41,9 @@ P[#P + 1] = {
         T = { builtin.treesitter,                    "treesitter"},
 
         N = { ":Telescope notify<CR>",               "notify"},
+
+        p = { project,                               "project"},
+
       },
     }, { prefix="<leader>" })
  end
