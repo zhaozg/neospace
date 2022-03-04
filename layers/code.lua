@@ -97,6 +97,16 @@ return {
               }
             end,
           },
+          java = {
+            function()
+              return {
+                exe = "astyle",
+                args = {'--mode=java', '--indent=spaces=4'},
+                stdin = true,
+                cwd = vim.fn.expand("%:p:h"), -- Run clang-format in cwd of the file.
+              }
+            end,
+          },
           cpp = {
             -- clang-format
             function()
