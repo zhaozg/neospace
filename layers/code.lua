@@ -136,10 +136,7 @@ return {
     end,
   },
   {
-    "editorconfig/editorconfig-vim",
-    init = function()
-      g.EditorConfig_exclude_patterns = { "fugitive://.*", "scp://.*" }
-    end,
+    "gpanders/editorconfig.nvim"
   },
 
   {
