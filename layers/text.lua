@@ -72,16 +72,5 @@ return {
       vim.cmd("nnoremap [w :PrevTrailingWhitespace<CR>")
     end
   },
-  {
-    'junegunn/Goyo.vim',
-    cmd = {'Goyo'},
-    config = function()
-      vim.cmd('autocmd! User GoyoEnter Limelight')
-      vim.cmd('autocmd! User GoyoLeave Limelight!')
-    end
-  },
-  {
-    'junegunn/limelight.vim',
-    cmd = {'Goyo'}
-  }
+  "folke/zen-mode.nvim"
 }
