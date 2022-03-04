@@ -2,9 +2,32 @@ local vim = vim
 local g = vim.g
 
 return {
-  'justinmk/vim-sneak',
+  {
+    'phaazon/hop.nvim',
+    config = function()
+      -- you can configure Hop the way you like here; see :h hop-config
+      require'hop'.setup {}
+    end
+  },
   'ggandor/lightspeed.nvim',
-  'tpope/vim-surround',
+  {
+    'tpope/vim-surround',
+    init = function()
+      g.surround_no_mappings = 1
+    end,
+    config = function()
+      vim.cmd("nmap ds       <Plug>Dsurround")
+      vim.cmd("nmap cs       <Plug>Csurround")
+      vim.cmd("nmap cS       <Plug>CSurround")
+      vim.cmd("nmap ys       <Plug>Ysurround")
+      vim.cmd("nmap yS       <Plug>YSurround")
+      vim.cmd("nmap yss      <Plug>Yssurround")
+      vim.cmd("nmap ySs      <Plug>YSsurround")
+      vim.cmd("nmap ySS      <Plug>YSsurround")
+      vim.cmd("xmap gs       <Plug>VSurround")
+      vim.cmd("xmap gS       <Plug>VgSurround")
+    end
+  },
   {
     'junegunn/vim-easy-align',
     config = function()
