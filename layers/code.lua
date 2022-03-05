@@ -123,9 +123,8 @@ return {
 
       vim.cmd("xmap <Leader>xf :Format<CR>")
       vim.cmd("nmap <Leader>xf :Format<CR>")
-    end,
+    end
   },
-  "unblevable/quick-scope",
   "wellle/targets.vim",
   {
     "AndrewRadev/splitjoin.vim",
