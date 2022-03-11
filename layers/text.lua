@@ -5,11 +5,61 @@ return {
   {
     'phaazon/hop.nvim',
     config = function()
+      local hop = require'hop'
+      local hint = require'hop.hint'
+
       -- you can configure Hop the way you like here; see :h hop-config
-      require'hop'.setup {}
+      hop.setup{}
+      vim.keymap.set('n', 'f', function()
+        hop.hint_char1({
+          direction = hint.HintDirection.AFTER_CURSOR,
+          current_line_only = true
+        })
+      end)
+      vim.keymap.set('n', 'F', function()
+        hop.hint_char1({
+          direction = hint.HintDirection.BEFORE_CURSOR,
+          current_line_only = true
+        })
+      end)
+      vim.keymap.set('v', 'f', function()
+        hop.hint_char1({
+          direction = hint.HintDirection.AFTER_CURSOR,
+          current_line_only = true,
+          inclusive_jump = true
+        })
+      end)
+      vim.keymap.set('v', 'F', function()
+        hop.hint_char1({
+          direction = hint.HintDirection.BEFORE_CURSOR,
+          current_line_only = true,
+          inclusive_jump = true
+        })
+      end)
+      vim.keymap.set('', 't', function()
+        hop.hint_char1({
+          direction = hint.HintDirection.AFTER_CURSOR,
+          current_line_only = true
+        })
+      end)
+      vim.keymap.set('', 'T', function()
+        hop.hint_char1({
+          direction = hint.HintDirection.BEFORE_CURSOR,
+          current_line_only = true
+        })
+      end)
+
+      vim.keymap.set('', '<C-s>', function()
+        hop.hint_char2({})
+      end)
+      vim.keymap.set('', '<C-w>', function()
+        hop.hint_words({})
+      end)
+      vim.keymap.set('n', '<C-x>', function()
+        hop.hint_lines_skip_whitespace({})
+      end)
     end
   },
-  'ggandor/lightspeed.nvim',
   {
     'tpope/vim-surround',
     init = function()
