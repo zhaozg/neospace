@@ -92,6 +92,7 @@ return {
             function()
               return {
                 exe = "astyle",
+                args = {'--mode=c', '--style=bsd --indent=spaces=2'},
                 stdin = true,
                 cwd = vim.fn.expand("%:p:h"), -- Run clang-format in cwd of the file.
               }
@@ -101,7 +102,7 @@ return {
             function()
               return {
                 exe = "astyle",
-                args = {'--mode=java', '--indent=spaces=4'},
+                args = {'--mode=java', '--style=java --indent=spaces=4'},
                 stdin = true,
                 cwd = vim.fn.expand("%:p:h"), -- Run clang-format in cwd of the file.
               }
