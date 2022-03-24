@@ -62,6 +62,8 @@ function PackMan:new(args)
     config_done = {},
 
     parallel = args.parallel or false,
+    done = args.done,
+    pendings = {}
   }
   self.__index = self
   setmetatable(packman, self)
@@ -112,7 +114,9 @@ function PackMan:request(pack)
   else
     run_install_hook(pack)
     packadd(pack)
-    if pack.config then pack.config() end
+    if pack.config then
+      self.pendings[#self.pendings + 1] = pack.config()
+    end
   end
 
   return pack
@@ -133,7 +137,9 @@ end
 function PackMan:config(pack)
   packadd(pack)
 
-  if pack.config then pack.config() end
+  if pack.config then
+    self.pendings[#self.pendings + 1] = pack.config()
+  end
 
   self.config_done[pack.name] = true
 end
@@ -189,6 +195,9 @@ function PackMan:update()
             update_pack(self.packs[name])
           else
             vim.notify(string.format('All update done'))
+            if self.done then
+              self.done('update')
+            end
           end
         end, true)
       end)

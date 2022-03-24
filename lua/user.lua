@@ -70,10 +70,17 @@ local function update()
   end
 end
 
+local function finish()
+  for i=1, #packman.pendings do
+    packman.pendings[i]()
+  end
+end
+
 return {
   setup = setup,
   update = update,
   use = use,
+  finish = finish,
 
   flush = flush,
   startup = flush,
