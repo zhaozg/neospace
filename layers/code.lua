@@ -355,7 +355,7 @@ return {
     end,
   },
   {
-    "glepnir/lspsaga.nvim",
+    "tami5/lspsaga.nvim",
     init = function()
       vim.cmd([[
       "-- lsp provider to find the cursor word definition and reference
