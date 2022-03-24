@@ -1,3 +1,5 @@
+local vim = vim
+
 return {
   { 'f-person/git-blame.nvim' },
   {

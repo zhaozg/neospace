@@ -188,36 +188,7 @@ return {
     end
   },
 
-  --tag at right
-  {
-    'liuchengxu/vista.vim',
-    init = function()
-      g.vista_icon_indent = {'└➜ ', '├➜ ' }
-
-      g.vista_echo_cursor_strategy =  'echo'
-      -- To enable fzf's preview window set g:vista_fzf_preview.
-      -- The elements of g:vista_fzf_preview will be passed as arguments to fzf#vim#with_preview()
-      -- For example:
-      g.vista_fzf_preview = {'right:50%'}
-      -- Ensure you have installed some decent font to show these pretty symbols, then you can enable icon for the kind.
-      g['vista#renderer#enable_icon'] = 1
-
-      g.vista_executive_for = {
-        ['vimwiki'] = 'markdown',
-        ['pandoc'] = 'markdown',
-        ['markdown'] = 'toc',
-        ['lua'] = 'nvim_lsp',
-        ['sh'] = 'nvim_lsp',
-        ['css'] = 'nvim_lsp',
-        ['c'] = 'nvim_lsp',
-        ['js'] = 'nvim_lsp',
-        ['java'] = 'nvim_lsp'
-      }
-    end,
-    config = function()
-      vim.cmd("map <leader>tt <cmd>Vista!!<CR>")
-    end
-  },
+  --at right
 
   --statusline at bottom
   {

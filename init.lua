@@ -60,6 +60,8 @@ layer:load('ale')
 layer:load('debug')
 layer:load('lang/markdown')
 
+layer:load_private()
+
 -- load plugins
 local user = require("user")
 user.setup()
