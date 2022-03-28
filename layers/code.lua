@@ -53,72 +53,16 @@ return {
   {
     "mhartington/formatter.nvim",
     config = function()
+      local fmt = require'neospace.fmt'
+
       require("formatter").setup({
         filetype = {
-          javascript = {
-            -- prettier
-            function()
-              return {
-                exe = "prettier",
-                args = { "--stdin-filepath", vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), "--single-quote" },
-                stdin = true,
-              }
-            end,
-          },
-          sh = {
-            -- Shell Script Formatter
-            function()
-              return {
-                exe = "shfmt",
-                args = { "-i", 2 },
-                stdin = true,
-              }
-            end,
-          },
-          lua = {
-            function()
-              return {
-                exe = "stylua",
-                args = {
-                  "--config-path " .. (os.getenv("XDG_CONFIG_HOME") or "~/.config") .. "/stylua/stylua.toml",
-                  "-",
-                },
-                stdin = true,
-              }
-            end,
-          },
-          c = {
-            -- clang-format
-            function()
-              return {
-                exe = "astyle",
-                args = {'--mode=c', '--style=bsd --indent=spaces=2'},
-                stdin = true,
-                cwd = vim.fn.expand("%:p:h"), -- Run clang-format in cwd of the file.
-              }
-            end,
-          },
-          java = {
-            function()
-              return {
-                exe = "astyle",
-                args = {'--mode=java', '--style=java --indent=spaces=4'},
-                stdin = true,
-                cwd = vim.fn.expand("%:p:h"), -- Run clang-format in cwd of the file.
-              }
-            end,
-          },
-          cpp = {
-            -- clang-format
-            function()
-              return {
-                exe = "clang-format",
-                args = { "--assume-filename", vim.api.nvim_buf_get_name(0) },
-                stdin = true,
-                cwd = vim.fn.expand("%:p:h"), -- Run clang-format in cwd of the file.
-              }
-            end,
-          },
+          javascript = { function() return fmt.javascript end },
+          sh         = { function() return fmt.sh end },
+          lua        = { function() return fmt.lua end },
+          c          = { function() return fmt.c end },
+          java       = { function() return fmt.java end, },
+          cpp        = { function() return fmt.cpp end },
         },
       })
 

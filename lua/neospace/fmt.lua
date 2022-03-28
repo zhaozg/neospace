@@ -1,21 +1,47 @@
 local M = {}
 
 M.c = {
-  exe= 'astyle',
-  args= {'--mode=c', '--style=allman', '--indent=spaces=2'},
-  stdin= 1
+  exe = "astyle",
+  args = {'--mode=c', '--style=bsd --indent=spaces=2'},
+  stdin = true,
+  cwd = vim.fn.expand("%:p:h"), -- Run clang-format in cwd of the file.
+}
+
+M.javascript = {
+  exe = "prettier",
+  args = { "--stdin-filepath", vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), "--single-quote" },
+  stdin = true,
+}
+
+M.sh = {
+  exe = "shfmt",
+  args = { "-i", 2 },
+  stdin = true,
 }
 
 M.lua = {
-  exe = 'lua-format',
-  args = {'-c' .. os.getenv('HOME') .. '/.lua-format'}
+  exe = "stylua",
+  args = {
+    "--config-path " .. (os.getenv("XDG_CONFIG_HOME") or "~/.config") .. "/stylua/stylua.toml",
+    "-",
+  },
+  stdin = true,
 }
 
 M.java = {
-  exe= 'astyle',
-  args= {'--mode=java', '--indent=spaces=2'},
-  stdin= 1
+  exe = "astyle",
+  args = {'--mode=java', '--style=java --indent=spaces=4'},
+  stdin = true,
+  cwd = vim.fn.expand("%:p:h"), -- Run clang-format in cwd of the file.
 }
+
+M.cpp = {
+  exe = "clang-format",
+  args = { "--assume-filename", vim.api.nvim_buf_get_name(0) },
+  stdin = true,
+  cwd = vim.fn.expand("%:p:h"), -- Run clang-format in cwd of the file.
+}
+
 
 M.objc = {
   exe = 'uncrustify',
