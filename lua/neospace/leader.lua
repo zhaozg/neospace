@@ -56,4 +56,5 @@ keymap("n", "<Leader>z8", [[<cmd>set foldlevel=8<CR>]], {noremap = true})
 keymap("n", "<Leader>z9", [[<cmd>set foldlevel=9<CR>]], {noremap = true})
 
 keymap("n", "<Leader>tr", [[<cmd>setlocal colorcolumn=80<CR>]], {noremap = true})
+keymap("n", "<Leader>tt", [[<cmd>SymbolsOutline<CR>]], {noremap = true})
 

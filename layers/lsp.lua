@@ -18,14 +18,13 @@ return {
                   server_uninstalled = "✗"
               }
           },
-          log_level = vim.log.levels.DEBUG,
+          log_level = vim.log.levels.ERROR,
       }
 
       local lsp = require('neospace.lsp')
 
       lsp_installer.on_server_ready(function(server)
           local opts = lsp.setting(server.name)
-          opts.on_attach = lsp.on_attach
           server:setup(opts)
           vim.cmd [[ do User LspAttachBuffers ]]
       end)

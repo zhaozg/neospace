@@ -57,7 +57,7 @@ return {
           enable = true,
           enable_autocmd = false,
         },
-        ensure_installed = "maintained",
+        ensure_installed = {"c", "cpp", "lua", "bash", "cmake", "java", "make", "vim", "zig", "yaml", "vue"},
         -- {'c', 'lua'}
         -- ensure_installed = 'all' -- one of 'all', 'language', or a list of languages
       }

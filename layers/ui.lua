@@ -72,7 +72,6 @@ return {
     init = function()
       -- empty by default, don't auto open tree on specific filetypes.
       g.nvim_tree_auto_ignore_ft = { 'alpha', 'dashboard' }
-      g.nvim_tree_indent_markers = 1 --0 by default, this option shows indent markers when folders are open
       --"0 by default, will enable file highlight for git attributes (can be used without the icons).
       g.nvim_tree_git_hl = 1
       --"This is the default. See :help filename-modifiers for more options
@@ -182,6 +181,11 @@ return {
             -- list of mappings to set on the tree manually
             list = {}
           }
+        },
+        renderer = {
+          indent_markers = {
+            enable = true
+          }
         }
       }
       vim.cmd("map <leader>tf <cmd>NvimTreeToggle<CR>")
@@ -189,6 +193,13 @@ return {
   },
 
   --at right
+  {
+    'simrat39/symbols-outline.nvim',
+    config = function()
+      require("symbols-outline").setup({
+      })
+    end
+  },
 
   --statusline at bottom
   {
