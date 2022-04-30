@@ -190,11 +190,16 @@ return {
     config = function()
       local tabline = require'tabline'
       local gradle_status = require('lualine.components.gradle_status')
-
+      local lsp_status = require('lualine.components.lsp_status')
       require('lualine').setup({
         sections = {
           lualine_a = {'mode', 'asyncrun_status'},
-          lualine_c = {'filename', 'lsp_progress'},
+          lualine_c = {'filename',
+            {
+              'lsp_status',
+              condition = lsp_status.isEnabled
+            }
+          },
           lualine_y = {'progress',
             {
               'gradle_status',

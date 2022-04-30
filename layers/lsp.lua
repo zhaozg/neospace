@@ -32,6 +32,11 @@ return {
   },
   {
     'nvim-lua/lsp-status.nvim',
+    config = function()
+      require('lsp-status').config({
+        status_symbol = 'ʂ'
+      })
+    end
   },
   {
     "tami5/lspsaga.nvim",
