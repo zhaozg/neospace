@@ -22,32 +22,33 @@ local on_attach = function(client, bufnr)
   map(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
 
   if not vim.fn.exists(':Lspsaga') then
+    map(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+
     map(bufnr, 'n', 'gh', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
     map(bufnr, 'n', 'ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
     map(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
     map(bufnr, 'n', 'cr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    map(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
 
     -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-    map(bufnr, 'n', 'go', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+    map(bufnr, 'n', 'ge', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
     map(bufnr, 'n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
     map(bufnr, 'n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-    map(bufnr, 'n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+    map(bufnr, 'n', 'gq', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
   else
     -- See https://github.com/tami5/lspsaga.nvim
-    map(bufnr, 'n', 'K', '<cmd>lua require("lspsaga.hover").render_hover_doc(<CR>', opts)
+    map(bufnr, 'n', 'gd', '<cmd>lua require"lspsaga.provider".preview_definition()<CR>', opts)
 
-    map(bufnr, 'n', 'gh', '<cmd>lua require("lspsaga.provider").lsp_finder()<CR>', opts)
+    map(bufnr, 'n', 'gh', '<cmd>lua require("lspsaga.hover").render_hover_doc(<CR>', opts)
     map(bufnr, 'n', 'ca', '<cmd>lua require("lspsaga.codeaction").code_action()<CR>', opts)
     map(bufnr, 'v', 'ca', '<cmd><C-U>lua require("lspsaga.codeaction").range_code_action()<CR>', opts)
     map(bufnr, 'n', '<C-k>', '<cmd>lua require("lspsaga.signaturehelp").signature_help()<CR>', opts)
     map(bufnr, "n", "cr", '<cmd>lua require("lspsaga.rename").rename()<cr>', opts)
-    map(bufnr, 'n', 'gd', '<cmd>lua require"lspsaga.provider".preview_definition()<CR>', opts)
 
-    map(bufnr, "n", "go", "<cmd>Lspsaga show_line_diagnostics<cr>", opts)
+    map(bufnr, "n", "ge", "<cmd>Lspsaga show_line_diagnostics<cr>", opts)
     map(bufnr, "n", "[d", "<cmd>Lspsaga diagnostic_jump_prev<cr>", opts)
     map(bufnr, "n", "]d", "<cmd>Lspsaga diagnostic_jump_next<cr>", opts)
 
+    map(bufnr, 'n', 'gF', '<cmd>lua require("lspsaga.provider").lsp_finder()<CR>', opts)
     -- scroll up hover doc
     map(bufnr, "n", "<C-b>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1, '<c-b>')<cr>", opts)
     -- scroll down hover doc or scroll in definition preview
