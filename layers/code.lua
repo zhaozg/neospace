@@ -33,7 +33,7 @@ return {
 
       vim.opt.list = true
       vim.opt.listchars:append("space: ")
-      vim.opt.listchars:append("eol:↴")
+      vim.opt.listchars:append("eol:↵")
     end,
     config = function()
       require("indent_blankline").init()

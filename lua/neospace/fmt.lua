@@ -35,14 +35,6 @@ M.java = {
   cwd = vim.fn.expand("%:p:h"), -- Run clang-format in cwd of the file.
 }
 
-M.cpp = {
-  exe = "clang-format",
-  args = { "--assume-filename", vim.api.nvim_buf_get_name(0) },
-  stdin = true,
-  cwd = vim.fn.expand("%:p:h"), -- Run clang-format in cwd of the file.
-}
-
-
 M.objc = {
   exe = 'uncrustify',
   args = {'-q', '-l OC'},

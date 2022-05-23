@@ -6,39 +6,60 @@ local get_runtime = api.nvim__get_runtime
 local fs_stat = uv.fs_stat
 local mpack = vim.mpack
 
-local appdir = os.getenv('APPDIR')
+local std_cache = vim.fn.stdpath('cache')
+
+local std_dirs = {
+  ['<APPDIR>']     = os.getenv('APPDIR'),
+  ['<VIMRUNTIME>'] = os.getenv('VIMRUNTIME'),
+  ['<STD_DATA>']   = vim.fn.stdpath('data'),
+  ['<STD_CONFIG>'] = vim.fn.stdpath('config'),
+}
+
+local function modpath_mangle(modpath)
+  for name, dir in pairs(std_dirs) do
+    modpath = modpath:gsub(dir, name)
+  end
+  return modpath
+end
+
+local function modpath_unmangle(modpath)
+  for name, dir in pairs(std_dirs) do
+    modpath = modpath:gsub(name, dir)
+  end
+  return modpath
+end
 
 local M = {
   chunks = {
     cache = {},
     profile = nil,
     dirty = false,
-    path = vim.fn.stdpath('cache')..'/luacache_chunks',
+    path = std_cache..'/luacache_chunks',
+    get = function(self, path)
+      return self.cache[modpath_mangle(path)]
+    end,
+    set = function(self, path, chunk)
+      self.cache[modpath_mangle(path)] = chunk
+    end
   },
   modpaths = {
     cache = {},
     profile = nil,
     dirty = false,
-    path = vim.fn.stdpath('cache')..'/luacache_modpaths',
+    path = std_cache..'/luacache_modpaths',
+    get = function(self, mod)
+      if self.cache[mod] then
+        return modpath_unmangle(self.cache[mod])
+      end
+    end,
+    set = function(self, mod, path)
+      self.cache[mod] = modpath_mangle(path)
+    end
   },
   log = {}
 }
 
 _G.__luacache = M
-
-if not get_runtime then
-  -- nvim 0.5 compat
-  get_runtime = function(paths, all, _)
-    local r = {}
-    for _, path in ipairs(paths) do
-      local found = api.nvim_get_runtime_file(path, all)
-      for i = 1, #found do
-        r[#r+1] = found[i]
-      end
-    end
-    return r
-  end
-end
 
 local function log(...)
   M.log[#M.log+1] = table.concat({string.format(...)}, ' ')
@@ -73,20 +94,6 @@ local function hash(modpath)
   error('Could not hash '..modpath)
 end
 
-local function modpath_mangle(modpath)
-  if appdir then
-    modpath = modpath:gsub(appdir, '/$APPDIR')
-  end
-  return modpath
-end
-
-local function modpath_unmangle(modpath)
-  if appdir then
-    modpath = modpath:gsub('/$APPDIR', appdir)
-  end
-  return modpath
-end
-
 local function profile(m, entry, name, loader)
   if m.profile then
     local mp = m.profile
@@ -105,6 +112,9 @@ local function mprofile(mod, name, loader)
 end
 
 local function cprofile(path, name, loader)
+  if M.chunks.profile then
+    path = modpath_mangle(path)
+  end
   profile(M.chunks, path, name, loader)
 end
 
@@ -114,7 +124,7 @@ local function get_runtime_file(basename, paths)
   local parents = vim.split(basename, '/')
   for i = #parents, 1, -1 do
     local parent = table.concat(vim.list_slice(parents, 1, i), '/')
-    local ppath = M.modpaths.cache[parent]
+    local ppath = M.modpaths:get(parent)
     if ppath then
       if ppath:sub(-9) == '/init.lua' then
         ppath = ppath:sub(1, -10) -- a/b/init.lua -> a/b
@@ -140,7 +150,7 @@ end
 local function get_runtime_file_cached(basename, paths)
   local mp = M.modpaths
   if mp.cache[basename] then
-    local modpath = mp.cache[basename]
+    local modpath = mp:get(basename)
     if fs_stat(modpath) then
       mprofile(basename, 'resolve_end', 'cache')
       return modpath
@@ -153,7 +163,7 @@ local function get_runtime_file_cached(basename, paths)
   if modpath then
     mprofile(basename, 'resolve_end', loader)
     log('Creating cache for module %s', basename)
-    mp.cache[basename] = modpath_mangle(modpath)
+    mp:set(basename, modpath)
     mp.dirty = true
   end
   return modpath
@@ -246,14 +256,16 @@ end
 local function load_from_cache(path)
   local mc = M.chunks
 
-  if not mc.cache[path] then
+  local cache = mc:get(path)
+
+  if not cache then
     return nil, string.format('No cache for path %s', path)
   end
 
-  local mhash, codes = unpack(mc.cache[path])
+  local mhash, codes = unpack(cache)
 
-  if mhash ~= hash(modpath_unmangle(path)) then
-    mc.cache[path] = nil
+  if mhash ~= hash(path) then
+    mc:set(path)
     mc.dirty = true
     return nil, string.format('Stale cache for path %s', path)
   end
@@ -261,7 +273,7 @@ local function load_from_cache(path)
   local chunk = loadstring(codes)
 
   if not chunk then
-    mc.cache[path] = nil
+    mc:set(path)
     mc.dirty = true
     return nil, string.format('Cache error for path %s', path)
   end
@@ -272,7 +284,7 @@ end
 local function loadfile_cached(path)
   cprofile(path, 'load_start')
 
-  local chunk, err  = load_from_cache(path)
+  local chunk, err = load_from_cache(path)
   if chunk and not err then
     log('Loaded cache for path %s', path)
     cprofile(path, 'load_end', 'cache')
@@ -284,7 +296,7 @@ local function loadfile_cached(path)
 
   if not err then
     log('Creating cache for path %s', path)
-    M.chunks.cache[modpath_mangle(path)] = {hash(path), string.dump(chunk)}
+    M.chunks:set(path, {hash(path), string.dump(chunk)})
     M.chunks.dirty = true
   end
 
@@ -296,7 +308,7 @@ function M.save_cache()
   local function _save_cache(t)
     if t.dirty then
       log('Updating chunk cache file: %s', t.path)
-      local f = io.open(t.path, 'w+b')
+      local f = assert(io.open(t.path, 'w+b'))
       f:write(mpack.encode(t.cache))
       f:flush()
       t.dirty = false
@@ -319,7 +331,7 @@ local function init_cache()
   local function _init_cache(t)
     if fs_stat(t.path) then
       log('Loading cache file %s', t.path)
-      local f = io.open(t.path, 'rb')
+      local f = assert(io.open(t.path, 'rb'))
       local ok
       ok, t.cache = pcall(function()
         return mpack.decode(f:read'*a')
@@ -334,6 +346,10 @@ local function init_cache()
     end
   end
 
+  if not uv.fs_stat(std_cache) then
+    vim.fn.mkdir(std_cache, 'p')
+  end
+
   _init_cache(M.chunks)
   _init_cache(M.modpaths)
 end
@@ -342,7 +358,14 @@ local function setup()
   init_cache()
 
   -- Override default functions
-  vim._load_package  = load_package
+  for i, loader in ipairs(package.loaders) do
+    if loader == vim._load_package then
+      package.loaders[i] = load_package
+      break
+    end
+  end
+  vim._load_package = load_package
+
   vim.api.nvim__get_runtime = get_runtime_cached
   loadfile = loadfile_cached
 
