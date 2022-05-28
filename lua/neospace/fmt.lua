@@ -1,12 +1,5 @@
 local M = {}
 
-M.c = {
-  exe = "astyle",
-  args = {'--mode=c', '--style=bsd --indent=spaces=2'},
-  stdin = true,
-  cwd = vim.fn.expand("%:p:h"), -- Run clang-format in cwd of the file.
-}
-
 M.javascript = {
   exe = "prettier",
   args = { "--stdin-filepath", vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), "--single-quote" },
@@ -29,53 +22,65 @@ M.lua = {
 }
 
 M.java = {
-  exe = "astyle",
-  args = {'--mode=java', '--style=java --indent=spaces=4'},
+  exe = "uncrustify",
+  args = { "-q", "-l JAVA" },
   stdin = true,
-  cwd = vim.fn.expand("%:p:h"), -- Run clang-format in cwd of the file.
+}
+
+M.c = {
+  exe = "uncrustify",
+  args = { "-q", "-l C" },
+  stdin = true,
+}
+
+M.cpp = {
+  exe = "uncrustify",
+  args = { "-q", "-l CPP" },
+  stdin = true,
 }
 
 M.objc = {
-  exe = 'uncrustify',
-  args = {'-q', '-l OC'},
-  stdin = 1,
+  exe = "uncrustify",
+  args = { "-q", "-l OC" },
+  stdin = true,
 }
 
 M.objcpp = {
-  exe = 'uncrustify',
-  args = {'-q', '-l OC+'},
-  stdin = 1,
+  exe = "uncrustify",
+  args = { "-q", "-l OC+" },
+  stdin = true,
 }
 
 M.xml = {
-  exe= 'tidy',
-  args= {'-quiet',
-         '-xml',
-         '-utf8',
-         '--indent auto',
-         '--indent-spaces 2',
-         '--vertical-space yes',
-         '--tidy-mark no'
-        },
-  stdin= 1,
+  exe = "tidy",
+  args = {
+    "-quiet",
+    "-xml",
+    "-utf8",
+    "--indent auto",
+    "--indent-spaces 2",
+    "--vertical-space yes",
+    "--tidy-mark no",
+  },
+  stdin = true,
 }
 
 M.xhtml = {
-  exe = 'tidy',
-  args = {'-quiet',
-          '-asxhtml',
-          '-utf8',
-          '--indent auto',
-          '--indent-spaces 2',
-          '--vertical-space yes',
-          '--tidy-mark no'
-         },
-  stdin = 1,
+  exe = "tidy",
+  args = {
+    "-quiet",
+    "-asxhtml",
+    "-utf8",
+    "--indent auto",
+    "--indent-spaces 2",
+    "--vertical-space yes",
+    "--tidy-mark no",
+  },
+  stdin = true,
 }
 
 M.markdown = {
-  exe = "prettier"
+  exe = "prettier",
 }
 
 return M
-
