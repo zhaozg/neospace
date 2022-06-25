@@ -1,36 +1,58 @@
 local vim = vim
-local fn  = vim.fn   -- to call Vim functions e.g. fn.bufnr()
-local g   = vim.g
-local o   = vim.o
+local fn = vim.fn -- to call Vim functions e.g. fn.bufnr()
+local g = vim.g
+local o = vim.o
 
-local fun = require'neospace.fun'
-local neospace = require'neospace'
+local fun = require("neospace.fun")
+local neospace = require("neospace")
 
 return {
+
   {
-    'goolord/alpha-nvim',
+    "kyazdani42/nvim-web-devicons",
     config = function()
-      local alpha = require'alpha'
-      local startify = require'alpha.themes.startify'
+      require("nvim-web-devicons").setup({
+        -- your personnal icons can go here (to override)
+        -- DevIcon will be appended to `name`
+        override = {
+          zsh = {
+            icon = "",
+            color = "#428850",
+            name = "Zsh",
+          },
+        },
+        -- globally enable default icons (default to false)
+        -- will get overriden by `get_icons` option
+        default = true,
+      })
+    end,
+  },
+
+  {
+    "goolord/alpha-nvim",
+    after = "kyazdani42/nvim-web-devicons",
+    config = function()
+      local alpha = require("alpha")
+      local startify = require("alpha.themes.startify")
 
       local function fix_header(lines)
         local lval = fun.max_by(function(a, b)
           return fn.strwidth(a) > fn.strwidth(b) and a or b
-	      end, lines)
-	      lval = fn.strwidth(lval)
+        end, lines)
+        lval = fn.strwidth(lval)
 
         local centered = fun.totable(fun.map(function(line)
-          line = string.rep(' ', (o.columns/2)-(lval/2)) .. line
+          line = string.rep(" ", (o.columns / 2) - (lval / 2)) .. line
           return line
         end, lines))
         return centered
       end
       local function version()
-         local t = vim.version()
-          return string.format("v%d.%d.%d%s", t.major, t.minor, t.patch, t.api_prerelease and "-dev" or "");
+        local t = vim.version()
+        return string.format("v%d.%d.%d%s", t.major, t.minor, t.patch, t.api_prerelease and "-dev" or "")
       end
 
-      startify.section.header.val = fix_header{
+      startify.section.header.val = fix_header({
         [[ _        _______  _______  _______  _______  _______  _______  _______]],
         [[( (    /|(  ____ \(  ___  )(  ____ \(  ____ )(  ___  )(  ____ \(  ____ \]],
         [[|  \  ( || (    \/| (   ) || (    \/| (    )|| (   ) || (    \/| (    \/]],
@@ -39,71 +61,74 @@ return {
         [[| | \   || (      | |   | |      ) || (      | (   ) || |      | (]],
         [[| )  \  || (____/\| (___) |/\____) || )      | )   ( || (____/\| (____/\]],
         [[|/    )_)(_______/(_______)\_______)|/       |/     \|(_______/(_______/]],
-       '                  neospace ' .. neospace.version .. ' ＠ nvim ' .. version()
-      }
+        "                  neospace " .. neospace.version .. " ＠ nvim " .. version(),
+      })
       alpha.setup(startify.opts)
-    end
+    end,
   },
 
   --tabline at top
   {
-    'kdheepak/tabline.nvim',
+    "kdheepak/tabline.nvim",
+    after = "kyazdani42/nvim-web-devicons",
     config = function()
-      local tabline = require'tabline'
-      tabline.setup {
+      local tabline = require("tabline")
+      tabline.setup({
         enable = false,
         options = {
-          section_separators = {'', ''},
-          component_separators = {'', ''},
+          section_separators = { "", "" },
+          component_separators = { "", "" },
           max_bufferline_percent = 66, -- set to nil by default, and it uses vim.o.columns * 2/3
           show_last_separator = false,
           show_tabs_always = false,
           show_bufnr = true,
           show_devicons = true,
-          show_filename_only = true
-        }
-      }
-    end
+          show_filename_only = true,
+        },
+      })
+    end,
   },
 
   --tree at left
   {
-    'kyazdani42/nvim-tree.lua',
+    "kyazdani42/nvim-tree.lua",
+    after = "kyazdani42/nvim-web-devicons",
     config = function()
-      require'nvim-tree'.setup {
+      require("nvim-tree").setup({
         -- disables netrw completely
-        disable_netrw       = true,
+        disable_netrw = true,
         -- hijack netrw window on startup
-        hijack_netrw        = true,
+        hijack_netrw = true,
         -- open the tree when running this setup function
-        open_on_setup       = false,
+        open_on_setup = false,
         -- will not open on setup if the filetype is in this list
-        ignore_ft_on_setup  = {
-          'alpha', 'dashboard'
+        ignore_ft_on_setup = {
+          "alpha",
+          "dashboard",
         },
         -- opens the tree when changing/opening a new tab if the tree wasn't previously opened
-        open_on_tab         = false,
+        open_on_tab = false,
         -- hijack the cursor in the tree to put it at the start of the filename
-        hijack_cursor       = false,
+        hijack_cursor = false,
         -- updates the root directory of the tree on `DirChanged` (when your run `:cd` usually)
-        update_cwd          = false,
+        update_cwd = false,
         -- update the focused file on `BufEnter`, un-collapses the folders recursively until it finds the file
         update_focused_file = {
           -- enables the feature
-          enable      = false,
+          enable = false,
           -- update the root directory of the tree to the one of the folder containing the file if the file is not under the current root directory
           -- only relevant when `update_focused_file.enable` is true
-          update_cwd  = false,
+          update_cwd = false,
           -- list of buffer names / filetypes that will not update the cwd if the file isn't found under the current root directory
           -- only relevant when `update_focused_file.update_cwd` is true and `update_focused_file.enable` is true
-          ignore_list = {}
+          ignore_list = {},
         },
         -- configuration options for the system open command (`s` in the tree by default)
         system_open = {
           -- the command to run this, leaving nil should work in most cases
-          cmd  = nil,
+          cmd = nil,
           -- the command arguments as a list
-          args = {}
+          args = {},
         },
 
         view = {
@@ -112,15 +137,15 @@ return {
           -- height of the window, can be either a number (columns) or a string in `%`, for top or bottom side placement
           height = 30,
           -- side of the tree, can be one of 'left' | 'right' | 'top' | 'bottom'
-          side = 'left',
+          side = "left",
           -- if true the tree will resize itself after opening a file
           mappings = {
             -- custom only false will merge the list with the default mappings
             -- if true, it will only use your list to set the mappings
             custom_only = false,
             -- list of mappings to set on the tree manually
-            list = {}
-          }
+            list = {},
+          },
         },
         renderer = {
           add_trailing = true,
@@ -130,53 +155,55 @@ return {
             git_placement = "after",
           },
           indent_markers = {
-            enable = true
-          }
-        }
-      }
+            enable = true,
+          },
+        },
+      })
       vim.cmd("map <leader>tf <cmd>NvimTreeToggle<CR>")
-    end
+    end,
   },
 
   --at right
   {
-    'simrat39/symbols-outline.nvim',
+    "simrat39/symbols-outline.nvim",
+    after = "kyazdani42/nvim-web-devicons",
     config = function()
-      require("symbols-outline").setup({
-      })
-    end
+      require("symbols-outline").setup({})
+    end,
   },
 
   --statusline at bottom
   {
-    'hoob3rt/lualine.nvim',
-    after = 'kdheepak/tabline.nvim',
+    "hoob3rt/lualine.nvim",
+    after = { "kyazdani42/nvim-web-devicons", "kdheepak/tabline.nvim" },
     config = function()
-      local tabline = require'tabline'
-      local gradle_status = require('lualine.components.gradle_status')
-      local lsp_status = require('lualine.components.lsp_status')
-      require('lualine').setup({
+      local tabline = require("tabline")
+      local gradle_status = require("lualine.components.gradle_status")
+      local lsp_status = require("lualine.components.lsp_status")
+      require("lualine").setup({
         sections = {
-          lualine_a = {'mode', 'asyncrun_status'},
-          lualine_c = {'filename',
+          lualine_a = { "mode", "asyncrun_status" },
+          lualine_c = {
+            "filename",
             {
-              'lsp_status',
-              condition = lsp_status.isEnabled
-            }
+              "lsp_status",
+              condition = lsp_status.isEnabled,
+            },
           },
-          lualine_y = {'progress',
+          lualine_y = {
+            "progress",
             {
-              'gradle_status',
-              condition = gradle_status.isEnabled
-            }
+              "gradle_status",
+              condition = gradle_status.isEnabled,
+            },
           },
           lualine_z = {
             {
-              'diagnostics',
-              sources = {'nvim_diagnostic'},
-              sections = {'error', 'warn', 'info'}
+              "diagnostics",
+              sources = { "nvim_diagnostic" },
+              sections = { "error", "warn", "info" },
             },
-            'location'
+            "location",
           },
         },
 
@@ -190,44 +217,26 @@ return {
         },
 
         extensions = {
-          'fugitive', 'fzf', 'nerdtree'
-        }
+          "fugitive",
+          "fzf",
+          "nerdtree",
+        },
       })
-    end
+    end,
   },
 
   {
-    'kyazdani42/nvim-web-devicons',
+    "folke/trouble.nvim",
     config = function()
-      require'nvim-web-devicons'.setup {
-        -- your personnal icons can go here (to override)
-        -- DevIcon will be appended to `name`
-        override = {
-          zsh = {
-            icon = "",
-            color = "#428850",
-            name = "Zsh"
-          }
-        };
-        -- globally enable default icons (default to false)
-        -- will get overriden by `get_icons` option
-        default = true;
-      }
-    end
-  },
-
-  {
-    'folke/trouble.nvim',
-    config = function()
-      require("trouble").setup {
-      }
-    end
+      require("trouble").setup({})
+    end,
   },
 
   {
     "folke/which-key.nvim",
+    after = "kyazdani42/nvim-web-devicons",
     config = function()
-      require("which-key").setup {
+      require("which-key").setup({
         plugins = {
           marks = true, -- shows a list of your marks on ' and `
           registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
@@ -275,18 +284,17 @@ return {
           align = "left", -- align columns left, center or right
         },
         ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
-        hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ "}, -- hide mapping boilerplate
+        hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
         show_help = true, -- show help message on the command line when the popup is visible
-        triggers = {"<leader>", "<localleader>"}, -- or specify a list manually
+        triggers = { "<leader>", "<localleader>" }, -- or specify a list manually
         triggers_blacklist = {
           -- list of mode / prefixes that should never be hooked by WhichKey
           -- this is mostly relevant for key maps that start with a native binding
           -- most people should not need to change this
           i = { "j", "k" },
           v = { "j", "k" },
-        }
-      }
-    end
-  }
+        },
+      })
+    end,
+  },
 }
-

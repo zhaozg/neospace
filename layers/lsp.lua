@@ -6,7 +6,7 @@ return {
   },
   {
     'williamboman/nvim-lsp-installer',
-    after = {"neovim/nvim-lspconfig"},
+    after = 'neovim/nvim-lspconfig',
     config = function()
       local lsp_installer = require("nvim-lsp-installer")
       -- Provide settings first!
@@ -32,6 +32,7 @@ return {
   },
   {
     'nvim-lua/lsp-status.nvim',
+    after = 'neovim/nvim-lspconfig',
     config = function()
       require('lsp-status').config({
         status_symbol = 'ʂ'
@@ -40,9 +41,11 @@ return {
   },
   {
     "ray-x/lsp_signature.nvim",
+    after = 'neovim/nvim-lspconfig',
   },
   {
     "tami5/lspsaga.nvim",
+    after = 'neovim/nvim-lspconfig',
     config = function()
       local saga = require 'lspsaga'
       saga.init_lsp_saga({

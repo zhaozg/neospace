@@ -59,7 +59,6 @@ return {
 
   {
     'TimUntersberger/neogit',
-    after = 'nvim-lua/plenary.nvim',
     config = function()
       local neogit = require('neogit')
       neogit.setup {

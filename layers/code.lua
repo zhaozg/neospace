@@ -102,11 +102,8 @@ return {
 
   "sheerun/vim-polyglot",
 
-  "SirVer/ultisnips",
-
   {
     "honza/vim-snippets",
-    after = "SirVer/ultisnips",
     init = function()
       g.UltiSnipsUsePythonVersion = 3
       g.UltiSnipsExpandTrigger = "<Plug>(ultisnips_expand)"
@@ -120,6 +117,7 @@ return {
       end
     end,
   },
+  "SirVer/ultisnips",
 
   "hrsh7th/cmp-nvim-lsp",
   "hrsh7th/cmp-buffer",
@@ -129,8 +127,6 @@ return {
 
   {
     "hrsh7th/nvim-cmp",
-    init = function()
-    end,
     config = function()
       local cmp = require("cmp")
 

@@ -29,7 +29,10 @@ local function helptags(plugin)
 end
 
 local function subset(a, b)
-  for x, _ in pairs(a) do
+  for x, y in pairs(a) do
+    if (type(x)=='number') then
+      x = y
+    end
     if b[x] == nil then
       return false
     end
@@ -135,7 +138,6 @@ function M.manage(plugins, options)
       try_activate(plugin)
     else
       count = count + 1
-      plugin_check(plugin)
       git.clone(plugin, function()
         helptags(plugin)
         count = count - 1
