@@ -1,5 +1,5 @@
 local vim = vim
-local packman
+local packs = {}
 
 local function use(args)
   local pack = {}
@@ -33,55 +33,24 @@ local function use(args)
     error("user.use -- invalid args")
   end
 
-  if packman.packs[pack.name] then
-    return packman.packs[pack.name]
+  if packs[pack.name] then
+    return packs[pack.name]
   end
 
-  if pack.repo or string.match(pack.name, "^[^/]+/[^/]+$") then
-    pack.repo = pack.repo or ("https://github.com/"..pack.name..".git")
-    return packman:request(pack)
-  end
+  packs[#packs + 1] = pack
 
-  local path = vim.fn.fnamemodify(pack.name, ":p")
-  if vim.fn.isdirectory(path) then
-    vim.opt.runtimepath:prepend(path)
-  else
-    error("user.user -- invalid args")
-  end
   return pack
 end
 
-local function setup(args)
-  if args and args.path then args.path = vim.fn.expand(args.path) end
-  packman = require'user.packman'.PackMan:new(args)
-end
+local function setup(options)
+  local manager = require("user.plugins").manage(packs, options)
 
-local function flush()
-  if packman.parallel then
-    packman:await_jobs()
-    packman:do_config_queue()
-  end
-end
-
-local function update()
-  packman:update()
-  if packman.parallel then
-    packman:await_jobs()
-  end
-end
-
-local function finish()
-  for i=1, #packman.pendings do
-    packman.pendings[i]()
-  end
+  vim.api.nvim_create_user_command("PluginsUpgrade", manager.upgrade, {})
+  vim.api.nvim_create_user_command("PluginsAutoremove", manager.autoremove, {})
+  return manager
 end
 
 return {
   setup = setup,
-  update = update,
   use = use,
-  finish = finish,
-
-  flush = flush,
-  startup = flush,
 }

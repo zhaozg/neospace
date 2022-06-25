@@ -150,7 +150,7 @@ return {
   --statusline at bottom
   {
     'hoob3rt/lualine.nvim',
-    after = 'tabline.nvim',
+    after = 'kdheepak/tabline.nvim',
     config = function()
       local tabline = require'tabline'
       local gradle_status = require('lualine.components.gradle_status')

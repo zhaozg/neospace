@@ -6,7 +6,7 @@ return {
   },
   {
     'williamboman/nvim-lsp-installer',
-    after = {"nvim-lspconfig"},
+    after = {"neovim/nvim-lspconfig"},
     config = function()
       local lsp_installer = require("nvim-lsp-installer")
       -- Provide settings first!

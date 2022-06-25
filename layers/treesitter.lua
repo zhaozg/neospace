@@ -1,12 +1,6 @@
 return {
   {
     'nvim-treesitter/nvim-treesitter',
-    after = {
-      "JoosepAlviste/nvim-ts-context-commentstring",
-      'p00f/nvim-ts-rainbow',
-      'romgrk/nvim-treesitter-context'
-    },
-    opt = true,
     config = function()
       require'nvim-treesitter.configs'.setup {
         highlight = {

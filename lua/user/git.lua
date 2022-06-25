@@ -1,61 +1,80 @@
+local vim = vim
 local M = {}
 
-local async = require'user.async'
-local uv = async.uv
+local async = require("user.async")
 
 function M.async_run(pack, args, callback)
-  local cmd = 'git'
+  local cmd = "git"
   table.insert(args, 1, pack.install_path)
   table.insert(args, 1, "-C")
-  async.run(cmd, args, callback)
+
+  async.run(cmd, {
+    args = args,
+    cwd = pack.install_path,
+    hide = true
+  }, callback)
 end
 
-function M.current_branch(pack, callback)
-  M.async_run(pack, {
-    'rev-parse',
-    '--abbrev-ref',
-    'HEAD'
-  }, function(code, branch)
-    callback(branch, code)
-  end)
+function M.current_branch(pack)
+  return vim.fn.system({ "git", "-C", pack.install_path, "rev-parse", "--abbrev-ref", "HEAD" })
 end
 
-function M.head_hash(pack, callback, remote)
+function M.current_version(pack, remote, callback)
+  local cmds = { "git", "-C", pack.install_path, "rev-parse" }
   if remote then
-    --get remote hash
-    M.current_branch(pack, function(branch, code)
-      assert(code==0)
-      M.async_run(pack, {
-        'rev-parse',
-        '@{u}'
-      }, function(code1, hash)
-        assert(code1==0)
-        callback(hash, code)
-      end)
-    end)
-    return
+    cmds[#cmds + 1] = "@{u}"
+  else
+    cmds[#cmds + 1] = "HEAD"
   end
-  -- get local head hash
+  if callback == nil then
+    return vim.fn.system(cmds):gsub("\r", ""):gsub("\n", "")
+  end
   M.async_run(pack, {
-    'rev-parse',
-    'HEAD'
-  }, function(code, hash)
-    callback(hash, code)
+    "rev-parse",
+    "@{u}",
+  }, callback)
+end
+
+function M.clone(pack, callback)
+  local cmd = "git"
+  local args = {
+    "clone",
+    pack.repo,
+    pack.install_path,
+    "--depth",
+    "9"
+  }
+
+  async.run(cmd, {
+    args = args,
+    hide = true
+  }, function(code, chunk, signal)
+    vim.defer_fn(function()
+      callback(code, chunk, signal)
+    end, 0)
   end)
 end
 
 function M.update(pack, callback)
+  local current = M.current_version(pack)
   M.async_run(pack, {
-    'pull',
-    '--quiet'
-  }, function(code)
-    if code==0 then
-      M.head_hash(pack, callback)
-      return
+    "pull",
+    "--depth",
+    "9",
+    "--force",
+    "--rebase",
+    "--quiet",
+  }, function(code, chunk, signal)
+    local update
+    if code == 0 then
+      vim.defer_fn(function()
+        update = M.current_version(pack)
+        callback(current, update, code, signal)
+      end, 0)
+    else
+      vim.notify("update %s fail: %d, %s, %d", code, chunk, signal)
     end
-    callback(nil, code)
   end)
 end
 
 return M
-

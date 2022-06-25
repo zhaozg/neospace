@@ -49,7 +49,6 @@ layer:load_private()
 
 -- load plugins
 local user = require("user")
-user.setup()
 
 for _, name in pairs(layer.names) do
   local modules = layer.modules[name]
@@ -58,5 +57,5 @@ for _, name in pairs(layer.names) do
   end
 end
 
-user.finish()
+user.setup()
 

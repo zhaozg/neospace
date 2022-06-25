@@ -102,10 +102,11 @@ return {
 
   "sheerun/vim-polyglot",
 
-  "honza/vim-snippets",
+  "SirVer/ultisnips",
+
   {
-    "SirVer/ultisnips",
-    after = "vim-snippets",
+    "honza/vim-snippets",
+    after = "SirVer/ultisnips",
     init = function()
       g.UltiSnipsUsePythonVersion = 3
       g.UltiSnipsExpandTrigger = "<Plug>(ultisnips_expand)"
