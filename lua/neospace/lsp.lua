@@ -54,7 +54,7 @@ local on_attach = function(client, bufnr)
     -- scroll down hover doc or scroll in definition preview
     map(bufnr, "n", "<C-f>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1, '<c-f>')<cr>", opts)
   end
-
+  require'lsp_signature'.on_attach({}, bufnr)
 end
 
 -- config that activates keymaps and enables snippet support

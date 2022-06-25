@@ -39,6 +39,9 @@ return {
     end
   },
   {
+    "ray-x/lsp_signature.nvim",
+  },
+  {
     "tami5/lspsaga.nvim",
     config = function()
       local saga = require 'lspsaga'
