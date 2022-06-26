@@ -2,9 +2,6 @@
 
 User is a fork of [user.nvim](https://github.com/faerryn/user.nvim) and [plogins.nvim](https://github.com/faerryn/plogins.nvim) packman for neovim, but update largely.
 
-
-+  repo_base = "http://git.what996.com/"
-
 ## Howto use
 
 * `:PluginsUpgrade` will update all plugins.
@@ -18,7 +15,7 @@ User is a fork of [user.nvim](https://github.com/faerryn/user.nvim) and [plogins
 ## Recommendations
 
 Neovim 0.5.0 now supports using init.lua, where lua code can be put.
-If you have a init.vim or .vimrc, you can put your lua code in a heredoc block:
+If you have a `init.vim` or `.vimrc`, you can put your lua code in a heredoc block:
 
 ```
 lua << EOF
@@ -79,7 +76,7 @@ local plugins = {
 }
 
 local user = require("user")
-user.setup(plugins, {
+user.setup({
   repo_base = "http://git.what996.com/"  -- default is "https://github.com/"
 })
 
@@ -93,10 +90,10 @@ use {
 	branch = nil, -- if non-nil, then clone from this branch instead of default branch
 	subdir = nil, -- if non-nil, then will add that subdirectory to rtp
 	init = function()
-		-- will run immediately unless disabled = true.
+		-- will run before packadd
 	end,
 	config = function()
-		-- will run after the package is loaded. not very useful if you don't have `parallel` enabled.
+		-- will run after the package is loaded.
 	end,
 }
 ```

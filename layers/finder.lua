@@ -1,5 +1,7 @@
 return {
   "nvim-telescope/telescope.nvim",
+  "nvim-telescope/telescope-symbols.nvim",
+  "nvim-telescope/telescope-media-files.nvim",
 
   {
     "nvim-telescope/telescope-project.nvim",

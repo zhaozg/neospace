@@ -7,7 +7,12 @@ function LspStatus:init(options)
 end
 
 function LspStatus:update_status()
-  return require('lsp-status').status()
+  local ret, status = pcall(require, 'lsp-status')
+  if ret then
+    return status.status()
+  else
+    return ""
+  end
 end
 
 LspStatus.isEnabled = function() return #vim.lsp.buf_get_clients() > 0 end

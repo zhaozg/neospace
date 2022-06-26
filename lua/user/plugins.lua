@@ -138,6 +138,7 @@ function M.manage(plugins, options)
       try_activate(plugin)
     else
       count = count + 1
+      plugin_check(plugin)
       git.clone(plugin, function()
         helptags(plugin)
         count = count - 1
