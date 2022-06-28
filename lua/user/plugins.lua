@@ -5,7 +5,7 @@ local git = require('user.git')
 
 local M = {}
 
-local function packadd(plugin)
+local function packadd_do(plugin)
   vim.cmd(("packadd %s"):format(vim.fn.fnameescape(plugin.name)))
   if plugin.packadd_hook then
     if plugin.init then
@@ -18,6 +18,34 @@ local function packadd(plugin)
     if not ret then
       notify(("packadd %s fail: %s"):format(plugin.name, msg))
     end
+  end
+end
+
+local function packadd_ft(plugin)
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = plugin.ft,
+    callback = function()
+      packadd_do(plugin)
+    end
+  })
+end
+
+local function packadd_on(plugin)
+  vim.api.nvim_create_autocmd('CmdUndefined', {
+    pattern = plugin.on,
+    callback = function()
+      packadd_do(plugin)
+    end
+  })
+end
+
+local function packadd(plugin)
+  if plugin.ft then
+    packadd_ft(plugin)
+  elseif plugin.on then
+    packadd_on(plugin)
+  else
+    packadd_do(plugin)
   end
 end
 
@@ -102,9 +130,16 @@ function M.manage(plugins, options)
   local pending_sources = {}
 
   local function try_activate(plugin)
+    if plugin.enable == nil then
+      plugin.enable = true
+    end
     if subset(plugin.packadd_after, activated_sources) then
-      packadd(plugin)
-      activated_sources[plugin.name] = true
+      if plugin.enable then
+        packadd(plugin)
+        activated_sources[plugin.name] = true
+      else
+        activated_sources[plugin.name] = false
+      end
       pending_sources[plugin.name] = nil
       return true
     else

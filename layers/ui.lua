@@ -299,8 +299,17 @@ return {
   },
   {
     "lewis6991/satellite.nvim",
+    enable = false,
     config = function()
-      require("satellite").setup()
+      require("satellite").setup({
+        excluded_filetypes = {
+          "NvimTree",
+          "Outline",
+          "SidebarNvim",
+          "NeogitStatus",
+          "alpha",
+        },
+      })
     end,
   },
 }

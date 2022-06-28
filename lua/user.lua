@@ -13,6 +13,10 @@ local function use(args)
 
     pack.name = args[1]
 
+    pack.enable = args.enable
+    pack.on = args.on
+    pack.ft = args.ft
+
     pack.repo = args.repo
     pack.branch = args.branch
 

@@ -44,13 +44,11 @@ return {
     after = 'neovim/nvim-lspconfig',
   },
   {
-    "tami5/lspsaga.nvim",
+    "glepnir/lspsaga.nvim",
     after = 'neovim/nvim-lspconfig',
     config = function()
       local saga = require 'lspsaga'
       saga.init_lsp_saga({
-        use_saga_diagnostic_sign = false,
-        code_action_icon = '',
       })
     end
   }

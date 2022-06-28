@@ -85,15 +85,19 @@ user.setup({
 ```lua
 local use = require('user').use
 use {
-	"package_author/package_name",
-	repo = nil, -- if non-nil, then clone from this repo instead
-	branch = nil, -- if non-nil, then clone from this branch instead of default branch
-	subdir = nil, -- if non-nil, then will add that subdirectory to rtp
-	init = function()
-		-- will run before packadd
-	end,
-	config = function()
-		-- will run after the package is loaded.
-	end,
+  "package_author/package_name",
+  enable = false,  -- default is true
+  ft = "*"         -- active for filetype, default is nil
+  on = nil,        -- active on command, default is nil
+  repo = nil, -- if non-nil, then clone from this repo instead
+  branch = nil, -- if non-nil, then clone from this branch instead of default branch
+  subdir = nil, -- if non-nil, then will add that subdirectory to rtp
+
+  init = function()
+      -- will run before packadd
+  end,
+  config = function()
+    -- will run after the package is loaded.
+  end,
 }
 ```
