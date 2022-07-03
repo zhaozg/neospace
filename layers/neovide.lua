@@ -1,6 +1,6 @@
 local vim = vim
 
-vim.o.guifont='FiraCode Nerd Font Mono:h18.5'
+vim.o.guifont='Hack Nerd Font Mono:h19'
 vim.g.neovide_fullscreen = true
 vim.g.neovide_no_idle = false
 vim.g.neovide_profiler = false
