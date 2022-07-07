@@ -72,7 +72,7 @@ function M.update(pack, callback)
         callback(current, update, code, signal)
       end, 0)
     else
-      vim.notify(("update %s fail: %d, %s, %d"):format(code, chunk, signal))
+      vim.notify(("update %s fail: %d, %s, %d"):format(code, chunk or '', signal))
     end
   end)
 end
