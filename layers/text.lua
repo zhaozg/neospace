@@ -193,5 +193,12 @@ return {
     end
   },
 
+  {
+    "lewis6991/spellsitter.nvim",
+    config = function()
+      require('spellsitter').setup()
+    end
+  },
+
   "folke/zen-mode.nvim"
 }

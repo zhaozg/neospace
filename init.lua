@@ -15,10 +15,6 @@ local neospace = require'neospace'
 -- set neospace
 neospace.base = fn.fnamemodify(fn.resolve(fn.expand('<sfile>:p')), ':h')
 
-if vim.fn.filereadable('.nvimrc')==1 then
-  vim.cmd("source .nvimrc")
-end
-
 -- map leader to Space
 vim.cmd("let mapleader = ' '")
 vim.cmd('let maplocalleader = ","')
@@ -57,5 +53,11 @@ for _, name in pairs(layer.names) do
   end
 end
 
-user.setup()
+user.setup({
+  loaded = function()
+    if vim.fn.filereadable('.nvimrc')==1 then
+      vim.cmd("source .nvimrc")
+    end
+  end
+})
 

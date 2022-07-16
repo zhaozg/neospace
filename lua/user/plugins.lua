@@ -195,6 +195,12 @@ function M.manage(plugins, options)
       progress = try_activate(plugins[source]) or progress
     end
   end
+  if options.loaded then
+    local _, msg = pcall(options.loaded)
+    if not _ then
+      notify(("ERR: %s"):format(msg))
+    end
+  end
 
   local function upgrade()
     local count = 0
