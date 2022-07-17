@@ -17,6 +17,7 @@ keymap("n", "<Leader>bh", [[<cmd>Alpha<CR>]], { noremap = true })
 keymap("n", "<Leader>bp", [[<cmd>bprevious<CR>]], { noremap = true })
 keymap("n", "<Leader>bn", [[<cmd>bnext<CR>]], { noremap = true })
 keymap("n", "<Leader>bw", [[<cmd>bw<CR>]], { noremap = true })
+keymap("n", "<Leader>q", [[<cmd>bd<CR>]], { noremap = true })
 
 -- window
 keymap("n", "<Leader>ww", [[<C-W>w]], {noremap = true})
