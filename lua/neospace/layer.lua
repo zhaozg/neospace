@@ -24,6 +24,23 @@ function M:load(name, private)
   end
 end
 
+function M:require(name, private)
+  if package.loaded[name] then
+    return package.loaded[name]
+  end
+
+  local path = string.format("%s/%s/lua/%s.lua",
+                             config_path,
+                             private and "private" or "layers",
+                             name)
+  if vim.fn.filereadable(path)==0 then return end
+  local load = dofile(path) or true
+  if load then
+    package.loaded[name] = load
+  end
+  return load
+end
+
 function M:load_private()
   self:load('init', true)
 end
