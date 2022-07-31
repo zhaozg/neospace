@@ -10,6 +10,12 @@ augroup taskwarrior
 augroup END
       ]]
     end
+  },
+  {
+    'itchyny/calendar.vim',
+    opt = true,
+    enable = false,
+    cmd = { 'Calendar' }
   }
 }
 

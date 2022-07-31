@@ -51,5 +51,11 @@ return {
       saga.init_lsp_saga({
       })
     end
+  },
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    config = function()
+      require("null-ls").setup()
+    end
   }
 }

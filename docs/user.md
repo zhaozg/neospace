@@ -1,6 +1,8 @@
 # USER
 
-User is a fork of [user.nvim](https://github.com/faerryn/user.nvim) and [plogins.nvim](https://github.com/faerryn/plogins.nvim) packman for neovim, but update largely.
+User is a fork of [user.nvim](https://github.com/faerryn/user.nvim) and
+[plogins.nvim](https://github.com/faerryn/plogins.nvim) packman for neovim,
+but update largely.
 
 ## Howto use
 
@@ -9,22 +11,25 @@ User is a fork of [user.nvim](https://github.com/faerryn/user.nvim) and [plogins
 * Auto install new plugins.
 
 ## Requirements
-- [Neovim 0.5.0](https://neovim.io/)
-- [Git](https://git-scm.com/)
+
+* [Neovim 0.5.0](https://neovim.io/)
+* [Git](https://git-scm.com/)
 
 ## Recommendations
 
 Neovim 0.5.0 now supports using init.lua, where lua code can be put.
 If you have a `init.vim` or `.vimrc`, you can put your lua code in a heredoc block:
 
-```
+```vim
 lua << EOF
 -- lua code goes here
 EOF
 ```
 
 ## Usage
+
 setup(): Mandatory to make the lua work:
+
 ```lua
 local plugins = {
   "tpope/vim-commentary",

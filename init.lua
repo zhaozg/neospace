@@ -38,6 +38,8 @@ layer:load('ale')
 layer:load('debug')
 layer:load('lang/markdown')
 
+layer:load('tools')
+
 if vim.fn.exists("g:neovide") then
   layer:load('neovide')
 end
