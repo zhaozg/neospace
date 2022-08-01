@@ -11,7 +11,7 @@ function M.async_run(pack, args, callback)
   async.run(cmd, {
     args = args,
     cwd = pack.install_path,
-    hide = true
+    hide = true,
   }, callback)
 end
 
@@ -42,12 +42,12 @@ function M.clone(pack, callback)
     pack.repo,
     pack.install_path,
     "--depth",
-    "9"
+    "9",
   }
 
   async.run(cmd, {
     args = args,
-    hide = true
+    hide = true,
   }, function(code, chunk, signal)
     vim.defer_fn(function()
       callback(code, chunk, signal)
@@ -72,7 +72,7 @@ function M.update(pack, callback)
         callback(current, update, code, signal)
       end, 0)
     else
-      vim.notify(("update %s fail: %d, %s, %d"):format(code, chunk or '', signal))
+      vim.notify(("update %s fail: %d, %s, %d"):format(code, chunk or "", signal))
     end
   end)
 end

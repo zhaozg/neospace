@@ -1,21 +1,20 @@
 return {
   {
-    'blindFS/vim-taskwarrior',
-    cmd ='TW',
+    "blindFS/vim-taskwarrior",
+    cmd = "TW",
     config = function()
-      vim.cmd[[
+      vim.cmd([[
 augroup taskwarrior
   autocmd!
   autocmd filetype taskedit DisableWhitespace
 augroup END
-      ]]
-    end
+      ]])
+    end,
   },
   {
-    'itchyny/calendar.vim',
+    "itchyny/calendar.vim",
     opt = true,
     enable = false,
-    cmd = { 'Calendar' }
-  }
+    cmd = { "Calendar" },
+  },
 }
-

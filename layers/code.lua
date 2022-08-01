@@ -3,9 +3,9 @@ local g = vim.g
 
 return {
   {
-    'numToStr/Comment.nvim',
+    "numToStr/Comment.nvim",
     config = function()
-      require('Comment').setup()
+      require("Comment").setup()
     end,
   },
   {
@@ -53,22 +53,46 @@ return {
   {
     "mhartington/formatter.nvim",
     config = function()
-      local fmt = require'neospace.fmt'
+      local fmt = require("neospace.fmt")
 
       require("formatter").setup({
         filetype = {
-          javascript = { function() return fmt.javascript end },
-          sh         = { function() return fmt.sh end },
-          lua        = { function() return fmt.lua end },
-          c          = { function() return fmt.c end },
-          java       = { function() return fmt.java end, },
-          cpp        = { function() return fmt.cpp end },
+          javascript = {
+            function()
+              return fmt.javascript
+            end,
+          },
+          sh = {
+            function()
+              return fmt.sh
+            end,
+          },
+          lua = {
+            function()
+              return fmt.lua
+            end,
+          },
+          c = {
+            function()
+              return fmt.c
+            end,
+          },
+          java = {
+            function()
+              return fmt.java
+            end,
+          },
+          cpp = {
+            function()
+              return fmt.cpp
+            end,
+          },
         },
       })
 
       vim.cmd("xmap <Leader>xf :Format<CR>")
       vim.cmd("nmap <Leader>xf :Format<CR>")
-    end
+    end,
   },
   "wellle/targets.vim",
   {
@@ -90,7 +114,7 @@ return {
     end,
   },
   {
-    "gpanders/editorconfig.nvim"
+    "gpanders/editorconfig.nvim",
   },
 
   {
@@ -249,7 +273,7 @@ return {
       cmp.setup.cmdline("/", {
         completion = { autocomplete = false },
         sources = {
-          { name = 'buffer', option = { keyword_pattern = [=[[^[:blank:]].*]=] } }
+          { name = "buffer", option = { keyword_pattern = [=[[^[:blank:]].*]=] } },
         },
       })
 
@@ -296,12 +320,12 @@ return {
     end,
   },
   {
-    'johmsalas/text-case.nvim',
+    "johmsalas/text-case.nvim",
     config = function()
-      require('textcase').setup {}
-      require('telescope').load_extension('textcase')
-      vim.api.nvim_set_keymap('n', 'ga.', '<cmd>TextCaseOpenTelescope<CR>', { desc = "Telescope" })
-      vim.api.nvim_set_keymap('v', 'ga.', "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope" })
-    end
-  }
+      require("textcase").setup({})
+      require("telescope").load_extension("textcase")
+      vim.api.nvim_set_keymap("n", "ga.", "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope" })
+      vim.api.nvim_set_keymap("v", "ga.", "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope" })
+    end,
+  },
 }

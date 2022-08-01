@@ -1,13 +1,13 @@
 -- displays the status of lsp
 local vim = vim
-local LspStatus = require('lualine.component'):extend()
+local LspStatus = require("lualine.component"):extend()
 
 function LspStatus:init(options)
-    LspStatus.super.init(self, options)
+  LspStatus.super.init(self, options)
 end
 
 function LspStatus:update_status()
-  local ret, status = pcall(require, 'lsp-status')
+  local ret, status = pcall(require, "lsp-status")
   if ret then
     return status.status()
   else
@@ -15,6 +15,8 @@ function LspStatus:update_status()
   end
 end
 
-LspStatus.isEnabled = function() return #vim.lsp.buf_get_clients() > 0 end
+LspStatus.isEnabled = function()
+  return #vim.lsp.buf_get_clients() > 0
+end
 
 return LspStatus

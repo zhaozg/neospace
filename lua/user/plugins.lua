@@ -1,7 +1,7 @@
 -- https://github.com/faerryn/plogins.nvim/blob/master/lua/plogins.lua
 local vim = vim
 local notify = vim.notify
-local git = require('user.git')
+local git = require("user.git")
 
 local M = {}
 
@@ -22,20 +22,20 @@ local function packadd_do(plugin)
 end
 
 local function packadd_ft(plugin)
-  vim.api.nvim_create_autocmd('FileType', {
+  vim.api.nvim_create_autocmd("FileType", {
     pattern = plugin.ft,
     callback = function()
       packadd_do(plugin)
-    end
+    end,
   })
 end
 
 local function packadd_on(plugin)
-  vim.api.nvim_create_autocmd('CmdUndefined', {
+  vim.api.nvim_create_autocmd("CmdUndefined", {
     pattern = plugin.on,
     callback = function()
       packadd_do(plugin)
-    end
+    end,
   })
 end
 
@@ -58,7 +58,7 @@ end
 
 local function subset(a, b)
   for x, y in pairs(a) do
-    if (type(x)=='number') then
+    if type(x) == "number" then
       x = y
     end
     if b[x] == nil then
@@ -90,20 +90,20 @@ local function recursively_delete(path)
 end
 
 local function chdir_do(dir, fun, callback)
-  local async = require('user.async')
-  if type(fun)=='function' then
+  local async = require("user.async")
+  if type(fun) == "function" then
     local ret, msg = pcall(fun)
     callback(ret, msg)
-  elseif type(fun)=='string' then
+  elseif type(fun) == "string" then
     async.run(fun, {
       cwd = dir,
-      args = {}
+      args = {},
     }, callback)
-  elseif type(fun)=='table' then
+  elseif type(fun) == "table" then
     local cmd = table.remove(fun, 1)
     async.run(cmd, {
       cwd = dir,
-      args = fun
+      args = fun,
     }, callback)
   else
     error("Can't run " .. tostring(fun))
@@ -122,8 +122,7 @@ end
 
 function M.manage(plugins, options)
   options = options or {}
-  local plugins_directory = options.plugins_directory
-    or ("%s/site/pack/user/opt"):format(vim.fn.stdpath("data"))
+  local plugins_directory = options.plugins_directory or ("%s/site/pack/user/opt"):format(vim.fn.stdpath("data"))
   local repo_base = options.repo_base or "https://github.com/"
 
   local activated_sources = {}
@@ -156,12 +155,12 @@ function M.manage(plugins, options)
   end
 
   local count = 0
-  for _ = 1, #plugins  do
+  for _ = 1, #plugins do
     local plugin = plugins[_]
     plugin.upgrade_hook = plugin.upgrade_hook or plugin.install or function() end
     plugin.packadd_hook = plugin.packadd_hook or plugin.config or function() end
     plugin.packadd_after = plugin.packadd_after or plugin.after or {}
-    if type(plugin.packadd_after)=='string' then
+    if type(plugin.packadd_after) == "string" then
       plugin.packadd_after = { plugin.packadd_after }
     end
 
@@ -181,7 +180,7 @@ function M.manage(plugins, options)
           try_activate(plugin)
           notify(("%s installed"):format(plugin.name))
         end)
-        if count==0 then
+        if count == 0 then
           notify("All plugins installed")
         end
       end)
@@ -215,10 +214,10 @@ function M.manage(plugins, options)
           helptags(plugin)
 
           install(plugin, function()
-              notify(("%s upgraded"):format(source))
+            notify(("%s upgraded"):format(source))
           end)
         end
-        if count==0 then
+        if count == 0 then
           notify("All plugins upgraded")
         end
       end)
