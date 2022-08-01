@@ -3,6 +3,14 @@ return {
     "nvim-treesitter/nvim-treesitter",
     config = function()
       require("nvim-treesitter.configs").setup({
+        tree_docs = {
+          enable = true,
+          keymaps = {
+            doc_node_at_cursor = "gdd",
+            doc_all_in_range = "gdd",
+          },
+        },
+
         highlight = {
           -- false will disable the whole extension
           enable = true,
@@ -10,8 +18,9 @@ return {
           -- disable = { 'c', 'rust' },
           additional_vim_regex_highlighting = false,
         },
+
         incremental_selection = {
-          enable = true,
+          enable = false,
           -- disable = { 'cpp', 'lua' },
           -- mappings for incremental selection (visual mappings)
           keymaps = {
@@ -25,6 +34,7 @@ return {
             scope_decremental = "grm",
           },
         },
+
         node_movement = { -- allows cursor movement in node hierarchy
           enable = true,
           -- disable = { 'cpp', 'rust' },
@@ -35,9 +45,11 @@ return {
             previous_scope = "<a-l>",
           },
         },
+
         indent = {
           enable = true,
         },
+
         rainbow = {
           enable = true,
           -- Also highlight non-bracket delimiters like html tags,
@@ -47,23 +59,12 @@ return {
           colors = {}, -- table of hex strings
           termcolors = {}, -- table of colour name strings
         },
+
         context_commentstring = {
           enable = true,
           enable_autocmd = false,
         },
-        ensure_installed = { "c", "cpp", "lua", "bash", "cmake", "java", "make", "vim", "zig", "yaml", "vue" },
-        -- {'c', 'lua'}
-        -- ensure_installed = 'all' -- one of 'all', 'language', or a list of languages
-      })
-      vim.opt.foldmethod = "expr"
-      vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-    end,
-  },
-  {
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    after = "nvim-treesitter/nvim-treesitter",
-    config = function()
-      require("nvim-treesitter.configs").setup({
+
         textobjects = {
           select = {
             enable = true,
@@ -76,16 +77,30 @@ return {
             },
           },
         },
+        ensure_installed = { "c", "cpp", "lua", "bash", "cmake", "java", "make", "vim", "zig", "yaml", "vue" },
+        -- {'c', 'lua'}
+        -- ensure_installed = 'all' -- one of 'all', 'language', or a list of languages
       })
+      vim.opt.foldmethod = "expr"
+      vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
     end,
   },
   {
-    "JoosepAlviste/nvim-ts-context-commentstring",
+    "nvim-treesitter/nvim-treesitter-refactor",
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+  },
+  {
+    "nvim-treesitter/nvim-tree-docs",
   },
   {
     "p00f/nvim-ts-rainbow",
   },
   {
-    "romgrk/nvim-treesitter-context",
+    "JoosepAlviste/nvim-ts-context-commentstring",
   },
 }
