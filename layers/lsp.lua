@@ -48,7 +48,10 @@ return {
     after = "neovim/nvim-lspconfig",
     config = function()
       local saga = require("lspsaga")
+      local opts = {}
 
+      -- WARNING: https://github.com/neovim/neovim/issues/19458
+      --[[
       local function get_file_name(include_path)
         local file_name = require("lspsaga.symbolwinbar").get_file_name()
         if vim.fn.bufname("%") == "" then
@@ -108,33 +111,33 @@ return {
         end,
       })
 
-      saga.init_lsp_saga({
-        symbol_in_winbar = {
-          in_custom = true,
-          click_support = function(node, clicks, button, modifiers)
-            -- To see all avaiable details: vim.pretty_print(node)
-            local st = node.range.start
-            local en = node.range["end"]
-            if button == "l" then
-              if clicks == 2 then
-                -- double left click to do nothing
-              else -- jump to node's starting line+char
-                vim.fn.cursor(st.line + 1, st.character + 1)
-              end
-            elseif button == "r" then
-              if modifiers == "s" then
-                print("lspsaga") -- shift right click to print "lspsaga"
-              end -- jump to node's ending line+char
-              vim.fn.cursor(en.line + 1, en.character + 1)
-            elseif button == "m" then
-              -- middle click to visual select node
+      opts.symbol_in_winbar = {
+        in_custom = true,
+        click_support = function(node, clicks, button, modifiers)
+          -- To see all avaiable details: vim.pretty_print(node)
+          local st = node.range.start
+          local en = node.range["end"]
+          if button == "l" then
+            if clicks == 2 then
+              -- double left click to do nothing
+            else -- jump to node's starting line+char
               vim.fn.cursor(st.line + 1, st.character + 1)
-              vim.cmd("normal v")
-              vim.fn.cursor(en.line + 1, en.character + 1)
             end
-          end,
-        },
-      })
+          elseif button == "r" then
+            if modifiers == "s" then
+              print("lspsaga") -- shift right click to print "lspsaga"
+            end -- jump to node's ending line+char
+            vim.fn.cursor(en.line + 1, en.character + 1)
+          elseif button == "m" then
+            -- middle click to visual select node
+            vim.fn.cursor(st.line + 1, st.character + 1)
+            vim.cmd("normal v")
+            vim.fn.cursor(en.line + 1, en.character + 1)
+          end
+        end,
+      }
+      --]]
+      saga.init_lsp_saga(opts)
     end,
   },
   {
