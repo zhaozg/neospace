@@ -24,20 +24,29 @@ require("neospace.leader")
 
 -- active default layer --
 local layer = require("neospace.layer")
+
+-- basic
 layer:load("better")
+layer:load("theme")
 layer:load("async")
 layer:load("ui")
-layer:load("theme")
+
+-- commons
 layer:load("text")
 layer:load("code")
 layer:load("finder")
 layer:load("git")
+
+-- enhance
 layer:load("lsp")
 layer:load("treesitter")
 layer:load("ale")
 layer:load("debug")
+
+-- language
 layer:load("lang/markdown")
 
+-- misc
 layer:load("tools")
 
 if vim.fn.exists("g:neovide") then

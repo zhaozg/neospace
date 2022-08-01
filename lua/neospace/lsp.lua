@@ -22,7 +22,7 @@ local on_attach = function(client, bufnr)
   map(bufnr, "n", "<space>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>", opts)
 
   if not vim.fn.exists(":Lspsaga") then
-    map(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+    map(bufnr, "n", "cd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
 
     map(bufnr, "n", "gh", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
     map(bufnr, "n", "ga", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
@@ -35,7 +35,7 @@ local on_attach = function(client, bufnr)
     map(bufnr, "n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
     map(bufnr, "n", "gq", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
   else
-    map(bufnr, "n", "gd", '<cmd>lua require"lspsaga.definition".preview_definition()<CR>', opts)
+    map(bufnr, "n", "cd", '<cmd>lua require"lspsaga.definition".preview_definition()<CR>', opts)
 
     map(bufnr, "n", "gh", '<cmd>lua require("lspsaga.hover").render_hover_doc(<CR>', opts)
     map(bufnr, "n", "ga", '<cmd>lua require("lspsaga.codeaction").code_action()<CR>', opts)

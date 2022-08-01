@@ -1,7 +1,64 @@
 local vim = vim
 local g = vim.g
 
+vim.cmd [[
+let g:better_whitespace_enabled = 1
+let g:strip_whitespace_on_save = 0
+let g:strip_only_modified_lines = 1
+let g:better_whitespace_operator = ""
+let g:show_spaces_that_precede_tabs = 1
+]]
+
 return {
+  {
+    "ntpeters/vim-better-whitespace",
+    config = function()
+      vim.cmd("nnoremap ]w :NextTrailingWhitespace<CR>")
+      vim.cmd("nnoremap [w :PrevTrailingWhitespace<CR>")
+    end,
+  },
+
+  {
+    "junegunn/vim-easy-align",
+    config = function()
+      local wk = require("which-key")
+
+      wk.register({
+        a = {
+          name = "+align",
+          ["a"] = { "<Plug>(EasyAlign)", "EasyAlign" },
+          ["i"] = { "<Plug>(LiveEasyAlign)", "LiveEasyAlign" },
+          ["="] = { "<Plug>(EasyAlign)ip=", "Align =" },
+          ["t"] = { "<Plug>(EasyAlign)ip*|", "AlignTable" },
+          ["|"] = { "<Plug>(EasyAlign)ip|", "Align |" },
+          [":"] = { "<Plug>(EasyAlign)ip:", "Align :" },
+          ["."] = { "<Plug>(EasyAlign)ip.", "Align ." },
+          [","] = { "<Plug>(EasyAlign)ip,", "Align ," },
+          ["&"] = { "<Plug>(EasyAlign)ip&", "Align &" },
+          ["#"] = { "<Plug>(EasyAlign)ip#", "Align #" },
+          ['"'] = { '<Plug>(EasyAlign)ip"', 'Align "' },
+          ["c"] = { "<Plug>(EasyAlign)ip-[ *]+/r0", "AlignCode" },
+        },
+      }, { prefix = "<leader>" })
+
+      wk.register({
+        a = {
+          name = "+align",
+          ["="] = { "<Plug>(EasyAlign)=", "Align =" },
+          ["t"] = { "<Plug>(EasyAlign)*|", "AlignTable" },
+          ["|"] = { "<Plug>(EasyAlign)|", "Align |" },
+          [":"] = { "<Plug>(EasyAlign):", "Align :" },
+          ["."] = { "<Plug>(EasyAlign).", "Align ." },
+          [","] = { "<Plug>(EasyAlign),", "Align ," },
+          ["&"] = { "<Plug>(EasyAlign)&", "Align &" },
+          ["#"] = { "<Plug>(EasyAlign)#", "Align #" },
+          ['"'] = { '<Plug>(EasyAlign)"', 'Align "' },
+          ["c"] = { "<Plug>(EasyAlign)-[ *]+/r0", "AlignCode" },
+        },
+      }, { prefix = "<leader>", mode = "v" })
+    end,
+  },
+
   {
     "phaazon/hop.nvim",
     config = function()
@@ -60,64 +117,14 @@ return {
       end)
     end,
   },
+
   {
-    "tpope/vim-surround",
-    init = function()
-      g.surround_no_mappings = 1
-    end,
+    "kylechui/nvim-surround",
     config = function()
-      vim.cmd("nmap ds       <Plug>Dsurround")
-      vim.cmd("nmap cs       <Plug>Csurround")
-      vim.cmd("nmap cS       <Plug>CSurround")
-      vim.cmd("nmap ys       <Plug>Ysurround")
-      vim.cmd("nmap yS       <Plug>YSurround")
-      vim.cmd("nmap yss      <Plug>Yssurround")
-      vim.cmd("nmap ySs      <Plug>YSsurround")
-      vim.cmd("nmap ySS      <Plug>YSsurround")
-      vim.cmd("xmap gs       <Plug>VSurround")
-      vim.cmd("xmap gS       <Plug>VgSurround")
+      require("nvim-surround").setup()
     end,
   },
-  {
-    "junegunn/vim-easy-align",
-    config = function()
-      local wk = require("which-key")
 
-      wk.register({
-        a = {
-          name = "+align",
-          ["a"] = { "<Plug>(EasyAlign)", "EasyAlign" },
-          ["i"] = { "<Plug>(LiveEasyAlign)", "LiveEasyAlign" },
-          ["="] = { "<Plug>(EasyAlign)ip=", "Align =" },
-          ["t"] = { "<Plug>(EasyAlign)ip*|", "AlignTable" },
-          ["|"] = { "<Plug>(EasyAlign)ip|", "Align |" },
-          [":"] = { "<Plug>(EasyAlign)ip:", "Align :" },
-          ["."] = { "<Plug>(EasyAlign)ip.", "Align ." },
-          [","] = { "<Plug>(EasyAlign)ip,", "Align ," },
-          ["&"] = { "<Plug>(EasyAlign)ip&", "Align &" },
-          ["#"] = { "<Plug>(EasyAlign)ip#", "Align #" },
-          ['"'] = { '<Plug>(EasyAlign)ip"', 'Align "' },
-          ["c"] = { "<Plug>(EasyAlign)ip-[ *]+/r0", "AlignCode" },
-        },
-      }, { prefix = "<leader>" })
-
-      wk.register({
-        a = {
-          name = "+align",
-          ["="] = { "<Plug>(EasyAlign)=", "Align =" },
-          ["t"] = { "<Plug>(EasyAlign)*|", "AlignTable" },
-          ["|"] = { "<Plug>(EasyAlign)|", "Align |" },
-          [":"] = { "<Plug>(EasyAlign):", "Align :" },
-          ["."] = { "<Plug>(EasyAlign).", "Align ." },
-          [","] = { "<Plug>(EasyAlign),", "Align ," },
-          ["&"] = { "<Plug>(EasyAlign)&", "Align &" },
-          ["#"] = { "<Plug>(EasyAlign)#", "Align #" },
-          ['"'] = { '<Plug>(EasyAlign)"', 'Align "' },
-          ["c"] = { "<Plug>(EasyAlign)-[ *]+/r0", "AlignCode" },
-        },
-      }, { prefix = "<leader>", mode = "v" })
-    end,
-  },
   {
     "fedepujol/move.nvim",
     config = function()
@@ -131,20 +138,7 @@ return {
       vim.api.nvim_set_keymap("v", "<C-h>", ":MoveHBlock(-1)<CR>", { noremap = true, silent = true })
     end,
   },
-  {
-    "ntpeters/vim-better-whitespace",
-    init = function()
-      g.better_whitespace_enabled = 1
-      g.strip_whitespace_on_save = 0
-      g.strip_only_modified_lines = 1
-      g.better_whitespace_operator = "<leader>xs"
-      g.show_spaces_that_precede_tabs = 1
-    end,
-    config = function()
-      vim.cmd("nnoremap ]w :NextTrailingWhitespace<CR>")
-      vim.cmd("nnoremap [w :PrevTrailingWhitespace<CR>")
-    end,
-  },
+
   {
     "sindrets/diffview.nvim",
     config = function()
@@ -200,5 +194,10 @@ return {
     end,
   },
 
-  "folke/zen-mode.nvim",
+  {
+    "folke/zen-mode.nvim",
+    config = function()
+      require("zen-mode").setup()
+    end
+  }
 }
