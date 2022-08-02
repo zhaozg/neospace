@@ -8,8 +8,8 @@ local M = {}
 local function packadd_do(plugin)
   vim.cmd(("packadd %s"):format(vim.fn.fnameescape(plugin.name)))
   if plugin.packadd_hook then
-    if plugin.init then
-      local ret, msg = pcall(plugin.init)
+    if plugin.packadd_init then
+      local ret, msg = pcall(plugin.packadd_init)
       if not ret then
         notify(("%s init fail: %s"):format(plugin.name, msg))
       end
@@ -158,6 +158,7 @@ function M.manage(plugins, options)
   for _ = 1, #plugins do
     local plugin = plugins[_]
     plugin.upgrade_hook = plugin.upgrade_hook or plugin.install or function() end
+    plugin.packadd_init = plugin.packadd_init or plugin.init
     plugin.packadd_hook = plugin.packadd_hook or plugin.config or function() end
     plugin.packadd_after = plugin.packadd_after or plugin.after or {}
     if type(plugin.packadd_after) == "string" then
