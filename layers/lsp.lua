@@ -5,29 +5,30 @@ return {
     "neovim/nvim-lspconfig",
   },
   {
-    "williamboman/nvim-lsp-installer",
-    after = "neovim/nvim-lspconfig",
+    "williamboman/mason.nvim",
     config = function()
-      local lsp_installer = require("nvim-lsp-installer")
-      -- Provide settings first!
-      lsp_installer.settings({
-        ui = {
-          icons = {
-            server_installed = "✓",
-            server_pending = "➜",
-            server_uninstalled = "✗",
-          },
-        },
-        log_level = vim.log.levels.ERROR,
+      require("mason").setup()
+    end,
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
+    after = "williamboman/mason.nvim",
+    config = function()
+      require("mason-lspconfig").setup({
+        log_level = vim.log.levels.DEBUG,
       })
 
-      local lsp = require("neospace.lsp")
-
-      lsp_installer.on_server_ready(function(server)
-        local opts = lsp.setting(server.name)
-        server:setup(opts)
-        vim.cmd([[ do User LspAttachBuffers ]])
-      end)
+      require("mason-lspconfig").setup_handlers {
+          function (server_name) -- default handler (optional)
+              local lsp = require("neospace.lsp")
+              local opts = lsp.setting(server_name)
+              require("lspconfig")[server_name].setup(opts)
+          end,
+          -- Next, you can provide targeted overrides for specific servers.
+          -- ["rust_analyzer"] = function ()
+          --     require("rust-tools").setup {}
+          -- end,
+      }
     end,
   },
   {
