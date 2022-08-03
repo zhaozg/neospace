@@ -148,6 +148,10 @@ return {
   "hrsh7th/cmp-path",
   "hrsh7th/cmp-cmdline",
   "quangnguyen30192/cmp-nvim-ultisnips",
+  {
+    "paopaol/cmp-doxygen",
+    after = "nvim-treesitter/nvim-treesitter",
+  },
 
   {
     "hrsh7th/nvim-cmp",
@@ -262,6 +266,7 @@ return {
         },
         -- ... Your other configuration ...
         sources = cmp.config.sources({
+          { name = "doxygen" },
           { name = "nvim_lsp" },
           { name = "ultisnips" }, -- For ultisnips users.
         }, {
@@ -328,4 +333,11 @@ return {
       vim.api.nvim_set_keymap("v", "ga.", "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope" })
     end,
   },
+  {
+    "danymat/neogen",
+    after = "nvim-treesitter/nvim-treesitter",
+    config = function()
+        require('neogen').setup {}
+    end,
+  }
 }
