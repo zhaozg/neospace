@@ -1,4 +1,5 @@
 local vim = vim
+local map = require('neospace').map
 
 return {
   { "f-person/git-blame.nvim" },
@@ -17,26 +18,42 @@ return {
         },
         numhl = false,
         linehl = false,
-        keymaps = {
-          -- Default keymap options
-          noremap = true,
+        on_attach = function(bufnr)
+          local gs = signs
+          local function lmap(mode, l, r, opts)
+            opts = opts or {}
+            opts.buffer = bufnr
+            vim.keymap.set(mode, l, r, opts)
+          end
+          -- Navigation
+          lmap('n', ']c', function()
+            if vim.wo.diff then return ']c' end
+            vim.schedule(function() gs.next_hunk() end)
+            return '<Ignore>'
+          end, {expr=true})
 
-          ["n ]c"] = { expr = true, "&diff ? ']c' : '<cmd>lua require\"gitsigns.actions\".next_hunk()<CR>'" },
-          ["n [c"] = { expr = true, "&diff ? '[c' : '<cmd>lua require\"gitsigns.actions\".prev_hunk()<CR>'" },
+          lmap('n', '[c', function()
+            if vim.wo.diff then return '[c' end
+            vim.schedule(function() gs.prev_hunk() end)
+            return '<Ignore>'
+          end, {expr=true})
 
-          ["n <leader>hs"] = '<cmd>lua require"gitsigns".stage_hunk()<CR>',
-          ["v <leader>hs"] = '<cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-          ["n <leader>hu"] = '<cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-          ["n <leader>hr"] = '<cmd>lua require"gitsigns".reset_hunk()<CR>',
-          ["v <leader>hr"] = '<cmd>lua require"gitsigns".reset_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-          ["n <leader>hR"] = '<cmd>lua require"gitsigns".reset_buffer()<CR>',
-          ["n <leader>hp"] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
-          ["n <leader>hb"] = '<cmd>lua require"gitsigns".blame_line(true)<CR>',
+          -- Actions
+          lmap({'n', 'v'}, '<leader>gs', ':Gitsigns stage_hunk<CR>')
+          lmap({'n', 'v'}, '<leader>gr', ':Gitsigns reset_hunk<CR>')
+          lmap('n', '<leader>gS', gs.stage_buffer)
+          lmap('n', '<leader>gu', gs.undo_stage_hunk)
+          lmap('n', '<leader>gR', gs.reset_buffer)
+          lmap('n', '<leader>gp', gs.preview_hunk)
+          lmap('n', '<leader>gb', function() gs.blame_line{full=true} end)
+          lmap('n', '<leader>gb', gs.toggle_current_line_blame)
+          lmap('n', '<leader>gd', gs.diffthis)
+          lmap('n', '<leader>gD', function() gs.diffthis('~') end)
+          lmap('n', '<leader>td', gs.toggle_deleted)
 
-          -- Text objects
-          ["o ih"] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
-          ["x ih"] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
-        },
+          -- Text object
+          lmap({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+        end,
         watch_gitdir = {
           interval = 1000,
           follow_files = true,
@@ -76,23 +93,23 @@ return {
           diffview = true,
         },
       })
-      vim.cmd("nnoremap <silent> <Leader>gn :Neogit kind=vsplit<CR>")
+      map('n', '<Leader>gn', ':Neogit kind=vsplit<CR>')
     end,
   },
 
   {
     "tpope/vim-fugitive",
     config = function()
-      vim.cmd("nnoremap <silent> <Leader>gf :BCommits<CR>")
-      vim.cmd("nnoremap <silent> <Leader>gb :Git blame<CR>")
-      vim.cmd("nnoremap <silent> <Leader>gc :Git commit<CR>")
-      vim.cmd("nnoremap <silent> <Leader>gd :Gdiffsplit<CR>")
-      vim.cmd("nnoremap <silent> <Leader>ge :Gedit<CR>")
-      vim.cmd("nnoremap <silent> <Leader>gl :Gclog<CR>")
-      vim.cmd("nnoremap <silent> <Leader>gp :Git push<CR>")
-      vim.cmd("nnoremap <silent> <Leader>gr :Gread<CR>")
-      vim.cmd("nnoremap <silent> <Leader>gs :Git<CR>")
-      vim.cmd("nnoremap <silent> <Leader>gw :Gwrite<CR>")
+      map('n', '<Leader>gf', ':BCommits<CR>')
+      map('n', '<Leader>gb', ':Git blame<CR>')
+      map('n', '<Leader>gc', ':Git commit<CR>')
+      map('n', '<Leader>gd', ':Gdiffsplit<CR>')
+      map('n', '<Leader>ge', ':Gedit<CR>')
+      map('n', '<Leader>gl', ':Gclog<CR>')
+      map('n', '<Leader>gp', ':Git push<CR>')
+      map('n', '<Leader>gr', ':Gread<CR>')
+      map('n', '<Leader>gs', ':Git<CR>')
+      map('n', '<Leader>gw', ':Gwrite<CR>')
     end,
   },
   {
@@ -100,8 +117,8 @@ return {
     opt = true,
     cmd = { "GV", "GV!" },
     config = function()
-      vim.cmd("nnoremap <silent> <Leader>gv :GV<CR>")
-      vim.cmd("nnoremap <silent> <Leader>gV :GV!<CR>")
+      map('n', '<Leader>gv', ':GV<CR>')
+      map('n', '<Leader>gV', ':GV!<CR>')
     end,
   },
 }

@@ -1,5 +1,5 @@
 local vim = vim
-local g = vim.g
+local map = require('neospace').map
 
 vim.cmd [[
 let g:better_whitespace_enabled = 1
@@ -13,8 +13,8 @@ return {
   {
     "ntpeters/vim-better-whitespace",
     config = function()
-      vim.cmd("nnoremap ]w :NextTrailingWhitespace<CR>")
-      vim.cmd("nnoremap [w :PrevTrailingWhitespace<CR>")
+      map('n', "]w", ":NextTrailingWhitespace<CR>")
+      map('n', "[w", ":PrevTrailingWhitespace<CR>")
     end,
   },
 
@@ -67,42 +67,31 @@ return {
 
       -- you can configure Hop the way you like here; see :h hop-config
       hop.setup({})
-      vim.keymap.set("n", "f", function()
+
+      vim.keymap.set("", "f", function()
         hop.hint_char1({
           direction = hint.HintDirection.AFTER_CURSOR,
           current_line_only = true,
         })
       end)
-      vim.keymap.set("n", "F", function()
+      vim.keymap.set("", "F", function()
         hop.hint_char1({
           direction = hint.HintDirection.BEFORE_CURSOR,
           current_line_only = true,
-        })
-      end)
-      vim.keymap.set("v", "f", function()
-        hop.hint_char1({
-          direction = hint.HintDirection.AFTER_CURSOR,
-          current_line_only = true,
-          inclusive_jump = true,
-        })
-      end)
-      vim.keymap.set("v", "F", function()
-        hop.hint_char1({
-          direction = hint.HintDirection.BEFORE_CURSOR,
-          current_line_only = true,
-          inclusive_jump = true,
         })
       end)
       vim.keymap.set("", "t", function()
         hop.hint_char1({
           direction = hint.HintDirection.AFTER_CURSOR,
           current_line_only = true,
+          hint_offset = -1
         })
       end)
       vim.keymap.set("", "T", function()
         hop.hint_char1({
           direction = hint.HintDirection.BEFORE_CURSOR,
           current_line_only = true,
+          hint_offset = 1
         })
       end)
 
@@ -128,14 +117,14 @@ return {
   {
     "fedepujol/move.nvim",
     config = function()
-      vim.api.nvim_set_keymap("n", "<C-j>", ":MoveLine(1)<CR>", { noremap = true, silent = true })
-      vim.api.nvim_set_keymap("n", "<C-k>", ":MoveLine(-1)<CR>", { noremap = true, silent = true })
-      vim.api.nvim_set_keymap("v", "<C-j>", ":MoveBlock(1)<CR>", { noremap = true, silent = true })
-      vim.api.nvim_set_keymap("v", "<C-k>", ":MoveBlock(-1)<CR>", { noremap = true, silent = true })
-      vim.api.nvim_set_keymap("n", "<C-l>", ":MoveHChar(1)<CR>", { noremap = true, silent = true })
-      vim.api.nvim_set_keymap("n", "<C-h>", ":MoveHChar(-1)<CR>", { noremap = true, silent = true })
-      vim.api.nvim_set_keymap("v", "<C-l>", ":MoveHBlock(1)<CR>", { noremap = true, silent = true })
-      vim.api.nvim_set_keymap("v", "<C-h>", ":MoveHBlock(-1)<CR>", { noremap = true, silent = true })
+      map("n", "<C-j>", ":MoveLine(1)<CR>" )
+      map("n", "<C-k>", ":MoveLine(-1)<CR>")
+      map("v", "<C-j>", ":MoveBlock(1)<CR>")
+      map("v", "<C-k>", ":MoveBlock(-1)<CR>")
+      map("n", "<C-l>", ":MoveHChar(1)<CR>")
+      map("n", "<C-h>", ":MoveHChar(-1)<CR>")
+      map("v", "<C-l>", ":MoveHBlock(1)<CR>")
+      map("v", "<C-h>", ":MoveHBlock(-1)<CR>")
     end,
   },
 

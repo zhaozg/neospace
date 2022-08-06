@@ -159,7 +159,7 @@ return {
           },
         },
       })
-      vim.cmd("map <leader>tf <cmd>NvimTreeToggle<CR>")
+      require('neospace').map('', '<leader>tf', '<cmd>NvimTreeToggle<CR>')
     end,
   },
 

@@ -1,4 +1,5 @@
 local vim = vim
+local map = require'neospace'.map
 
 vim.o.guifont = "Hack Nerd Font Mono:h19"
 vim.g.neovide_remember_window_size = true
@@ -16,9 +17,8 @@ vim.g.neovide_input_use_logo = true
 vim.cmd("set clipboard+=unnamedplus")
 
 -- system clipboard
-vim.keymap.set("", "<D-c>", '"+y')
-vim.keymap.set("n", "<D-v>", '"+p')
-vim.cmd("inoremap <D-v> <c-r>+")
-vim.cmd("cnoremap <D-v> <c-r>+")
+map("", "<D-c>", '"+y')
+map("n", "<D-v>", '"+p')
+map({"i", "c"}, "<D-v>", '<c-r>+')
 --use <c-r> to insert original character without triggering things like auto-pairs
-vim.cmd("inoremap <D-r> <c-v>")
+map("i", "<D-r>", "<c-v>")

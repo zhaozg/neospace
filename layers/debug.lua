@@ -1,5 +1,3 @@
-local vim = vim
-
 return {
   {
     "sakhnik/nvim-gdb",

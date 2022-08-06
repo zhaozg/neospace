@@ -1,5 +1,6 @@
 local vim = vim
 local g = vim.g
+local map = require('neospace').map
 
 return {
   {
@@ -47,7 +48,7 @@ return {
         buftype_exclude = { "alpha" },
         show_trailing_blankline_indent = true,
       })
-      vim.cmd("nmap <silent> <Leader>ti <cmd>IndentBlanklineToggle<CR>")
+      map('n', '<Leader>ti', '<cmd>IndentBlanklineToggle<CR>')
     end,
   },
   {
@@ -90,8 +91,7 @@ return {
         },
       })
 
-      vim.cmd("xmap <Leader>xf :Format<CR>")
-      vim.cmd("nmap <Leader>xf :Format<CR>")
+      map({'n', 'x'}, '<Leader>xf', ':Format<CR>')
     end,
   },
   "wellle/targets.vim",
@@ -102,17 +102,11 @@ return {
       g.splitjoin_split_mapping = ""
     end,
     config = function()
-      vim.cmd("nmap <Leader>cJ <plug>SplitjoinJoin")
-      vim.cmd("nmap <Leader>cS <Plug>SplitjoinSplit")
+      map('n', '<Leader>cJ', '<plug>SplitjoinJoin')
+      map('n', '<Leader>cS', '<Plug>SplitjoinSplit')
     end,
   },
   "tpope/vim-sleuth",
-  {
-    "zhaozg/vim-printf",
-    config = function()
-      vim.cmd("nnoremap <Leader>cp :Printf<CR>")
-    end,
-  },
   {
     "gpanders/editorconfig.nvim",
   },
@@ -329,8 +323,7 @@ return {
     config = function()
       require("textcase").setup({})
       require("telescope").load_extension("textcase")
-      vim.api.nvim_set_keymap("n", "ga.", "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope" })
-      vim.api.nvim_set_keymap("v", "ga.", "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope" })
+      map({'n', 'v'}, "ga.", "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope" })
     end,
   },
   {
