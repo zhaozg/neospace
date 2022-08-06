@@ -8,6 +8,6 @@ augroup END
 return {
   {
     "kamichidu/vim-edit-properties",
-    ["for"] = { "jproperties" },
+    ft = { "jproperties" },
   },
 }
