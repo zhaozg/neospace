@@ -43,7 +43,6 @@ layer:load("git")
 -- enhance
 layer:load("lsp")
 layer:load("treesitter")
-layer:load("ale")
 layer:load("debug")
 
 -- language
