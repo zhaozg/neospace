@@ -15,6 +15,9 @@ local neospace = require("neospace")
 -- set neospace
 neospace.base = fn.fnamemodify(fn.resolve(fn.expand("<sfile>:p")), ":h")
 
+if neospace.init then
+  neospace.init()
+end
 -- map leader to Space
 vim.cmd("let mapleader = ' '")
 vim.cmd('let maplocalleader = ","')
@@ -66,8 +69,8 @@ end
 
 user.setup({
   loaded = function()
-    if vim.fn.filereadable(".nvimrc") == 1 then
-      vim.cmd("source .nvimrc")
+    if neospace.config then
+      neospace.config()
     end
   end,
 })

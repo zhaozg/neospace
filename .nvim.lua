@@ -1,5 +1,7 @@
-lua << EOF
-  local vim = vim
+function UserInit()
+end
+
+function UserConfig()
   local setting = require'neospace.lsp'.setting
   setting('sumneko_lua', { settings = {
     Lua = {
@@ -11,4 +13,9 @@ lua << EOF
       }
     }
   }})
-EOF
+end
+
+return {
+  init = UserInit,
+  config = UserConfig
+}
