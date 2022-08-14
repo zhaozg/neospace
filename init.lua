@@ -61,8 +61,12 @@ local user = require("user")
 
 for _, name in pairs(layer.names) do
   local modules = layer.modules[name]
-  for _ = 1, #modules do
-    user.use(modules[_])
+  if modules then
+    for _ = 1, #modules do
+      user.use(modules[_])
+    end
+  else
+    print(("Error to load(%s) with %s"):format(name, modules))
   end
 end
 

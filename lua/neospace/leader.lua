@@ -1,18 +1,4 @@
 local map = require('neospace').map
-local wk = require("which-key")
-
-wk.register({
-  a = { name = "align" },
-  b = { name = "buffer" },
-  c = { name = "code" },
-  d = { name = "debug" },
-  f = { name = "find" },
-  g = { name = "git" },
-  t = { name = "toggle" },
-  w = { name = "windows" },
-  x = { name = "text" },
-  z = { name = "fold" }
-}, { prefix = "<leader>" })
 
 map("n", "<Leader>q", "<cmd>q<CR>")
 

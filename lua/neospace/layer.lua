@@ -16,10 +16,12 @@ function M:load(name, private)
   if vim.fn.filereadable(path) == 0 then
     return
   end
-  local modules = dofile(path)
-  if modules then
+  local _, modules = pcall(dofile, path)
+  if _ and modules then
     table.insert(self.names, name)
     self.modules[name] = modules
+  elseif not _ then
+    vim.notify(("dofile(%s) error: %s"):format(path, modules))
   end
 end
 
@@ -32,9 +34,12 @@ function M:require(name, private)
   if vim.fn.filereadable(path) == 0 then
     return
   end
-  local load = dofile(path) or true
-  if load then
-    package.loaded[name] = load
+  local _, load = pcall(dofile, path)
+  if _ then
+    package.loaded[name] = load or true
+  else
+    vim.notify(("dofile(%s) error: %s"):format(path, load))
+    return
   end
   return load
 end

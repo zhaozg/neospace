@@ -236,7 +236,20 @@ return {
     "folke/which-key.nvim",
     after = "kyazdani42/nvim-web-devicons",
     config = function()
-      require("which-key").setup({
+      local wk = require("which-key")
+      wk.register({
+        a = { name = "align" },
+        b = { name = "buffer" },
+        c = { name = "code" },
+        d = { name = "debug" },
+        f = { name = "find" },
+        g = { name = "git" },
+        t = { name = "toggle" },
+        w = { name = "windows" },
+        x = { name = "text" },
+        z = { name = "fold" }
+      }, { prefix = "<leader>" })
+      wk.setup({
         plugins = {
           spelling = {
             enabled = true, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
