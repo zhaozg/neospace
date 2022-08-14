@@ -120,28 +120,13 @@ return {
 
   "sheerun/vim-polyglot",
 
-  {
-    "honza/vim-snippets",
-    init = function()
-      g.UltiSnipsUsePythonVersion = 3
-      g.UltiSnipsExpandTrigger = "<Plug>(ultisnips_expand)"
-      g.UltiSnipsJumpForwardTrigger = "<Plug>(ultisnips_jump_forward)"
-      g.UltiSnipsJumpBackwardTrigger = "<Plug>(ultisnips_jump_backward)"
-      g.UltiSnipsListSnippets = "<c-x><c-s>"
-      g.UltiSnipsRemoveSelectModeMappings = E06C75
-      g.UltiSnipsEditSplit = "context"
-      if vim.fn.exists("g:UltiSnipsSnippetsDir") then
-        g.UltiSnipsSnippetDirectories = { vim.fn.get(g, "UltiSnipsSnippetsDir"), "UltiSnips" }
-      end
-    end,
-  },
-  "SirVer/ultisnips",
-
   "hrsh7th/cmp-nvim-lsp",
   "hrsh7th/cmp-buffer",
   "hrsh7th/cmp-path",
   "hrsh7th/cmp-cmdline",
-  "quangnguyen30192/cmp-nvim-ultisnips",
+  "rafamadriz/friendly-snippets",
+  "hrsh7th/vim-vsnip",
+  "hrsh7th/cmp-vsnip",
   {
     "paopaol/cmp-doxygen",
     after = "nvim-treesitter/nvim-treesitter",
@@ -152,63 +137,42 @@ return {
     config = function()
       local cmp = require("cmp")
 
+      local has_words_before = function()
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+      end
+
+      local feedkey = function(key, mode)
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+      end
+
       cmp.setup({
         snippet = {
           expand = function(args)
-            vim.fn["UltiSnips#Anon"](args.body)
+            vim.fn["vsnip#anonymous"](args.body)
           end,
         },
         mapping = {
-          ["<Tab>"] = cmp.mapping({
-            c = function()
-              if cmp.visible() then
-                cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-              else
-                cmp.complete()
-              end
-            end,
-            i = function(fallback)
-              if cmp.visible() then
-                cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-              elseif vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
-                vim.api.nvim_feedkeys(t("<Plug>(ultisnips_jump_forward)"), "m", true)
-              else
-                fallback()
-              end
-            end,
-            s = function(fallback)
-              if vim.fn["UltiSnips#CanJumpForwards"]() == 1 then
-                vim.api.nvim_feedkeys(t("<Plug>(ultisnips_jump_forward)"), "m", true)
-              else
-                fallback()
-              end
-            end,
-          }),
-          ["<S-Tab>"] = cmp.mapping({
-            c = function()
-              if cmp.visible() then
-                cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
-              else
-                cmp.complete()
-              end
-            end,
-            i = function(fallback)
-              if cmp.visible() then
-                cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
-              elseif vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
-                return vim.api.nvim_feedkeys(t("<Plug>(ultisnips_jump_backward)"), "m", true)
-              else
-                fallback()
-              end
-            end,
-            s = function(fallback)
-              if vim.fn["UltiSnips#CanJumpBackwards"]() == 1 then
-                return vim.api.nvim_feedkeys(t("<Plug>(ultisnips_jump_backward)"), "m", true)
-              else
-                fallback()
-              end
-            end,
-          }),
+          -- Super-Tab like mapping
+          ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item()
+            elseif vim.fn["vsnip#available"](1) == 1 then
+              feedkey("<Plug>(vsnip-expand-or-jump)", "")
+            elseif has_words_before() then
+              cmp.complete()
+            else
+              fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+            end
+          end, { "i", "s" }),
+
+          ["<S-Tab>"] = cmp.mapping(function()
+            if cmp.visible() then
+              cmp.select_prev_item()
+            elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+              feedkey("<Plug>(vsnip-jump-prev)", "")
+            end
+          end, { "i", "s" }),
           ["<Down>"] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), { "i" }),
           ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), { "i" }),
           ["<C-n>"] = cmp.mapping({
@@ -262,10 +226,19 @@ return {
         sources = cmp.config.sources({
           { name = "doxygen" },
           { name = "nvim_lsp" },
-          { name = "ultisnips" }, -- For ultisnips users.
+          { name = 'vsnip' },
         }, {
           { name = "buffer" },
         }),
+      })
+
+      -- Set configuration for specific filetype.
+      cmp.setup.filetype('gitcommit', {
+        sources = cmp.config.sources({
+          { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+        }, {
+          { name = 'buffer' },
+        })
       })
 
       -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
