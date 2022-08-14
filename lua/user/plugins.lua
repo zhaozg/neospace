@@ -226,11 +226,15 @@ function M.manage(plugins, options)
   end
 
   local function autoremove()
-    for _, entry in ipairs(scandir(plugins_directory)) do
-      local source = entry:gsub("%%", "/")
-      if plugins[source] == nil then
-        recursively_delete(("%s/%s"):format(plugins_directory, entry))
-        notify(("%s removed"):format(source))
+    local entries = scandir(plugins_directory)
+    for _, entry in ipairs(entries) do
+      local subs = scandir(("%s/%s"):format(plugins_directory, entry))
+      for _, sub in ipairs(subs) do
+        local plugin = string.format("%s/%s", entry, sub)
+        if plugins[plugin] == nil then
+          recursively_delete(("%s/%s"):format(plugins_directory, plugin))
+          notify(("%s removed"):format(plugin))
+        end
       end
     end
   end
