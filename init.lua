@@ -39,6 +39,7 @@ layer:load("text")
 layer:load("code")
 layer:load("finder")
 layer:load("git")
+layer:load("fold")
 
 -- enhance
 layer:load("lsp")

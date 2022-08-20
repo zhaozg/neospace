@@ -1,9 +1,8 @@
-local g = vim.g
-
 return {
   "tpope/vim-repeat",
   "tpope/vim-sensible",
   "zhaozg/nvim-defaults",
+  "kevinhwang91/promise-async",
 
   { "nvim-lua/popup.nvim", opt = true },
   { "nvim-lua/neovim-ui", opt = true },
