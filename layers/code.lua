@@ -1,6 +1,6 @@
 local vim = vim
 local g = vim.g
-local map = require('neospace').map
+local map = require("neospace").map
 
 return {
   {
@@ -48,7 +48,7 @@ return {
         buftype_exclude = { "alpha" },
         show_trailing_blankline_indent = true,
       })
-      map('n', '<Leader>ti', '<cmd>IndentBlanklineToggle<CR>')
+      map("n", "<Leader>ti", "<cmd>IndentBlanklineToggle<CR>")
     end,
   },
   {
@@ -91,7 +91,7 @@ return {
         },
       })
 
-      map({'n', 'x'}, '<Leader>xf', ':Format<CR>')
+      map({ "n", "x" }, "<Leader>xf", ":Format<CR>")
     end,
   },
   "wellle/targets.vim",
@@ -102,8 +102,8 @@ return {
       g.splitjoin_split_mapping = ""
     end,
     config = function()
-      map('n', '<Leader>cJ', '<plug>SplitjoinJoin')
-      map('n', '<Leader>cS', '<Plug>SplitjoinSplit')
+      map("n", "<Leader>cJ", "<plug>SplitjoinJoin")
+      map("n", "<Leader>cS", "<Plug>SplitjoinSplit")
     end,
   },
   "tpope/vim-sleuth",
@@ -124,9 +124,14 @@ return {
   "hrsh7th/cmp-buffer",
   "hrsh7th/cmp-path",
   "hrsh7th/cmp-cmdline",
+  "hrsh7th/cmp-emoji",
+
   "rafamadriz/friendly-snippets",
-  "hrsh7th/vim-vsnip",
-  "hrsh7th/cmp-vsnip",
+  "L3MON4D3/LuaSnip",
+  "molleweide/LuaSnip-snippets.nvim",
+  "saadparwaiz1/cmp_luasnip",
+
+  "f3fora/cmp-spell",
   {
     "paopaol/cmp-doxygen",
     after = "nvim-treesitter/nvim-treesitter",
@@ -134,22 +139,31 @@ return {
 
   {
     "hrsh7th/nvim-cmp",
+    after = {
+      "L3MON4D3/LuaSnip",
+      "molleweide/LuaSnip-snippets.nvim",
+    },
+    init = function()
+      vim.opt.spell = true
+      vim.opt.spelllang = { "en_us", "cjk" }
+
+      vim.o.completeopt = "menu,menuone,noselect"
+    end,
     config = function()
       local cmp = require("cmp")
+      local luasnip = require("luasnip")
+      luasnip.snippets = require("luasnip_snippets").load_snippets()
+      require("luasnip.loaders.from_vscode").lazy_load()
 
       local has_words_before = function()
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
         return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
       end
 
-      local feedkey = function(key, mode)
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
-      end
-
       cmp.setup({
         snippet = {
           expand = function(args)
-            vim.fn["vsnip#anonymous"](args.body)
+            require("luasnip").lsp_expand(args.body)
           end,
         },
         mapping = {
@@ -157,20 +171,21 @@ return {
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
-            elseif vim.fn["vsnip#available"](1) == 1 then
-              feedkey("<Plug>(vsnip-expand-or-jump)", "")
+            elseif luasnip.expand_or_jumpable() then
+              luasnip.expand_or_jump()
             elseif has_words_before() then
               cmp.complete()
             else
-              fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+              fallback()
             end
           end, { "i", "s" }),
-
-          ["<S-Tab>"] = cmp.mapping(function()
+          ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
-            elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-              feedkey("<Plug>(vsnip-jump-prev)", "")
+            elseif luasnip.jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
             end
           end, { "i", "s" }),
           ["<Down>"] = cmp.mapping(cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), { "i" }),
@@ -180,7 +195,7 @@ return {
               if cmp.visible() then
                 cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
               else
-                vim.api.nvim_feedkeys(t("<Down>"), "n", true)
+                vim.api.nvim_feedkeys("<Down>", "n", true)
               end
             end,
             i = function(fallback)
@@ -196,7 +211,7 @@ return {
               if cmp.visible() then
                 cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
               else
-                vim.api.nvim_feedkeys(t("<Up>"), "n", true)
+                vim.api.nvim_feedkeys("<Up>", "n", true)
               end
             end,
             i = function(fallback)
@@ -224,38 +239,39 @@ return {
         },
         -- ... Your other configuration ...
         sources = cmp.config.sources({
-          { name = "doxygen" },
           { name = "nvim_lsp" },
-          { name = 'vsnip' },
-        }, {
+          { name = "luasnip" },
           { name = "buffer" },
+          { name = "doxygen" },
+          { name = "spell" },
+          { name = "emoji" },
         }),
       })
 
       -- Set configuration for specific filetype.
-      cmp.setup.filetype('gitcommit', {
+      cmp.setup.filetype("gitcommit", {
         sources = cmp.config.sources({
-          { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
-        }, {
-          { name = 'buffer' },
-        })
+          { name = "cmp_git" }, -- You can specify the `cmp_git` source if you were installed it.
+          { name = "buffer" },
+        }),
       })
 
       -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-      cmp.setup.cmdline("/", {
-        completion = { autocomplete = false },
-        sources = {
-          { name = "buffer", option = { keyword_pattern = [=[[^[:blank:]].*]=] } },
-        },
-      })
+      -- cmp.setup.cmdline("/", {
+      --   completion = { autocomplete = false },
+      --   sources = {
+      --     { name = "buffer", option = { keyword_pattern = [=[[^[:blank:]].*]=] } },
+      --   },
+      -- })
 
       -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline(":", {
         completion = { autocomplete = false },
+        mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
-          { name = "path" },
-        }, {
           { name = "cmdline" },
+          { name = "cmdline_history" },
+          { name = "path" },
         }),
       })
 
@@ -267,9 +283,6 @@ return {
         capabilities = capabilities
       }
       --]]
-
-      -- Set completeopt to have a better completion experience
-      vim.o.completeopt = "menuone,noinsert,noselect"
     end,
   },
 
@@ -296,14 +309,14 @@ return {
     config = function()
       require("textcase").setup({})
       require("telescope").load_extension("textcase")
-      map({'n', 'v'}, "ga.", "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope" })
+      map({ "n", "v" }, "ga.", "<cmd>TextCaseOpenTelescope<CR>", { desc = "Telescope" })
     end,
   },
   {
     "danymat/neogen",
     after = "nvim-treesitter/nvim-treesitter",
     config = function()
-        require('neogen').setup {}
+      require("neogen").setup({})
     end,
-  }
+  },
 }

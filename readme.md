@@ -10,12 +10,17 @@ vim 有诸多的优秀插件、Neovim 的发展也导致了大量后起之秀的
 
 受到 [space-vim](https://github.com/liuchengxu/space-vim) 及其作者的影响, 学着自己作一个插件管理工具, 用来满足日常的工作所需。
 
-Neospace is a simple neovim plugins and layers management toolkit.
+Neospace is a simple Neovim plugins and layers management toolkit.
 
-**!!!** Neospace based on lua, so not support vim.
+**!!!** Neospace based on Lua, so not support vim.
 
 ## Plugins and Layers
 
-A plugin is git repo to extend the functionality of vim/neovim.
+A plugin is git repo to extend the functionality of vim/Neovim.
 
-A layer is a set of function-related, similar purpose plugins of neovim.
+A layer is a set of function-related, similar purpose plugins of Neovim.
+
+### core plugins
+
+- [hrsh7th/nvim-cmp](https://github.com/hrsh7th/nvim-cmp): A completion plugin for Neovim coded in Lua.
+- [williamboman/mason.nvim](https://github.com/williamboman/mason.nvim): Portable package manager for Neovim that runs everywhere Neovim runs.
