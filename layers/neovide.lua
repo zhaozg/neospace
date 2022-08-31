@@ -1,7 +1,7 @@
 local vim = vim
 local map = require'neospace'.map
 
-vim.o.guifont = "Hack Nerd Font Mono:h19"
+vim.o.guifont = "Hack Nerd Font:h19"
 vim.g.neovide_remember_window_size = true
 vim.g.neovide_fullscreen = true
 vim.g.neovide_no_idle = false
