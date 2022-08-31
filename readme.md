@@ -22,5 +22,6 @@ A layer is a set of function-related, similar purpose plugins of Neovim.
 
 ### core plugins
 
-- [hrsh7th/nvim-cmp](https://github.com/hrsh7th/nvim-cmp): A completion plugin for Neovim coded in Lua.
-- [williamboman/mason.nvim](https://github.com/williamboman/mason.nvim): Portable package manager for Neovim that runs everywhere Neovim runs.
+- [hrsh7th/nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
+- [williamboman/mason.nvim](https://github.com/williamboman/mason.nvim)
+- [jose-elias-alvarez/null-ls.nvim](https://github.com/jose-elias-alvarez/null-ls.nvim)

@@ -1,6 +1,5 @@
 local vim = vim
 local fn = vim.fn -- to call Vim functions e.g. fn.bufnr()
-local g = vim.g
 local o = vim.o
 
 local fun = require("neospace.fun")
@@ -47,6 +46,7 @@ return {
         end, lines))
         return centered
       end
+
       local function version()
         local t = vim.version()
         return string.format("v%d.%d.%d%s", t.major, t.minor, t.patch, t.api_prerelease and "-dev" or "")
@@ -267,16 +267,8 @@ return {
   },
   {
     "lewis6991/satellite.nvim",
-    enable = false,
     config = function()
       require("satellite").setup({
-        excluded_filetypes = {
-          "NvimTree",
-          "Outline",
-          "SidebarNvim",
-          "NeogitStatus",
-          "alpha",
-        },
       })
     end,
   },

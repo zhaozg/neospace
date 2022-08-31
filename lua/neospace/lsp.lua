@@ -5,8 +5,9 @@ local map = require("neospace").map
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-  require("lsp-status").on_attach(client)
-  require("lsp-format").on_attach(client)
+  require("lsp-status").on_attach(client, bufnr)
+  require("lsp-format").on_attach(client, bufnr)
+  require("lsp_signature").on_attach(client, bufnr)
 
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
@@ -53,7 +54,6 @@ local on_attach = function(client, bufnr)
     -- scroll down hover doc or scroll in definition preview
     map(bufnr, "n", "<C-f>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1, '<c-f>')<cr>")
   end
-  require("lsp_signature").on_attach({}, bufnr)
 end
 
 -- config that activates keymaps and enables snippet support

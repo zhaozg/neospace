@@ -1,86 +1,32 @@
 local M = {}
 
-M.javascript = {
-  exe = "prettier",
-  args = { "--stdin-filepath", vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), "--single-quote" },
-  stdin = true,
+M.prettier = {
+  extra_args = function(params)
+    _ = params
+    return { "--stdin-filepath", vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), "--single-quote" }
+  end
 }
 
-M.sh = {
-  exe = "shfmt",
-  args = { "-i", 2 },
-  stdin = true,
+M.shfmt = {
+  extra_args = function(params)
+    _ = params
+    return { "-i", 2 }
+  end
 }
 
-M.lua = {
-  exe = "stylua",
-  args = {
-    "--config-path " .. (os.getenv("XDG_CONFIG_HOME") or "~/.config") .. "/stylua/stylua.toml",
-    "-",
-  },
-  stdin = true,
-}
+M.uncrustify = {
+  extra_args = function(params)
+    local Path = require("plenary.path")
+    local uncrustify_cfg = Path:new(params.root .. "/" .. ".uncrustify.cfg")
+    local args = {}
 
-M.java = {
-  exe = "uncrustify",
-  args = { "-q", "-l JAVA" },
-  stdin = true,
-}
-
-M.c = {
-  exe = "uncrustify",
-  args = { "-q", "-l C" },
-  stdin = true,
-}
-
-M.cpp = {
-  exe = "uncrustify",
-  args = { "-q", "-l CPP" },
-  stdin = true,
-}
-
-M.objc = {
-  exe = "uncrustify",
-  args = { "-q", "-l OC" },
-  stdin = true,
-}
-
-M.objcpp = {
-  exe = "uncrustify",
-  args = { "-q", "-l OC+" },
-  stdin = true,
-}
-
-M.xml = {
-  exe = "tidy",
-  args = {
-    "-quiet",
-    "-xml",
-    "-utf8",
-    "--indent auto",
-    "--indent-spaces 2",
-    "--vertical-space yes",
-    "--tidy-mark no",
-  },
-  stdin = true,
-}
-
-M.xhtml = {
-  exe = "tidy",
-  args = {
-    "-quiet",
-    "-asxhtml",
-    "-utf8",
-    "--indent auto",
-    "--indent-spaces 2",
-    "--vertical-space yes",
-    "--tidy-mark no",
-  },
-  stdin = true,
-}
-
-M.markdown = {
-  exe = "prettier",
+    if uncrustify_cfg:exists() and uncrustify_cfg:is_file() then
+      args = {
+        "-c", uncrustify_cfg:absolute()
+      }
+    end
+    return args
+  end
 }
 
 return M
