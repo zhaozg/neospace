@@ -52,45 +52,9 @@ return {
     end,
   },
   {
-    "mhartington/formatter.nvim",
+    "lukas-reineke/lsp-format.nvim",
     config = function()
-      local fmt = require("neospace.fmt")
-
-      require("formatter").setup({
-        filetype = {
-          javascript = {
-            function()
-              return fmt.javascript
-            end,
-          },
-          sh = {
-            function()
-              return fmt.sh
-            end,
-          },
-          lua = {
-            function()
-              return fmt.lua
-            end,
-          },
-          c = {
-            function()
-              return fmt.c
-            end,
-          },
-          java = {
-            function()
-              return fmt.java
-            end,
-          },
-          cpp = {
-            function()
-              return fmt.cpp
-            end,
-          },
-        },
-      })
-
+      require("lsp-format").setup()
       map({ "n", "x" }, "<Leader>xf", ":Format<CR>")
     end,
   },

@@ -18,17 +18,13 @@ return {
         log_level = vim.log.levels.DEBUG,
       })
 
-      require("mason-lspconfig").setup_handlers {
-          function (server_name) -- default handler (optional)
-              local lsp = require("neospace.lsp")
-              local opts = lsp.setting(server_name)
-              require("lspconfig")[server_name].setup(opts)
-          end,
-          -- Next, you can provide targeted overrides for specific servers.
-          -- ["rust_analyzer"] = function ()
-          --     require("rust-tools").setup {}
-          -- end,
-      }
+      require("mason-lspconfig").setup_handlers({
+        function(server_name) -- default handler (optional)
+          local lsp = require("neospace.lsp")
+          local opts = lsp.setting(server_name)
+          require("lspconfig")[server_name].setup(opts)
+        end,
+      })
     end,
   },
   {
@@ -51,8 +47,6 @@ return {
       local saga = require("lspsaga")
       local opts = {}
 
-      -- WARNING: https://github.com/neovim/neovim/issues/19458
-      --[[
       local function get_file_name(include_path)
         local file_name = require("lspsaga.symbolwinbar").get_file_name()
         if vim.fn.bufname("%") == "" then
@@ -137,14 +131,47 @@ return {
           end
         end,
       }
-      --]]
       saga.init_lsp_saga(opts)
     end,
   },
   {
     "jose-elias-alvarez/null-ls.nvim",
     config = function()
-      require("null-ls").setup()
+      local null_ls = require("null-ls")
+      null_ls.setup({
+        source = {
+          method = {
+            -- source will run on LSP code action request
+            null_ls.methods.CODE_ACTION,
+
+            -- source will run on LSP diagnostics request
+            null_ls.methods.DIAGNOSTICS,
+
+            -- source will run on LSP formatting request
+            null_ls.methods.FORMATTING,
+
+            -- source will run on LSP hover request
+            null_ls.methods.HOVER,
+
+            -- source will run on LSP completion request
+            null_ls.methods.COMPLETION,
+          },
+          -- code action sources
+          null_ls.builtins.code_actions,
+
+          -- diagnostic sources
+          null_ls.builtins.diagnostics,
+
+          -- formatting sources
+          null_ls.builtins.formatting,
+
+          -- hover sources
+          null_ls.builtins.hover,
+
+          -- completion sources
+          null_ls.builtins.completion,
+        },
+      })
     end,
   },
 }

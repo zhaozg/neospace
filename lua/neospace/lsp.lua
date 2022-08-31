@@ -1,11 +1,12 @@
 local vim = vim
 
-local map = require('neospace').map
+local map = require("neospace").map
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
   require("lsp-status").on_attach(client)
+  require("lsp-format").on_attach(client)
 
   -- Enable completion triggered by <c-x><c-o>
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
@@ -34,12 +35,12 @@ local on_attach = function(client, bufnr)
     map(bufnr, "n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
     map(bufnr, "n", "gq", "<cmd>lua vim.diagnostic.setloclist()<CR>")
   else
-    map(bufnr, "n", "cd", '<cmd>Lspsaga preview_definition<CR>')
-    map(bufnr, "n", "gh", '<cmd>Lspsaga hover_doc<CR>')
-    map(bufnr, "n", "ga", '<cmd>Lspsaga code_action<CR>')
-    map(bufnr, "v", "ga", '<cmd><C-U>Lspsaga range_code_action<CR>')
-    map(bufnr, "n", "ch", '<cmd>Lspsaga signature_help<CR>')
-    map(bufnr, "n", "cr", '<cmd>Lspsaga rename<CR>')
+    map(bufnr, "n", "cd", "<cmd>Lspsaga preview_definition<CR>")
+    map(bufnr, "n", "gh", "<cmd>Lspsaga hover_doc<CR>")
+    map(bufnr, "n", "ga", "<cmd>Lspsaga code_action<CR>")
+    map(bufnr, "v", "ga", "<cmd><C-U>Lspsaga range_code_action<CR>")
+    map(bufnr, "n", "ch", "<cmd>Lspsaga signature_help<CR>")
+    map(bufnr, "n", "cr", "<cmd>Lspsaga rename<CR>")
 
     map(bufnr, "n", "ge", "<cmd>Lspsaga show_line_diagnostics<cr>")
     map(bufnr, "n", "ge", "<cmd>Lspsaga show_cursor_diagnostics<cr>")
