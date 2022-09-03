@@ -2,7 +2,7 @@ function UserInit()
 end
 
 function UserConfig()
-  local setting = require'neospace.lsp'.setting
+  local setting = require('neospace.lsp').setting
   setting('sumneko_lua', { settings = {
     Lua = {
       diagnostics = {
@@ -12,7 +12,7 @@ function UserConfig()
         }
       }
     }
-  }})
+  } })
 end
 
 return {

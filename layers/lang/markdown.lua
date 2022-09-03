@@ -3,6 +3,15 @@ local g = vim.g
 
 return {
   {
+    "ekickx/clipboard-image.nvim",
+    ft = { "markdown", "telekasten" },
+    require 'clipboard-image'.setup {
+      telekasten = {
+        affix = "![](%s)"
+      }
+    }
+  },
+  {
     "kvrohit/tasks.nvim",
     config = function()
       local wk = require("which-key")

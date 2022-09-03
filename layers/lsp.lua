@@ -136,41 +136,10 @@ return {
   },
   {
     "jose-elias-alvarez/null-ls.nvim",
+    after = "nvim-lua/plenary.nvim",
     config = function()
       local null_ls = require("null-ls")
       null_ls.setup({
-        source = {
-          method = {
-            -- source will run on LSP code action request
-            null_ls.methods.CODE_ACTION,
-
-            -- source will run on LSP diagnostics request
-            null_ls.methods.DIAGNOSTICS,
-
-            -- source will run on LSP formatting request
-            null_ls.methods.FORMATTING,
-
-            -- source will run on LSP hover request
-            null_ls.methods.HOVER,
-
-            -- source will run on LSP completion request
-            null_ls.methods.COMPLETION,
-          },
-          -- code action sources
-          null_ls.builtins.code_actions,
-
-          -- diagnostic sources
-          null_ls.builtins.diagnostics,
-
-          -- formatting sources
-          null_ls.builtins.formatting,
-
-          -- hover sources
-          null_ls.builtins.hover,
-
-          -- completion sources
-          null_ls.builtins.completion,
-        },
       })
     end,
   },
