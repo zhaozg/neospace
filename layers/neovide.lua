@@ -7,6 +7,7 @@ end
 vim.g.neovide_input_macos_alt_is_meta = true
 vim.g.neovide_remember_window_size = true
 vim.g.neovide_fullscreen = true
+vim.g.neovide_hide_mouse_when_typing = true
 vim.g.neovide_no_idle = false
 vim.g.neovide_profiler = false
 vim.g.neovide_touch_drag_timeout = 0.1

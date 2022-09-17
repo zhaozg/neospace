@@ -57,15 +57,35 @@ local on_attach = function(client, bufnr)
 end
 
 -- config that activates keymaps and enables snippet support
-local function make_config()
+local function make_config(options)
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
-  return {
-    -- enable snippet support
-    capabilities = capabilities,
-    -- map buffer local keybindings when the language server attaches
-    on_attach = on_attach,
-  }
+  options = options or {}
+
+  -- enable snippet support
+  options.capabilities = capabilities
+
+  -- map buffer local keybindings when the language server attaches
+  if not options.on_attach then
+    options.on_attach = on_attach
+  else
+    local lattach = options.on_attach
+    local attach = function(client, bufnr)
+      on_attach(client, bufnr)
+      if type(lattach) == 'function' then
+        lattach(client, bufnr)
+      else
+        if type(lattach) == 'table' then
+          for _, v in pairs(lattach) do
+            v(client, bufnr)
+          end
+        end
+      end
+    end
+    options.on_attach = attach
+  end
+
+  return options
 end
 
 -- real settings in private layers
@@ -74,13 +94,8 @@ local settings = {}
 return {
   settings = settings,
   setting = function(name, options)
-    local config = make_config()
-
-    options = options or {}
-    settings[name] = settings[name] or {}
-
-    settings[name] = vim.tbl_extend("force", settings[name], options)
-
-    return vim.tbl_extend("force", config, settings[name])
+    options = make_config(options)
+    settings[name] = vim.tbl_extend("force", settings[name] or {}, options)
+    return settings[name]
   end,
 }
