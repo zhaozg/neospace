@@ -2,11 +2,11 @@ local vim = vim
 local map = require('neospace').map
 
 return {
-  { "f-person/git-blame.nvim" },
   {
     "lewis6991/gitsigns.nvim",
     config = function()
       local signs = require("gitsigns")
+      vim.api.nvim_set_hl(0, 'GitsignsCurrentLineBlame', { fg = 'green' })
 
       signs.setup({
         signs = {
@@ -25,42 +25,44 @@ return {
             opts.buffer = bufnr
             vim.keymap.set(mode, l, r, opts)
           end
+
           -- Navigation
           lmap('n', ']c', function()
             if vim.wo.diff then return ']c' end
             vim.schedule(function() gs.next_hunk() end)
             return '<Ignore>'
-          end, {expr=true})
+          end, { expr = true })
 
           lmap('n', '[c', function()
             if vim.wo.diff then return '[c' end
             vim.schedule(function() gs.prev_hunk() end)
             return '<Ignore>'
-          end, {expr=true})
+          end, { expr = true })
 
           -- Actions
-          lmap({'n', 'v'}, '<leader>gs', ':Gitsigns stage_hunk<CR>')
-          lmap({'n', 'v'}, '<leader>gr', ':Gitsigns reset_hunk<CR>')
-          lmap('n', '<leader>gS', gs.stage_buffer)
-          lmap('n', '<leader>gu', gs.undo_stage_hunk)
-          lmap('n', '<leader>gR', gs.reset_buffer)
-          lmap('n', '<leader>gp', gs.preview_hunk)
-          lmap('n', '<leader>gb', function() gs.blame_line{full=true} end)
-          lmap('n', '<leader>gb', gs.toggle_current_line_blame)
-          lmap('n', '<leader>gd', gs.diffthis)
-          lmap('n', '<leader>gD', function() gs.diffthis('~') end)
+          lmap({ 'n', 'v' }, '<leader>hs', ':Gitsigns stage_hunk<CR>')
+          lmap({ 'n', 'v' }, '<leader>hr', ':Gitsigns reset_hunk<CR>')
+          lmap('n', '<leader>hS', gs.stage_buffer)
+          lmap('n', '<leader>hu', gs.undo_stage_hunk)
+          lmap('n', '<leader>hR', gs.reset_buffer)
+          lmap('n', '<leader>hp', gs.preview_hunk)
+          lmap('n', '<leader>hb', function() gs.blame_line { full = true } end)
+          lmap('n', '<leader>hd', gs.diffthis)
+          lmap('n', '<leader>hD', function() gs.diffthis('~') end)
+          lmap('n', '<leader>tb', gs.toggle_current_line_blame)
           lmap('n', '<leader>td', gs.toggle_deleted)
 
           -- Text object
-          lmap({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+          lmap({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
         end,
         watch_gitdir = {
           interval = 1000,
           follow_files = true,
         },
-        current_line_blame = false,
+        current_line_blame = true,
         current_line_blame_opts = {
           delay = 100,
+          virt_text = true,
           virt_text_pos = "eol",
         },
         sign_priority = 6,
@@ -71,29 +73,6 @@ return {
           internal = true, -- If luajit is present
         },
       })
-    end,
-  },
-
-  {
-    "TimUntersberger/neogit",
-    config = function()
-      local neogit = require("neogit")
-      neogit.setup({
-        disable_signs = false,
-        disable_context_highlighting = false,
-        disable_commit_confirmation = false,
-        -- customize displayed signs
-        signs = {
-          -- { CLOSED, OPENED }
-          section = { ">", "v" },
-          item = { ">", "v" },
-          hunk = { "", "" },
-        },
-        integrations = {
-          diffview = true,
-        },
-      })
-      map('n', '<Leader>gn', ':Neogit kind=vsplit<CR>')
     end,
   },
 
