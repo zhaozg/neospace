@@ -5,11 +5,15 @@ return {
   {
     "ekickx/clipboard-image.nvim",
     ft = { "markdown", "telekasten" },
-    require 'clipboard-image'.setup {
-      telekasten = {
-        affix = "![](%s)"
+    config = function()
+      require 'clipboard-image'.setup {
+        telekasten = {
+          affix = "![](%s)"
+        }
       }
-    }
+      vim.keymap.set('i', "<C-p>", "<ESC>:PasteImg<CR>")
+      vim.keymap.set('n', "<C-p>", ":PasteImg<CR>")
+    end
   },
   {
     "kvrohit/tasks.nvim",
