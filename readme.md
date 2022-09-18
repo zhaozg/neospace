@@ -14,6 +14,12 @@ Neospace is a simple Neovim plugins and layers management toolkit.
 
 **!!!** Neospace based on Lua, so not support vim.
 
+## Principles
+
+1. 非必要，不增加更多模块。在保持适当的插件规模的情况下，解决碰到的问题。
+2. 插件默认配置优先，非必要不对插件的配置，如 `keymap` 进行重新设置。
+3. 流行的插件优先、知名作者的插件优先。
+
 ## Plugins and Layers
 
 A plugin is git repo to extend the functionality of vim/Neovim.
