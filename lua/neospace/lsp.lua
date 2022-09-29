@@ -49,10 +49,6 @@ local on_attach = function(client, bufnr)
     map(bufnr, "n", "]e", "<cmd>Lspsaga diagnostic_jump_next<cr>")
 
     map(bufnr, "n", "gF", "<cmd>Lspsaga lsp_finder<CR>")
-    -- scroll up hover doc
-    map(bufnr, "n", "<C-b>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1, '<c-b>')<cr>")
-    -- scroll down hover doc or scroll in definition preview
-    map(bufnr, "n", "<C-f>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1, '<c-f>')<cr>")
   end
 end
 
