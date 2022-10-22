@@ -174,18 +174,18 @@ return {
     ft = { "markdown", "telekasten" },
     config = function()
       local init = {
-        { "--toc" },
-        { "--standalone" },
-        { "--from", "gfm" },
       }
-      if lang.markdown.pandoc.render.css then
-        init[#init + 1] = { "--css", lang.markdown.pandoc.render.css }
+      local function output(kind)
+        kind = kind or 'html'
+        local bufname = vim.api.nvim_buf_get_name(0)
+        return ("%s." .. kind):format(bufname:gsub(".[^.]+$", ""))
       end
+
       require 'pandoc'.setup({
         default = {
           output = '%s.html',
           args = {
-            { "--toc" },
+            { "--from", "gfm" },
             { "--standalone" }
           }
         },
@@ -193,32 +193,48 @@ return {
           -- normal mode
           n = {
             ['<localleader>eh'] = function()
-              local function output()
-                local bufname = vim.api.nvim_buf_get_name(0)
-                return ("%s.html"):format(bufname:gsub(".[^.]+$", ""))
+              local html_init = vim.tbl_extend('keep', init, {})
+              if lang.markdown.pandoc.render.css then
+                html_init[#html_init + 1] = { "--css", lang.markdown.pandoc.render.css }
               end
-
               require('pandoc.render').file(
-                vim.tbl_extend("force", init, {
+                vim.tbl_extend("force", html_init, {
+                  { "--toc" },
+                  { "--standalone" },
                   { "--self-contained" },
-                  { "--output", output() }
+                  { "--from", "gfm" },
+                  { "--output", output('html') }
                 })
               )
             end,
+
             ['<localleader>ep'] = function()
-              local function output()
-                local bufname = vim.api.nvim_buf_get_name(0)
-                return ("%s.pdf"):format(bufname:gsub(".[^.]+$", ""))
+              local pdf_init = vim.tbl_extend('keep', init, {})
+              if lang.markdown.pandoc.render.css then
+                pdf_init[#pdf_init + 1] = { "--css", lang.markdown.pandoc.render.css }
+              end
+              require('pandoc.render').file(
+                vim.tbl_extend("force", pdf_init, {
+                  { "--toc" },
+                  { "--standalone" },
+                  { "--from", "gfm" },
+                  { "--pdf-engine", "prince" },
+                  { "--output", output('pdf') }
+                })
+              )
+            end,
+            ['<localleader>ed'] = function()
+              local docx_init = vim.tbl_extend('keep', init, {})
+              if lang.markdown.pandoc.render.referernce then
+                docx_init[#docx_init + 1] = { "--referernce-doc", lang.markdown.pandoc.render.referernce }
               end
 
               require('pandoc.render').file(
-                vim.tbl_extend("force", init, {
-                  { "--pdf-engine", "prince" },
-                  { "--output", output() }
+                vim.tbl_extend("force", docx_init, {
+                  { "--output", output('docx') }
                 })
               )
             end,
-
           }
         }
       })
