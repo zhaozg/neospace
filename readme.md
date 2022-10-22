@@ -8,7 +8,7 @@ vim 有诸多的优秀插件、Neovim 的发展也导致了大量后起之秀的
 
 如何管理和使用这些插件就成了需要解决的问题。
 
-受到 [space-vim](https://github.com/liuchengxu/space-vim) 及其作者的影响, 学着自己作一个插件管理工具, 用来满足日常的工作所需。
+受到 [space-vim](https://github.com/liuchengxu/space-vim) 及其作者的影响，学着自己作一个插件管理工具，用来满足日常的工作所需。
 
 Neospace is a simple Neovim plugins and layers management toolkit.
 

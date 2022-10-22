@@ -1,5 +1,6 @@
 local vim = vim
 local g = vim.g
+local lang = require('neospace.lang')
 
 return {
   {
@@ -166,6 +167,61 @@ return {
     "mickael-menu/zk-nvim",
     config = function()
       require("zk").setup()
+    end
+  },
+  {
+    "aspeddro/pandoc.nvim",
+    ft = { "markdown", "telekasten" },
+    config = function()
+      local init = {
+        { "--toc" },
+        { "--standalone" },
+        { "--from", "gfm" },
+      }
+      if lang.markdown.pandoc.render.css then
+        init[#init + 1] = { "--css", lang.markdown.pandoc.render.css }
+      end
+      require 'pandoc'.setup({
+        default = {
+          output = '%s.html',
+          args = {
+            { "--toc" },
+            { "--standalone" }
+          }
+        },
+        mappings = {
+          -- normal mode
+          n = {
+            ['<localleader>eh'] = function()
+              local function output()
+                local bufname = vim.api.nvim_buf_get_name(0)
+                return ("%s.html"):format(bufname:gsub(".[^.]+$", ""))
+              end
+
+              require('pandoc.render').file(
+                vim.tbl_extend("force", init, {
+                  { "--self-contained" },
+                  { "--output", output() }
+                })
+              )
+            end,
+            ['<localleader>ep'] = function()
+              local function output()
+                local bufname = vim.api.nvim_buf_get_name(0)
+                return ("%s.pdf"):format(bufname:gsub(".[^.]+$", ""))
+              end
+
+              require('pandoc.render').file(
+                vim.tbl_extend("force", init, {
+                  { "--pdf-engine", "prince" },
+                  { "--output", output() }
+                })
+              )
+            end,
+
+          }
+        }
+      })
     end
   },
   {
