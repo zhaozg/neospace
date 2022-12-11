@@ -48,6 +48,7 @@ layer:load("debug")
 
 -- language
 layer:load("lang/markdown")
+layer:load("lang/diagram")
 
 -- misc
 layer:load("tools")

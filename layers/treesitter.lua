@@ -1,6 +1,9 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    init = function()
+      require("nvim-treesitter.install").prefer_git = true
+    end,
     config = function()
       require("nvim-treesitter.configs").setup({
         tree_docs = {

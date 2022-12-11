@@ -1,7 +1,7 @@
 return {
   {
     "wannesm/wmgraphviz.vim",
-    ft = { "dot" },
+    ft = { "dot", "gv", "markdown" },
     config = function()
       vim.cmd("autocmd FileType flow nmap <silent> <buffer> <leader>lf <Plug>GenerateFlowDiagram")
     end,
