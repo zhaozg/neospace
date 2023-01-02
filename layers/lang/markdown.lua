@@ -165,8 +165,10 @@ return {
   },
   {
     "mickael-menu/zk-nvim",
+    after = "nvim-telescope/telescope.nvim",
     config = function()
       require("zk").setup()
+      require("telescope").load_extension("zk")
     end
   },
   {
