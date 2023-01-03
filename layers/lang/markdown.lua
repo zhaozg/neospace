@@ -5,10 +5,10 @@ local lang = require('neospace.lang')
 return {
   {
     "ekickx/clipboard-image.nvim",
-    ft = { "markdown", "telekasten" },
+    ft = { "markdown" },
     config = function()
       require 'clipboard-image'.setup {
-        telekasten = {
+        markdown = {
           affix = "![](%s)"
         }
       }
@@ -95,74 +95,6 @@ return {
       vim.g.glow_use_pager = true
     end,
   },
-  "renerocksai/calendar-vim",
-  {
-    "renerocksai/telekasten.nvim",
-    after = "renerocksai/calendar-vim",
-    config = function()
-      local home = vim.fn.expand("~/Documents/Notes")
-      require("telekasten").setup({
-        home = home,
-        take_over_my_home = true,
-        auto_set_filetype = true,
-
-        dailies = home .. "/" .. "daily",
-        weeklies = home .. "/" .. "weekly",
-        templates = home .. "/" .. "templates",
-
-        image_subdir = "img",
-
-        extension = ".md",
-
-        new_note_filename = "title",
-        uuid_type = "%Y%m%d%H%M",
-        uuid_sep = "-",
-
-        follow_creates_nonexisting = true,
-        dailies_create_nonexisting = true,
-        weeklies_create_nonexisting = true,
-
-        journal_auto_open = false,
-
-        template_new_note = home .. "/" .. "templates/new_note.md",
-        template_new_daily = home .. "/" .. "templates/daily.md",
-        template_new_weekly = home .. "/" .. "templates/weekly.md",
-
-        image_link_style = "markdown",
-        sort = "filename",
-        plug_into_calendar = true,
-        calendar_opts = {
-          -- calendar week display mode: 1 .. 'WK01', 2 .. 'WK 1', 3 .. 'KW01', 4 .. 'KW 1', 5 .. '1'
-          weeknm = 4,
-          -- use monday as first day of week: 1 .. true, 0 .. false
-          calendar_monday = 1,
-          -- calendar mark: where to put mark for marked days: 'left', 'right', 'left-fit'
-          calendar_mark = "left-fit",
-        },
-
-        -- telescope actions behavior
-        close_after_yanking = false,
-        insert_after_inserting = true,
-
-        -- tag notation: '#tag', ':tag:', 'yaml-bare'
-        tag_notation = "#tag",
-
-        -- command palette theme: dropdown (window) or ivy (bottom panel)
-        command_palette_theme = "ivy",
-
-        -- tag list theme:
-        -- get_cursor: small tag list at cursor; ivy and dropdown like above
-        show_tags_theme = "ivy",
-
-        -- when linking to a note in subdir/, create a [[subdir/title]] link
-        -- instead of a [[title only]] link
-        subdirs_in_links = true,
-        template_handling = "smart",
-        new_note_location = "smart",
-        rename_update_links = true,
-      })
-    end,
-  },
   {
     "mickael-menu/zk-nvim",
     after = "nvim-telescope/telescope.nvim",
@@ -173,7 +105,7 @@ return {
   },
   {
     "aspeddro/pandoc.nvim",
-    ft = { "markdown", "telekasten" },
+    ft = { "markdown" },
     config = function()
       local init = {
       }
@@ -244,6 +176,6 @@ return {
   },
   {
     "hotoo/pangu.vim",
-    ft = { "markdown", "telekasten" },
+    ft = { "markdown" },
   },
 }
