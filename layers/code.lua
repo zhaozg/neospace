@@ -72,10 +72,6 @@ return {
   },
   "tpope/vim-sleuth",
   {
-    "gpanders/editorconfig.nvim",
-  },
-
-  {
     "norcalli/nvim-colorizer.lua",
     config = function()
       require("colorizer").setup()
