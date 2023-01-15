@@ -60,51 +60,10 @@ return {
   },
 
   {
-    "phaazon/hop.nvim",
+    "ggandor/leap.nvim",
     config = function()
-      local hop = require("hop")
-      local hint = require("hop.hint")
-
-      -- you can configure Hop the way you like here; see :h hop-config
-      hop.setup({})
-
-      vim.keymap.set("", "f", function()
-        hop.hint_char1({
-          direction = hint.HintDirection.AFTER_CURSOR,
-          current_line_only = true,
-        })
-      end)
-      vim.keymap.set("", "F", function()
-        hop.hint_char1({
-          direction = hint.HintDirection.BEFORE_CURSOR,
-          current_line_only = true,
-        })
-      end)
-      vim.keymap.set("", "t", function()
-        hop.hint_char1({
-          direction = hint.HintDirection.AFTER_CURSOR,
-          current_line_only = true,
-          hint_offset = -1
-        })
-      end)
-      vim.keymap.set("", "T", function()
-        hop.hint_char1({
-          direction = hint.HintDirection.BEFORE_CURSOR,
-          current_line_only = true,
-          hint_offset = 1
-        })
-      end)
-
-      vim.keymap.set("", "<C-s>", function()
-        hop.hint_char2({})
-      end)
-      vim.keymap.set("", "<C-w>", function()
-        hop.hint_words({})
-      end)
-      vim.keymap.set("n", "<C-x>", function()
-        hop.hint_lines_skip_whitespace({})
-      end)
-    end,
+      require('leap').add_default_mappings()
+    end
   },
 
   {
@@ -117,7 +76,7 @@ return {
   {
     "fedepujol/move.nvim",
     config = function()
-      map("n", "<C-j>", ":MoveLine(1)<CR>" )
+      map("n", "<C-j>", ":MoveLine(1)<CR>")
       map("n", "<C-k>", ":MoveLine(-1)<CR>")
       map("v", "<C-j>", ":MoveBlock(1)<CR>")
       map("v", "<C-k>", ":MoveBlock(-1)<CR>")
@@ -140,7 +99,7 @@ return {
           win_config = {
             position = "left", -- One of 'left', 'right', 'top', 'bottom'
             width = 35, -- Only applies when position is 'left' or 'right'
-            height = 10,             -- Only applies when position is 'top' or 'bottom'
+            height = 10, -- Only applies when position is 'top' or 'bottom'
           },
         },
         key_bindings = {
