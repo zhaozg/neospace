@@ -59,10 +59,10 @@ vim.cmd("set clipboard+=unnamedplus")
 map("", "<D-c>", '"+y')
 
 -- pasta
-map("n", "<D-v>", '"+p')
-map("i", "<D-v>", '<Esc>"+pa')
-map("c", "<D-v>", '<c-r>+', {})
-map("t", "<D-v>", '<c-\\><c-n>"+pa')
+vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true})
 
 -- undo
 map("n", "<D-z>", '"u')
