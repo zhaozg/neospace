@@ -1,0 +1,16 @@
+{
+    "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+
+    "runtime.version": "LuaJIT",
+    "Lua.format.enable": false,
+    "Lua.format.defaultConfig": {
+        "indent_style": "space",
+        "indent_size": "2"
+    },
+    "diagnostics.globals": [
+        "vim"
+    ],
+    "workspace.library": [
+        "${3rd}/luv/library"
+    ]
+}

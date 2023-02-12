@@ -7,10 +7,16 @@ insert_final_newline = true
 
 # Matches multiple files with brace expansion notation
 # Set default charset
-[*.{lua}]
+[*.lua]
 charset = utf-8
 indent_style = space
 indent_size = 2
+# none/single/double
+quote_style = double
+continuation_indent = 2
+
+max_line_length = 120
+call_arg_parentheses = keep
 
 # Tab indentation (no size specified)
 [Makefile]
