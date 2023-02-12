@@ -14,8 +14,8 @@ if vim.fn.filereadable(".nvim.lua") == 1 then
     M.init = ctx.init
     M.config = ctx.config
   else
-    M.init = UserInit
-    M.config = UserConfig
+    M.init = _G.UserInit
+    M.config = _G.UserConfig
   end
 end
 

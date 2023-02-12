@@ -87,6 +87,7 @@ return {
           if button == "l" then
             if clicks == 2 then
               -- double left click to do nothing
+              print("double left click");
             else -- jump to node's starting line+char
               vim.fn.cursor(st.line + 1, st.character + 1)
             end

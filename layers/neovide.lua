@@ -22,16 +22,16 @@ vim.g.gui_font_default_size = 19
 vim.g.gui_font_size = vim.g.gui_font_default_size
 vim.g.gui_font_face = "Hack Nerd Font Mono"
 
-RefreshGuiFont = function()
+local RefreshGuiFont = function()
   vim.opt.guifont = string.format("%s:h%s", vim.g.gui_font_face, vim.g.gui_font_size)
 end
 
-ResizeGuiFont = function(delta)
+local ResizeGuiFont = function(delta)
   vim.g.gui_font_size = vim.g.gui_font_size + delta
   RefreshGuiFont()
 end
 
-ResetGuiFont = function()
+local ResetGuiFont = function()
   vim.g.gui_font_size = vim.g.gui_font_default_size
   RefreshGuiFont()
 end
@@ -42,13 +42,13 @@ ResetGuiFont()
 -- Dynamic change font size
 
 map({ 'n', 'i' }, "<A-=>", "", {
-  callback = function() ResizeGuiFont(0.5) end
+    callback = function() ResizeGuiFont(0.5) end
 })
 map({ 'n', 'i' }, "<A-->", "", {
-  callback = function() ResizeGuiFont(-0.5) end
+    callback = function() ResizeGuiFont( -0.5) end
 })
 map({ 'n', 'i' }, "<A-0>", "", {
-  callback = function() ResetGuiFont() end
+    callback = function() ResetGuiFont() end
 })
 
 -- system clipboard {{{
@@ -59,10 +59,10 @@ vim.cmd("set clipboard+=unnamedplus")
 map("", "<D-c>", '"+y')
 
 -- pasta
-vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true})
-vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true })
 
 -- undo
 map("n", "<D-z>", '"u')

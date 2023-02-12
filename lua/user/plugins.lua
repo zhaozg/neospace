@@ -6,7 +6,6 @@ local git = require("user.git")
 local M = {}
 
 local function packadd_do(plugin)
-
   local _, err = pcall(vim.cmd, ("packadd %s"):format(vim.fn.fnameescape(plugin.name)))
   if not _ then
     notify(("packadd %s fail: %s"):format(plugin.name, err))
@@ -26,19 +25,19 @@ end
 
 local function packadd_ft(plugin)
   vim.api.nvim_create_autocmd("FileType", {
-    pattern = plugin.ft,
-    callback = function()
-      packadd_do(plugin)
-    end,
+      pattern = plugin.ft,
+      callback = function()
+        packadd_do(plugin)
+      end,
   })
 end
 
 local function packadd_on(plugin)
   vim.api.nvim_create_autocmd("CmdUndefined", {
-    pattern = plugin.on,
-    callback = function()
-      packadd_do(plugin)
-    end,
+      pattern = plugin.on,
+      callback = function()
+        packadd_do(plugin)
+      end,
   })
 end
 
@@ -99,14 +98,14 @@ local function chdir_do(dir, fun, callback)
     callback(ret, msg)
   elseif type(fun) == "string" then
     async.run(fun, {
-      cwd = dir,
-      args = {},
+        cwd = dir,
+        args = {},
     }, callback)
   elseif type(fun) == "table" then
     local cmd = table.remove(fun, 1)
     async.run(cmd, {
-      cwd = dir,
-      args = fun,
+        cwd = dir,
+        args = fun,
     }, callback)
   else
     error("Can't run " .. tostring(fun))
@@ -160,9 +159,11 @@ function M.manage(plugins, options)
   local count = 0
   for _ = 1, #plugins do
     local plugin = plugins[_]
-    plugin.upgrade_hook = plugin.upgrade_hook or plugin.install or function() end
+    plugin.upgrade_hook = plugin.upgrade_hook or plugin.install or function()
+        end
     plugin.packadd_init = plugin.packadd_init or plugin.init
-    plugin.packadd_hook = plugin.packadd_hook or plugin.config or function() end
+    plugin.packadd_hook = plugin.packadd_hook or plugin.config or function()
+        end
     plugin.packadd_after = plugin.packadd_after or plugin.after or {}
     if type(plugin.packadd_after) == "string" then
       plugin.packadd_after = { plugin.packadd_after }
@@ -206,14 +207,14 @@ function M.manage(plugins, options)
   end
 
   local function upgrade()
-    local count = 0
+    local cnt = 0
     for source, _ in pairs(activated_sources) do
       local plugin = plugins[source]
-      count = count + 1
+      cnt = cnt + 1
 
       plugin_check(plugin)
       git.update(plugin, function(current, update)
-        count = count - 1
+        cnt = cnt - 1
         if current ~= update then
           helptags(plugin)
 
@@ -221,7 +222,7 @@ function M.manage(plugins, options)
             notify(("%s upgraded"):format(source))
           end)
         end
-        if count == 0 then
+        if cnt == 0 then
           notify("All plugins upgraded")
         end
       end)

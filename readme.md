@@ -26,6 +26,10 @@ A plugin is git repo to extend the functionality of vim/Neovim.
 
 A layer is a set of function-related, similar purpose plugins of Neovim.
 
+## Dev
+
+* lint: <code>luacheck `fd \\.lua`</code>
+
 ### core plugins
 
 - [hrsh7th/nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
