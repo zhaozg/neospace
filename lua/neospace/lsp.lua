@@ -2,6 +2,9 @@ local vim = vim
 
 local map = require("neospace").map
 
+-- real settings in your custom layers
+local settings = {}
+
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
@@ -36,11 +39,8 @@ local on_attach = function(client, bufnr)
     map(bufnr, "n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
     map(bufnr, "n", "gq", "<cmd>lua vim.diagnostic.setloclist()<CR>")
   else
-    map(bufnr, "n", "cd", "<cmd>Lspsaga preview_definition<CR>")
     map(bufnr, "n", "gh", "<cmd>Lspsaga hover_doc<CR>")
     map(bufnr, "n", "ga", "<cmd>Lspsaga code_action<CR>")
-    map(bufnr, "v", "ga", "<cmd><C-U>Lspsaga range_code_action<CR>")
-    map(bufnr, "n", "ch", "<cmd>Lspsaga signature_help<CR>")
     map(bufnr, "n", "cr", "<cmd>Lspsaga rename<CR>")
 
     map(bufnr, "n", "ge", "<cmd>Lspsaga show_line_diagnostics<cr>")
@@ -50,38 +50,37 @@ local on_attach = function(client, bufnr)
 
     map(bufnr, "n", "gF", "<cmd>Lspsaga lsp_finder<CR>")
   end
+
+  for _, v in pairs(settings[client.name]._on_attach) do
+    v(client, bufnr)
+  end
 end
 
--- config that activates keymaps and enables snippet support
-local function make_config(options)
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
+local function make_config(defaults, options)
+  assert(defaults)
   options = options or {}
 
-  -- enable snippet support
-  options.capabilities = capabilities
-
-  -- map buffer local keybindings when the language server attaches
-  if not options.on_attach then
-    options.on_attach = on_attach
-  else
-    local lattach = options.on_attach
-    local attach = function(client, bufnr)
-      on_attach(client, bufnr)
-      if type(lattach) == 'function' then
-        lattach(client, bufnr)
-      else
-        if type(lattach) == 'table' then
-          for _, v in pairs(lattach) do
-            v(client, bufnr)
-          end
-        end
-      end
-    end
-    options.on_attach = attach
+  if not options.capabilities then
+    defaults.capabilities = vim.lsp.protocol.make_client_capabilities()
+    -- enable snippet support
+    defaults.capabilities.textDocument.completion.completionItem.snippetSupport = true
   end
 
-  return options
+  if not defaults._on_attach then
+    defaults._on_attach = {}
+  end
+
+  if options.on_attach then
+    defaults._on_attach[#defaults._on_attach + 1] = options.on_attach
+    options.on_attach = nil
+  end
+
+  defaults = vim.tbl_extend("force", defaults, options)
+  if not defaults.on_attach then
+    defaults.on_attach = on_attach
+  end
+
+  return defaults
 end
 
 -- real settings in private layers
@@ -90,8 +89,17 @@ local settings = {}
 return {
   settings = settings,
   setting = function(name, options)
-    options = make_config(options)
-    settings[name] = vim.tbl_extend("force", settings[name] or {}, options)
+    options = options or {}
+    local defaults = settings[name]
+    if defaults then
+      if options.on_attach then
+        defaults._on_attach[#defaults._on_attach + 1] = options.on_attach
+        options.on_attach = nil
+      end
+      settings[name] = vim.tbl_extend("force", defaults, options)
+    else
+      settings[name] = make_config({}, options)
+    end
     return settings[name]
   end,
 }

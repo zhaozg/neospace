@@ -9,13 +9,10 @@ M.windows = fn.has("win32") or fn.has("win64")
 
 if vim.fn.filereadable(".nvim.lua") == 1 then
   local ctx = assert(loadfile(".nvim.lua"))
-  ctx = assert(ctx())
+  ctx = ctx()
   if ctx then
     M.init = ctx.init
     M.config = ctx.config
-  else
-    M.init = _G.UserInit
-    M.config = _G.UserConfig
   end
 end
 
