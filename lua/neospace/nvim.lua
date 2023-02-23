@@ -1,6 +1,4 @@
-local vim = _G.vim
-
-local unpack = _G.unpack or table.unpack
+local vim = vim
 
 local function pcall_ret(status, ...)
   if status then

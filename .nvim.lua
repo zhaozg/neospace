@@ -3,7 +3,7 @@ end
 
 function UserConfig()
   local setting = require('neospace.lsp').setting
-  setting('sumneko_lua', { settings = {
+  setting('lua_ls', { settings = {
     Lua = {
       diagnostics = {
         enable = true,

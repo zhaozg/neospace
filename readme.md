@@ -28,10 +28,14 @@ A layer is a set of function-related, similar purpose plugins of Neovim.
 
 ## Dev
 
-* lint: <code>luacheck `fd \\.lua`</code>
+### lint
+
+```sh
+luacheck `fd \\.lua`
+```
 
 ### core plugins
 
-- [hrsh7th/nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
-- [williamboman/mason.nvim](https://github.com/williamboman/mason.nvim)
-- [jose-elias-alvarez/null-ls.nvim](https://github.com/jose-elias-alvarez/null-ls.nvim)
+* [hrsh7th/nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
+* [williamboman/mason.nvim](https://github.com/williamboman/mason.nvim)
+* [jose-elias-alvarez/null-ls.nvim](https://github.com/jose-elias-alvarez/null-ls.nvim)

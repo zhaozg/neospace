@@ -2,7 +2,6 @@ local M = {}
 local vim = vim
 local uv = vim and vim.loop or require("luv")
 local co = coroutine
-local unp = table.unpack ~= nil and table.unpack or unpack
 
 M.uv = uv
 
@@ -31,13 +30,13 @@ end
 -- https://github.com/iamcco/async-await.lua/blob/master/lua/async-await.lua
 local function next_step(thread, success, ...)
   local res = { co.resume(thread, ...) }
-  assert(res[1], unp(res, 2))
+  assert(res[1], unpack(res, 2))
   if co.status(thread) ~= "dead" then
     res[2](function(...)
       next_step(thread, success, ...)
     end)
   else
-    success(unp(res, 2))
+    success(unpack(res, 2))
   end
 end
 
@@ -52,12 +51,12 @@ M.async = function(func)
     res.is_done = true
     res.data = { ... }
     if res.cb ~= nil then
-      res.cb(unp(res.data))
+      res.cb(unpack(res.data))
     end
   end)
   return function(cb)
     if res.is_done then
-      cb(unp(res.data))
+      cb(unpack(res.data))
     else
       res.cb = cb
     end

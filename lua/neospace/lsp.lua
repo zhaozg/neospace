@@ -83,9 +83,6 @@ local function make_config(defaults, options)
   return defaults
 end
 
--- real settings in private layers
-local settings = {}
-
 return {
   settings = settings,
   setting = function(name, options)

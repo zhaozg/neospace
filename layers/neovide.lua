@@ -18,7 +18,7 @@ vim.g.neovide_cursor_antialiasing = false
 vim.g.neovide_cursor_vfx_mode = ""
 vim.g.neovide_input_use_logo = true
 
-vim.g.gui_font_default_size = 19
+vim.g.gui_font_default_size = 17
 vim.g.gui_font_size = vim.g.gui_font_default_size
 vim.g.gui_font_face = "Hack Nerd Font Mono"
 

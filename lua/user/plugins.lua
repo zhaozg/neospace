@@ -125,7 +125,7 @@ end
 function M.manage(plugins, options)
   options = options or {}
   local plugins_directory = options.plugins_directory or ("%s/site/pack/user/opt"):format(vim.fn.stdpath("data"))
-  local repo_base = options.repo_base or "https://github.com/"
+  local repo_base = options.repo_base or "https://github.com"
 
   local activated_sources = {}
   local pending_sources = {}

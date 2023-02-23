@@ -86,7 +86,6 @@ return {
   "hrsh7th/cmp-cmdline",
   "hrsh7th/cmp-emoji",
 
-  "rafamadriz/friendly-snippets",
   "L3MON4D3/LuaSnip",
   "molleweide/LuaSnip-snippets.nvim",
   "saadparwaiz1/cmp_luasnip",
@@ -205,7 +204,10 @@ return {
           { name = "doxygen" },
           { name = "spell" },
           { name = "emoji" },
-        }),
+
+          { name = "buffer" },
+          { name = "path" }
+        })
       })
 
       -- Set configuration for specific filetype.
@@ -213,6 +215,8 @@ return {
         sources = cmp.config.sources({
           { name = "cmp_git" }, -- You can specify the `cmp_git` source if you were installed it.
           { name = "buffer" },
+          { name = "spell" },
+          { name = "emoji" },
         }),
       })
 
