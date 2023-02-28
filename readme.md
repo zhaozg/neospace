@@ -34,6 +34,14 @@ A layer is a set of function-related, similar purpose plugins of Neovim.
 luacheck `fd \\.lua`
 ```
 
+### test
+
+We use a busted wrapper for testing neovim plugin, [vusted](https://github.com/notomo/vusted).
+
+```sh
+vusted
+```
+
 ### core plugins
 
 * [hrsh7th/nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
