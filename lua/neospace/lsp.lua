@@ -68,6 +68,7 @@ local function make_config(defaults, options)
 
   if not defaults._on_attach then
     defaults._on_attach = {}
+    defaults.on_attach = on_attach
   end
 
   if options.on_attach then
@@ -76,9 +77,6 @@ local function make_config(defaults, options)
   end
 
   defaults = vim.tbl_extend("force", defaults, options)
-  if not defaults.on_attach then
-    defaults.on_attach = on_attach
-  end
 
   return defaults
 end
@@ -87,16 +85,8 @@ return {
   settings = settings,
   setting = function(name, options)
     options = options or {}
-    local defaults = settings[name]
-    if defaults then
-      if options.on_attach then
-        defaults._on_attach[#defaults._on_attach + 1] = options.on_attach
-        options.on_attach = nil
-      end
-      settings[name] = vim.tbl_extend("force", defaults, options)
-    else
-      settings[name] = make_config({}, options)
-    end
+    local defaults = settings[name] or {}
+    settings[name] = make_config(defaults, options)
     return settings[name]
   end,
 }

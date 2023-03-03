@@ -1,6 +1,14 @@
 local vim = vim
+local map = require("neospace").map
 
 return {
+  {
+    "lukas-reineke/lsp-format.nvim",
+    config = function()
+      require("lsp-format").setup()
+      map({ "n", "x" }, "<Leader>xf", ":Format<CR>")
+    end,
+  },
   {
     "neovim/nvim-lspconfig",
   },
@@ -49,16 +57,16 @@ return {
 
       local function config_winbar()
         local exclude = {
-          ["teminal"] = true,
-          ["toggleterm"] = true,
-          ["prompt"] = true,
-          ["NvimTree"] = true,
-          ["help"] = true,
+          teminal = true,
+          toggleterm = true,
+          prompt = true,
+          NvimTree = true,
+          help = true,
         } -- Ignore float windows and exclude filetype
         if vim.api.nvim_win_get_config(0).zindex or exclude[vim.bo.filetype] then
           vim.wo.winbar = ""
         else
-          vim.wo.winbar = require('lspsaga.symbolwinbar'):get_winbar()
+          vim.wo.winbar = require("lspsaga.symbolwinbar"):get_winbar()
         end
       end
 
@@ -94,7 +102,7 @@ return {
           elseif button == "r" then
             if modifiers == "s" then
               print("lspsaga") -- shift right click to print "lspsaga"
-            end -- jump to node's ending line+char
+            end                -- jump to node's ending line+char
             vim.fn.cursor(en.line + 1, en.character + 1)
           elseif button == "m" then
             -- middle click to visual select node

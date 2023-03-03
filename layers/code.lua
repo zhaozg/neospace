@@ -51,13 +51,6 @@ return {
       map("n", "<Leader>ti", "<cmd>IndentBlanklineToggle<CR>")
     end,
   },
-  {
-    "lukas-reineke/lsp-format.nvim",
-    config = function()
-      require("lsp-format").setup()
-      map({ "n", "x" }, "<Leader>xf", ":Format<CR>")
-    end,
-  },
   "wellle/targets.vim",
   {
     "AndrewRadev/splitjoin.vim",
@@ -238,7 +231,6 @@ return {
           { name = "path" },
         }),
       })
-
     end,
   },
 
@@ -248,12 +240,12 @@ return {
       local npairs = require("nvim-autopairs")
       npairs.setup({
         check_ts = false,
-        map_cr = true, --  map <CR> on insert mode
-        map_complete = true, -- it will auto insert `(` after select function or method item
+        map_cr = true,        --  map <CR> on insert mode
+        map_complete = true,  -- it will auto insert `(` after select function or method item
         ts_config = {
           lua = { "string" }, -- it will not add pair on that treesitter node
           javascript = { "template_string" },
-          java = false, -- don't check treesitter on java
+          java = false,       -- don't check treesitter on java
         },
       })
       --look at https://github.com/windwp/nvim-autopairs/wiki/Endwise
