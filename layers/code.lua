@@ -199,8 +199,8 @@ return {
           { name = "emoji" },
 
           { name = "buffer" },
-          { name = "path" }
-        })
+          { name = "path" },
+        }),
       })
 
       -- Set configuration for specific filetype.
@@ -240,12 +240,12 @@ return {
       local npairs = require("nvim-autopairs")
       npairs.setup({
         check_ts = false,
-        map_cr = true,        --  map <CR> on insert mode
-        map_complete = true,  -- it will auto insert `(` after select function or method item
+        map_cr = true, --  map <CR> on insert mode
+        map_complete = true, -- it will auto insert `(` after select function or method item
         ts_config = {
           lua = { "string" }, -- it will not add pair on that treesitter node
           javascript = { "template_string" },
-          java = false,       -- don't check treesitter on java
+          java = false, -- don't check treesitter on java
         },
       })
       --look at https://github.com/windwp/nvim-autopairs/wiki/Endwise

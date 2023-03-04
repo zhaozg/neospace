@@ -2,9 +2,8 @@ local M = {}
 
 M.markdown = {
   pandoc = {
-    render = {
-    }
-  }
+    render = {},
+  },
 }
 
 return M

@@ -35,6 +35,7 @@
         ],
         "pathStrict": true
     },
+    "format.enable": false,
     "workspace": {
         "checkThirdParty": false,
         "maxPreload": 2000,

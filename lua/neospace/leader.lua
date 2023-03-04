@@ -1,4 +1,4 @@
-local map = require('neospace').map
+local map = require("neospace").map
 
 map("n", "<Leader>q", "<cmd>q<CR>")
 

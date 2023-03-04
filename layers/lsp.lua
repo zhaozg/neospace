@@ -95,14 +95,14 @@ return {
           if button == "l" then
             if clicks == 2 then
               -- double left click to do nothing
-              print("double left click");
+              print("double left click")
             else -- jump to node's starting line+char
               vim.fn.cursor(st.line + 1, st.character + 1)
             end
           elseif button == "r" then
             if modifiers == "s" then
               print("lspsaga") -- shift right click to print "lspsaga"
-            end                -- jump to node's ending line+char
+            end -- jump to node's ending line+char
             vim.fn.cursor(en.line + 1, en.character + 1)
           elseif button == "m" then
             -- middle click to visual select node
@@ -118,10 +118,5 @@ return {
   {
     "jose-elias-alvarez/null-ls.nvim",
     after = "nvim-lua/plenary.nvim",
-    config = function()
-      local null_ls = require("null-ls")
-      null_ls.setup({
-      })
-    end,
   },
 }

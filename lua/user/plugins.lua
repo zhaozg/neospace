@@ -25,19 +25,19 @@ end
 
 local function packadd_ft(plugin)
   vim.api.nvim_create_autocmd("FileType", {
-      pattern = plugin.ft,
-      callback = function()
-        packadd_do(plugin)
-      end,
+    pattern = plugin.ft,
+    callback = function()
+      packadd_do(plugin)
+    end,
   })
 end
 
 local function packadd_on(plugin)
   vim.api.nvim_create_autocmd("CmdUndefined", {
-      pattern = plugin.on,
-      callback = function()
-        packadd_do(plugin)
-      end,
+    pattern = plugin.on,
+    callback = function()
+      packadd_do(plugin)
+    end,
   })
 end
 
@@ -98,14 +98,14 @@ local function chdir_do(dir, fun, callback)
     callback(ret, msg)
   elseif type(fun) == "string" then
     async.run(fun, {
-        cwd = dir,
-        args = {},
+      cwd = dir,
+      args = {},
     }, callback)
   elseif type(fun) == "table" then
     local cmd = table.remove(fun, 1)
     async.run(cmd, {
-        cwd = dir,
-        args = fun,
+      cwd = dir,
+      args = fun,
     }, callback)
   else
     error("Can't run " .. tostring(fun))
@@ -159,11 +159,9 @@ function M.manage(plugins, options)
   local count = 0
   for _ = 1, #plugins do
     local plugin = plugins[_]
-    plugin.upgrade_hook = plugin.upgrade_hook or plugin.install or function()
-        end
+    plugin.upgrade_hook = plugin.upgrade_hook or plugin.install or function() end
     plugin.packadd_init = plugin.packadd_init or plugin.init
-    plugin.packadd_hook = plugin.packadd_hook or plugin.config or function()
-        end
+    plugin.packadd_hook = plugin.packadd_hook or plugin.config or function() end
     plugin.packadd_after = plugin.packadd_after or plugin.after or {}
     if type(plugin.packadd_after) == "string" then
       plugin.packadd_after = { plugin.packadd_after }

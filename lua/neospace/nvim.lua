@@ -35,6 +35,7 @@ local make_meta_accessor = vim.make_meta_accessor
     function mt:__index(k)
       return get(k)
     end
+
     return setmetatable({}, mt)
   end
 
