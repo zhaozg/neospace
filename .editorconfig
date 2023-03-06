@@ -1,5 +1,5 @@
 # EditorConfig is awesome: https://EditorConfig.org
-
+###################################################################################################
 # Unix-style newlines with a newline ending every file
 [*]
 end_of_line = lf
@@ -10,7 +10,7 @@ insert_final_newline = true
 [*.lua]
 charset = utf-8
 
-column_width = 120
+column_width = 100
 line_endings = "Unix"
 indent_type = "Spaces"
 indent_width = 2
