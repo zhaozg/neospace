@@ -1,14 +1,6 @@
 local vim = vim
-local map = require("neospace").map
 
 return {
-  {
-    "lukas-reineke/lsp-format.nvim",
-    config = function()
-      require("lsp-format").setup()
-      map({ "n", "x" }, "<Leader>xf", ":Format<CR>")
-    end,
-  },
   {
     "neovim/nvim-lspconfig",
   },

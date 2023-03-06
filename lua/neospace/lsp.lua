@@ -9,7 +9,6 @@ local settings = {}
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
   require("lsp-status").on_attach(client, bufnr)
-  require("lsp-format").on_attach(client, bufnr)
   require("lsp_signature").on_attach(client, bufnr)
 
   -- Enable completion triggered by <c-x><c-o>
@@ -20,7 +19,7 @@ local on_attach = function(client, bufnr)
   map(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
   map(bufnr, "n", "cD", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
   map(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>")
-  map(bufnr, "n", "gf", "<cmd>lua vim.lsp.buf.format()<CR>")
+  map(bufnr, "n", "gf", "<cmd>lua vim.lsp.buf.format({timeout_ms = 2000})<CR>")
   map(bufnr, "n", "<space>wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>")
   map(bufnr, "n", "<space>wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>")
   map(bufnr, "n", "<space>wl", "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>")
