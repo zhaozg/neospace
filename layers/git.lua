@@ -40,8 +40,10 @@ return {
           end, { expr = true })
 
           -- Actions
-          lmap({ 'n', 'v' }, '<leader>hs', ':Gitsigns stage_hunk<CR>')
-          lmap({ 'n', 'v' }, '<leader>hr', ':Gitsigns reset_hunk<CR>')
+          lmap('n', '<leader>hs', gs.stage_hunk)
+          lmap('n', '<leader>hr', gs.reset_hunk)
+          lmap('v', '<leader>hs', function() gs.stage_hunk {vim.fn.line("."), vim.fn.line("v")} end)
+          lmap('v', '<leader>hr', function() gs.reset_hunk {vim.fn.line("."), vim.fn.line("v")} end)
           lmap('n', '<leader>hS', gs.stage_buffer)
           lmap('n', '<leader>hu', gs.undo_stage_hunk)
           lmap('n', '<leader>hR', gs.reset_buffer)
@@ -50,6 +52,9 @@ return {
           lmap('n', '<leader>hd', gs.diffthis)
           lmap('n', '<leader>hD', function() gs.diffthis('~') end)
           lmap('n', '<leader>tb', gs.toggle_current_line_blame)
+          lmap('n', '<leader>td', gs.toggle_deleted)
+          lmap('n', '<leader>hd', gs.diffthis)
+          lmap('n', '<leader>hD', function() gs.diffthis('~') end)
           lmap('n', '<leader>td', gs.toggle_deleted)
 
           -- Text object
