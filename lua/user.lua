@@ -48,7 +48,7 @@ end
 
 local function setup(options)
   options = options or {}
-  options.repo_base = "https://github.com/"
+  options.repo_base = "https://github.com"
   local manager = require("user.plugins").manage(packs, options)
 
   vim.api.nvim_create_user_command("PluginsUpgrade", manager.upgrade, {})

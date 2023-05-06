@@ -90,20 +90,26 @@ return {
   },
   {
     "nvim-treesitter/nvim-treesitter-refactor",
+    after = "nvim-treesitter/nvim-treesitter",
   },
   {
     "nvim-treesitter/nvim-treesitter-context",
+    after = "nvim-treesitter/nvim-treesitter",
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
+    after = "nvim-treesitter/nvim-treesitter",
   },
   {
     "nvim-treesitter/nvim-tree-docs",
+    after = "nvim-treesitter/nvim-treesitter",
   },
   {
     "p00f/nvim-ts-rainbow",
+    after = "nvim-treesitter/nvim-treesitter",
   },
   {
     "JoosepAlviste/nvim-ts-context-commentstring",
-  },
+    after = "nvim-treesitter/nvim-treesitter",
+  }
 }

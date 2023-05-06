@@ -6,19 +6,20 @@ local git = require("user.git")
 local M = {}
 
 local function packadd_do(plugin)
-  local _, err = pcall(vim.cmd, ("packadd %s"):format(vim.fn.fnameescape(plugin.name)))
+  local cmd = ("packadd %s"):format(vim.fn.fnameescape(plugin.name))
+  local _, err = pcall(vim.cmd, cmd)
   if not _ then
-    notify(("packadd %s fail: %s"):format(plugin.name, err))
+    notify(("packadd %s fail with:\n%s\n"):format(plugin.name, err))
   elseif plugin.packadd_hook then
     if plugin.packadd_init then
       local ret, msg = pcall(plugin.packadd_init)
       if not ret then
-        notify(("%s init fail: %s"):format(plugin.name, msg))
+        notify(("packadd init %s fail: %s"):format(plugin.name, msg))
       end
     end
     local ret, msg = pcall(plugin.packadd_hook)
     if not ret then
-      notify(("packadd %s fail: %s"):format(plugin.name, msg))
+      notify(("packadd hook %s fail: %s"):format(plugin.name, msg))
     end
   end
 end

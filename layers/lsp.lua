@@ -6,6 +6,7 @@ return {
   },
   {
     "williamboman/mason.nvim",
+    after = "neovim/nvim-lspconfig",
     config = function()
       require("mason").setup()
     end,

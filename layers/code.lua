@@ -86,7 +86,10 @@ return {
   "f3fora/cmp-spell",
   {
     "paopaol/cmp-doxygen",
-    after = "nvim-treesitter/nvim-treesitter",
+    after = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-treesitter/nvim-treesitter-textobjects"
+    }
   },
 
   {

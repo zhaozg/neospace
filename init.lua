@@ -8,8 +8,7 @@ vim.g.loaded_node_provider = 0
 
 vim.g.python3_host_prog = "python3"
 
---embed impatient comes from https://github.com/lewis6991/impatient.nvim
-require("impatient")
+vim.loader.enable()
 
 local neospace = require("neospace")
 -- set neospace
@@ -36,6 +35,7 @@ layer:load("ui")
 
 -- commons
 layer:load("text")
+layer:load("treesitter")
 layer:load("code")
 layer:load("finder")
 layer:load("git")
@@ -43,7 +43,6 @@ layer:load("fold")
 
 -- enhance
 layer:load("lsp")
-layer:load("treesitter")
 layer:load("debug")
 
 -- language
@@ -56,7 +55,7 @@ layer:load("tools")
 if vim.fn.exists("g:neovide") then
   layer:load("neovide")
 end
-layer:load_private()
+--layer:load_private()
 
 -- load plugins
 local user = require("user")
