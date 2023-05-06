@@ -55,7 +55,12 @@ layer:load("tools")
 if vim.fn.exists("g:neovide") then
   layer:load("neovide")
 end
---layer:load_private()
+
+layer:load_private()
+
+-- deprecated
+vim.treesitter.query.get_query = vim.treesitter.query.get
+vim.treesitter.query.parse_query = vim.treesitter.query.parse
 
 -- load plugins
 local user = require("user")

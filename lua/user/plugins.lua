@@ -5,6 +5,24 @@ local git = require("user.git")
 
 local M = {}
 
+local function run(scripts, title)
+  local ret, msg, typ
+  typ = type(scripts)
+  assert(typ=='function' or typ=='table', string.format("invalid %s to run", title or "Lua"))
+  if typ =='function' then
+     ret, msg = pcall(scripts)
+  elseif typ=='table' and #scripts > 0 then
+    ret = true
+    for i=1, #scripts do
+      ret, msg = pcall(scripts[i])
+      if not ret then
+        break
+      end
+    end
+  end
+  return ret, msg
+end
+
 local function packadd_do(plugin)
   local cmd = ("packadd %s"):format(vim.fn.fnameescape(plugin.name))
   local _, err = pcall(vim.cmd, cmd)
@@ -12,7 +30,7 @@ local function packadd_do(plugin)
     notify(("packadd %s fail with:\n%s\n"):format(plugin.name, err))
   elseif plugin.packadd_hook then
     if plugin.packadd_init then
-      local ret, msg = pcall(plugin.packadd_init)
+      local ret, msg = run(plugin.packadd_init)
       if not ret then
         notify(("packadd init %s fail: %s"):format(plugin.name, msg))
       end

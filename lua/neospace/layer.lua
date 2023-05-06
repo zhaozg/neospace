@@ -44,6 +44,33 @@ function M:require(name, private)
   return load
 end
 
+function M:append(name, func, item)
+  local module
+  for _, plugins in pairs(self.modules) do
+    for i = 1, #plugins do
+      local plugin = plugins[i]
+      if type(plugin)=='string' and plugin==name then
+        module = {plugin}
+        plugins[i] = module
+        break
+      elseif plugin[1] == name then
+        module = plugin
+      end
+    end
+  end
+
+  assert(module, string.format("not have `%s` plugin", name))
+  item = item or "init"
+  assert(item=='init', string.format("not support `%s` config for `%s` plugin", item, name))
+  if module[item]==nil then
+    module[item] = func
+  elseif type(module[item])=='function' then
+    module[item] = {module[item], func}
+  else
+    table.insert(module[item], #module[item], func)
+  end
+end
+
 function M:load_private()
   self:load("init", true)
 end
