@@ -53,16 +53,6 @@ return {
           enable = true,
         },
 
-        rainbow = {
-          enable = true,
-          -- Also highlight non-bracket delimiters like html tags,
-          -- boolean or table: lang -> boolean
-          extended_mode = true,
-          max_file_lines = nil, -- Do not enable for files with more than n lines, int
-          colors = {}, -- table of hex strings
-          termcolors = {}, -- table of colour name strings
-        },
-
         context_commentstring = {
           enable = true,
           enable_autocmd = false,
@@ -102,10 +92,6 @@ return {
   },
   {
     "nvim-treesitter/nvim-tree-docs",
-    after = "nvim-treesitter/nvim-treesitter",
-  },
-  {
-    "p00f/nvim-ts-rainbow",
     after = "nvim-treesitter/nvim-treesitter",
   },
   {
