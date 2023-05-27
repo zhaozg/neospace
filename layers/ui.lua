@@ -66,7 +66,21 @@ return {
       alpha.setup(startify.opts)
     end,
   },
-
+  {
+    "luukvbaal/statuscol.nvim",
+    after = 'kevinhwang91/promise-async',
+    config = function()
+      local builtin = require("statuscol.builtin")
+      require("statuscol").setup({
+        relculright = true,
+        segments = {
+          {text = {builtin.foldfunc}, click = "v:lua.ScFa"},
+          {text = {"%s"}, click = "v:lua.ScSa"},
+          {text = {builtin.lnumfunc, " "}, click = "v:lua.ScLa"}
+        }
+      })
+    end,
+  },
   --tabline at top
   {
     "kdheepak/tabline.nvim",
