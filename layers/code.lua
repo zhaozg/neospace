@@ -80,7 +80,6 @@ return {
   "hrsh7th/cmp-emoji",
 
   "L3MON4D3/LuaSnip",
-  "molleweide/LuaSnip-snippets.nvim",
   "saadparwaiz1/cmp_luasnip",
 
   "f3fora/cmp-spell",
@@ -96,7 +95,6 @@ return {
     "hrsh7th/nvim-cmp",
     after = {
       "L3MON4D3/LuaSnip",
-      "molleweide/LuaSnip-snippets.nvim",
     },
     init = function()
       vim.opt.spell = true
@@ -107,8 +105,8 @@ return {
     config = function()
       local cmp = require("cmp")
       local luasnip = require("luasnip")
-      luasnip.snippets = require("luasnip_snippets").load_snippets()
       require("luasnip.loaders.from_vscode").lazy_load()
+      require("luasnip.loaders.from_snipmate").lazy_load()
 
       local has_words_before = function()
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
