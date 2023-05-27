@@ -43,7 +43,10 @@ return {
   },
   {
     "glepnir/lspsaga.nvim",
-    after = "neovim/nvim-lspconfig",
+    after = {
+      "neovim/nvim-lspconfig",
+      "nvim-treesitter/nvim-treesitter"
+    },
     config = function()
       local saga = require("lspsaga")
       local opts = {}
