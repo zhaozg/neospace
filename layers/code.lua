@@ -25,28 +25,21 @@ return {
     init = function()
       vim.opt.termguicolors = true
       vim.g.indent_blankline_use_treesitter = true
-      vim.cmd([[highlight IndentBlanklineIndent1 guifg=#E06C75 gui=nocombine]])
-      vim.cmd([[highlight IndentBlanklineIndent2 guifg=#E5C07B gui=nocombine]])
-      vim.cmd([[highlight IndentBlanklineIndent3 guifg=#98C379 gui=nocombine]])
-      vim.cmd([[highlight IndentBlanklineIndent4 guifg=#56B6C2 gui=nocombine]])
-      vim.cmd([[highlight IndentBlanklineIndent5 guifg=#61AFEF gui=nocombine]])
-      vim.cmd([[highlight IndentBlanklineIndent6 guifg=#C678DD gui=nocombine]])
-
       vim.opt.list = true
       vim.opt.listchars:append("space: ")
       vim.opt.listchars:append("eol:↵")
     end,
     config = function()
-      require("indent_blankline").init()
       require("indent_blankline").setup({
         char = "┊",
         space_char_blankline = " ",
         enabled = false,
         show_first_indent_level = false,
         show_end_of_line = true,
-        show_current_context = true,
         buftype_exclude = { "alpha" },
         show_trailing_blankline_indent = true,
+        show_current_context = true,
+        show_current_context_start = true,
       })
       map("n", "<Leader>ti", "<cmd>IndentBlanklineToggle<CR>")
     end,
