@@ -1,7 +1,7 @@
 local vim = vim
-local map = require 'neospace'.map
+local map = require("neospace").map
 
-if not vim.fn.exists('g:neovide') then
+if vim.fn.exists("g:neovide") == 0 then
   return
 end
 vim.g.neovide_input_macos_alt_is_meta = true
@@ -41,14 +41,20 @@ ResetGuiFont()
 
 -- Dynamic change font size
 
-map({ 'n', 'i' }, "<A-=>", "", {
-    callback = function() ResizeGuiFont(0.5) end
+map({ "n", "i" }, "<A-=>", "", {
+  callback = function()
+    ResizeGuiFont(0.5)
+  end,
 })
-map({ 'n', 'i' }, "<A-->", "", {
-    callback = function() ResizeGuiFont( -0.5) end
+map({ "n", "i" }, "<A-->", "", {
+  callback = function()
+    ResizeGuiFont(-0.5)
+  end,
 })
-map({ 'n', 'i' }, "<A-0>", "", {
-    callback = function() ResetGuiFont() end
+map({ "n", "i" }, "<A-0>", "", {
+  callback = function()
+    ResetGuiFont()
+  end,
 })
 
 -- system clipboard {{{
@@ -59,15 +65,15 @@ vim.cmd("set clipboard+=unnamedplus")
 map("", "<D-c>", '"+y')
 
 -- pasta
-vim.api.nvim_set_keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true })
+vim.api.nvim_set_keymap("", "<D-v>", "+p<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("!", "<D-v>", "<C-R>+", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("t", "<D-v>", "<C-R>+", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("v", "<D-v>", "<C-R>+", { noremap = true, silent = true })
 
 -- undo
 map("n", "<D-z>", '"u')
-map("i", "<D-z>", '<Esc>ua')
+map("i", "<D-z>", "<Esc>ua")
 
 -- system clipboard }}}
 
-map("n", "<leader>tw", '<cmd>let g:neovide_fullscreen = !g:neovide_fullscreen<cr>', {})
+map("n", "<leader>tw", "<cmd>let g:neovide_fullscreen = !g:neovide_fullscreen<cr>", {})

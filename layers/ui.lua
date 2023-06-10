@@ -5,7 +5,7 @@ local o = vim.o
 local fun = require("neospace.fun")
 local neospace = require("neospace")
 
-return {
+local ui = {
 
   {
     "kyazdani42/nvim-web-devicons",
@@ -26,7 +26,9 @@ return {
       })
     end,
   },
-
+  {
+    "MunifTanjim/nui.nvim",
+  },
   {
     "goolord/alpha-nvim",
     after = "kyazdani42/nvim-web-devicons",
@@ -49,7 +51,13 @@ return {
 
       local function version()
         local t = vim.version()
-        return string.format("v%d.%d.%d%s", t.major, t.minor, t.patch, t.api_prerelease and "-dev" or "")
+        return string.format(
+          "v%d.%d.%d%s",
+          t.major,
+          t.minor,
+          t.patch,
+          t.api_prerelease and "-dev" or ""
+        )
       end
 
       startify.section.header.val = fix_header({
@@ -68,16 +76,16 @@ return {
   },
   {
     "luukvbaal/statuscol.nvim",
-    after = 'kevinhwang91/promise-async',
+    after = "kevinhwang91/promise-async",
     config = function()
       local builtin = require("statuscol.builtin")
       require("statuscol").setup({
         relculright = true,
         segments = {
-          {text = {builtin.foldfunc}, click = "v:lua.ScFa"},
-          {text = {"%s"}, click = "v:lua.ScSa"},
-          {text = {builtin.lnumfunc, " "}, click = "v:lua.ScLa"}
-        }
+          { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+          { text = { "%s" }, click = "v:lua.ScSa" },
+          { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+        },
       })
     end,
   },
@@ -162,7 +170,7 @@ return {
           },
         },
       })
-      require('neospace').map('', '<leader>tf', '<cmd>NvimTreeToggle<CR>')
+      require("neospace").map("", "<leader>tf", "<cmd>NvimTreeToggle<CR>")
     end,
   },
 
@@ -250,7 +258,7 @@ return {
         t = { name = "toggle" },
         w = { name = "windows" },
         x = { name = "text" },
-        z = { name = "fold" }
+        z = { name = "fold" },
       }, { prefix = "<leader>" })
       wk.setup({
         plugins = {
@@ -268,11 +276,46 @@ return {
       })
     end,
   },
+
   {
     "lewis6991/satellite.nvim",
     config = function()
-      require("satellite").setup({
-      })
+      require("satellite").setup({})
     end,
   },
 }
+
+if vim.fn.exists("g:neovide")==0 then
+  ui[#ui + 1] = {
+    "folke/noice.nvim",
+    after = {
+      "rcarriga/nvim-notify",
+      "MunifTanjim/nui.nvim",
+    },
+    config = function()
+      require("noice").setup({
+        lsp = {
+          -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+          override = {
+            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+            ["vim.lsp.util.stylize_markdown"] = true,
+            ["cmp.entry.get_documentation"] = true,
+          },
+          signature = {
+            enabled = false,
+          },
+        },
+        -- you can enable a preset for easier configuration
+        presets = {
+          bottom_search = true, -- use a classic bottom cmdline for search
+          command_palette = true, -- position the cmdline and popupmenu together
+          long_message_to_split = true, -- long messages will be sent to a split
+          inc_rename = false, -- enables an input dialog for inc-rename.nvim
+          lsp_doc_border = false, -- add a border to hover docs and signature help
+        },
+      })
+    end,
+  }
+end
+
+return ui
