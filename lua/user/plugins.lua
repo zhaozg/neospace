@@ -98,13 +98,20 @@ local function scandir(path)
   return entries
 end
 
-local function recursively_delete(path)
+local function directory_delete(path, recursively)
   local stat = vim.loop.fs_stat(path)
-  if stat.type == "directory" then
-    for _, entry in ipairs(scandir(path)) do
-      recursively_delete(("%s/%s"):format(path, entry))
+  if stat.type == 'directory' then
+    local lists = scandir(path)
+    if recursively then
+      for _, entry in ipairs(lists) do
+        directory_delete(("%s/%s"):format(path, entry), recursively)
+      end
+      vim.loop.fs_rmdir(path)
+    else
+      if vim.tbl_isempty(lists) then
+        vim.loop.fs_rmdir(path)
+      end
     end
-    vim.loop.fs_rmdir(path)
   else
     vim.loop.fs_unlink(path)
   end
@@ -253,7 +260,8 @@ function M.manage(plugins, options)
       for _, sub in ipairs(subs) do
         local plugin = string.format("%s/%s", entry, sub)
         if plugins[plugin] == nil then
-          recursively_delete(("%s/%s"):format(plugins_directory, plugin))
+          directory_delete(("%s/%s"):format(plugins_directory, plugin), true)
+          directory_delete(("%s/%s"):format(plugins_directory, entry), false)
           notify(("%s removed"):format(plugin))
         end
       end
