@@ -152,6 +152,11 @@ return {
           },
         },
       })
+
+      map("n", "<leader>do", ":DiffviewOpen<CR>")
+      map("n", "<leader>dc", ":DiffviewClose<CR>")
+      map("n", "<leader>dR", ":DiffviewRefresh<CR>")
+
     end,
   },
 
