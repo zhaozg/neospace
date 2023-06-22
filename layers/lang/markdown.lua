@@ -11,11 +11,6 @@ return {
         markdown = {
           img_dir = {"%:p:h", "img"},
           affix = "![](%s)",
-          img_name = function()
-            local cword = vim.fn.expand('<cword>')
-            vim.fn.feedkeys("diw")
-            return cword
-          end,
         }
       }
       vim.keymap.set('i', "<C-p>", "<ESC>:PasteImg<CR>")
