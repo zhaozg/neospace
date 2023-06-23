@@ -2,6 +2,85 @@ local vim = vim
 local g = vim.g
 local lang = require('neospace.lang')
 
+local layer = require("neospace.layer")
+layer:append("jose-elias-alvarez/null-ls.nvim", function()
+  local null_ls = require "null-ls"
+  local markdownlint = null_ls.builtins.diagnostics.markdownlint.with {
+    extra_args = { "--config", "~/.markdownlint.yaml" }
+  }
+  null_ls.register(markdownlint)
+
+  if vim.fn.executable("lint-md") == 1 then
+    local helpers = require("null-ls.helpers")
+
+    local lint_md_source = {
+      name = "lint-md",
+      method = null_ls.methods.DIAGNOSTICS,
+      filetypes = { "markdown" },
+      generator = helpers.generator_factory({
+        command = "lint-md",
+        args = { "$FILENAME" },
+        from_stderr = false,
+        from_stdout = true,
+        format = "line",
+        output = 'raw',
+        use_cache = false,
+        prepend_extra_args = true,
+        multiple_files = false,
+        timeout = 1000,
+        to_temp_file = true,
+        check_exit_code = function(code, stderr)
+          local success = code <= 1
+
+          if not success then print(stderr) end
+
+          return true
+        end,
+
+        -- 28:1  error  代码语言不能为空，请在代码块语法上增加语言  no-empty-code-lang
+        on_output = helpers.diagnostics.from_patterns({
+          {
+            pattern = [[(%d+):(%d+)%s+(%w+)%s+(.+)%s+(.*)]],
+            groups = { "row", "col", "severity", "message", "code" },
+          }
+        })
+      })
+    }
+
+    local fmt_md_source = {
+      name = "lint-md",
+      method = null_ls.methods.FORMATTING,
+      filetypes = { "markdown" },
+      generator = helpers.formatter_factory({
+        command = "lint-md",
+        args = { "--fix", "$FILENAME" },
+        to_stdin = false,
+        from_stderr = false,
+        from_stdout = false,
+        output = 'raw',
+        use_cache = false,
+        prepend_extra_args = true,
+        multiple_files = false,
+        from_temp_file = true,
+        to_temp_file = true,
+        timeout = 1000,
+        check_exit_code = function(code, stderr)
+          local success = code <= 1
+
+          if not success then print(stderr) end
+
+          return success
+        end
+      })
+    }
+
+    null_ls.register({
+      lint_md_source,
+      fmt_md_source
+    })
+  end
+end)
+
 return {
   {
     "ekickx/clipboard-image.nvim",
@@ -9,7 +88,7 @@ return {
     config = function()
       require 'clipboard-image'.setup {
         markdown = {
-          img_dir = {"%:p:h", "img"},
+          img_dir = { "%:p:h", "img" },
           affix = "![](%s)",
         }
       }
@@ -120,7 +199,7 @@ return {
         default = {
           output = '%s.html',
           args = {
-            { "--from", "gfm" },
+            { "--from",      "gfm" },
             { "--standalone" }
           }
         },
@@ -137,8 +216,8 @@ return {
                   { "--toc" },
                   { "--standalone" },
                   { "--self-contained" },
-                  { "--from", "gfm" },
-                  { "--output", output('html') }
+                  { "--from",          "gfm" },
+                  { "--output",        output('html') }
                 })
               )
             end,
@@ -152,9 +231,9 @@ return {
                 vim.tbl_extend("force", pdf_init, {
                   { "--toc" },
                   { "--standalone" },
-                  { "--from", "gfm" },
+                  { "--from",       "gfm" },
                   { "--pdf-engine", "prince" },
-                  { "--output", output('pdf') }
+                  { "--output",     output('pdf') }
                 })
               )
             end,
@@ -174,9 +253,5 @@ return {
         }
       })
     end
-  },
-  {
-    "hotoo/pangu.vim",
-    ft = { "markdown" },
   },
 }
