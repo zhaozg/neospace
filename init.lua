@@ -49,11 +49,12 @@ layer:load("ai")
 -- language
 layer:load("lang/markdown")
 layer:load("lang/diagram")
+layer:load("lang/java")
 
 -- misc
 layer:load("tools")
 
-if vim.fn.exists("g:neovide") then
+if vim.fn.exists("g:neovide")==1 then
   layer:load("neovide")
 end
 
