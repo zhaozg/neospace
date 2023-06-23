@@ -44,6 +44,7 @@ layer:load("fold")
 -- enhance
 layer:load("lsp")
 layer:load("debug")
+layer:load("ai")
 
 -- language
 layer:load("lang/markdown")

@@ -194,6 +194,8 @@ return {
 
           { name = "buffer" },
           { name = "path" },
+
+          { name = "codeium" }
         }),
       })
 
