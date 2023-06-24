@@ -60,9 +60,23 @@ return {
   },
 
   {
-    "ggandor/leap.nvim",
+    "folke/flash.nvim",
     config = function()
-      require('leap').add_default_mappings()
+      require('flash').setup()
+
+      local Mapper = require("nvim-mapper")
+      Mapper.map({ "n", "x", "o" }, 's', require("flash").jump,
+        {silent = true},
+        "Flash", "Jump", "Fullscope Jump")
+      Mapper.map({ "n", "x", "o" }, 'S', require("flash").treesitter,
+        {silent = true},
+        "Flash", "Treesitter", "Treesitter Jump")
+
+      Mapper.map({ "n", "x", "o" }, 'R', require("flash").remote,
+        {silent = true},
+        "Flash", "Remote", "Treesitter Jump")
+      --map({ "n", "x", "o" }, "S", require("flash").)
+      --map("o", "r", require("flash").)
     end
   },
 
@@ -94,7 +108,7 @@ return {
 
       require("diffview").setup({
         diff_binaries = false, -- Show diffs for binaries
-        use_icons = true, -- Requires nvim-web-devicons
+        use_icons = true,      -- Requires nvim-web-devicons
 
         view = {
           -- For more info, see |diffview-config-view.x.layout|.
@@ -107,7 +121,7 @@ return {
             -- Config for conflicted files in diff views during a merge or rebase.
             layout = "diff3_mixed",
             disable_diagnostics = true, -- Temporarily disable diagnostics for conflict buffers while in the view.
-            winbar_info = true, -- See |diffview-config-view.x.winbar_info|
+            winbar_info = true,         -- See |diffview-config-view.x.winbar_info|
           },
           file_history = {
             -- Config for changed files in file history views.
@@ -118,8 +132,8 @@ return {
         file_panel = {
           win_config = {
             position = "left", -- One of 'left', 'right', 'top', 'bottom'
-            width = 25, -- Only applies when position is 'left' or 'right'
-            height = 10, -- Only applies when position is 'top' or 'bottom'
+            width = 25,        -- Only applies when position is 'left' or 'right'
+            height = 10,       -- Only applies when position is 'top' or 'bottom'
           },
         },
         key_bindings = {
@@ -127,24 +141,24 @@ return {
           -- The `view` bindings are active in the diff buffers, only when the current
           -- tabpage is a Diffview.
           view = {
-            ["<tab>"] = cb("select_next_entry"), -- Open the diff for the next file
+            ["<tab>"] = cb("select_next_entry"),   -- Open the diff for the next file
             ["<s-tab>"] = cb("select_prev_entry"), -- Open the diff for the previous file
-            ["<leader>e"] = cb("focus_files"), -- Bring focus to the files panel
-            ["<leader>b"] = cb("toggle_files"), -- Toggle the files panel.
+            ["<leader>e"] = cb("focus_files"),     -- Bring focus to the files panel
+            ["<leader>b"] = cb("toggle_files"),    -- Toggle the files panel.
           },
           file_panel = {
-            ["j"] = cb("next_entry"), -- Bring the cursor to the next file entry
+            ["j"] = cb("next_entry"),      -- Bring the cursor to the next file entry
             ["<down>"] = cb("next_entry"),
-            ["k"] = cb("prev_entry"), -- Bring the cursor to the previous file entry.
+            ["k"] = cb("prev_entry"),      -- Bring the cursor to the previous file entry.
             ["<up>"] = cb("prev_entry"),
             ["<cr>"] = cb("select_entry"), -- Open the diff for the selected entry.
             ["o"] = cb("select_entry"),
             ["<2-LeftMouse>"] = cb("select_entry"),
             ["-"] = cb("toggle_stage_entry"), -- Stage / unstage the selected entry.
-            ["S"] = cb("stage_all"), -- Stage all entries.
-            ["U"] = cb("unstage_all"), -- Unstage all entries.
-            ["X"] = cb("restore_entry"), -- Restore entry to the state on the left side.
-            ["R"] = cb("refresh_files"), -- Update stats and entries in the file list.
+            ["S"] = cb("stage_all"),          -- Stage all entries.
+            ["U"] = cb("unstage_all"),        -- Unstage all entries.
+            ["X"] = cb("restore_entry"),      -- Restore entry to the state on the left side.
+            ["R"] = cb("refresh_files"),      -- Update stats and entries in the file list.
             ["<tab>"] = cb("select_next_entry"),
             ["<s-tab>"] = cb("select_prev_entry"),
             ["<leader>e"] = cb("focus_files"),
@@ -156,7 +170,6 @@ return {
       map("n", "<leader>do", ":DiffviewOpen<CR>")
       map("n", "<leader>dc", ":DiffviewClose<CR>")
       map("n", "<leader>dR", ":DiffviewRefresh<CR>")
-
     end,
   },
 
