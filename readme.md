@@ -42,6 +42,15 @@ We use a busted wrapper for testing neovim plugin, [vusted](https://github.com/n
 vusted
 ```
 
+## Honor roll
+
+### Soul figures
+
+* [folke](https://github.com/folke)
+* [hrsh7th](https://github.com/hrsh7th)
+* [lewis6991](https://github.com/lewis6991)
+* [tpope](https://github.com/tpope)
+
 ### core plugins
 
 * [hrsh7th/nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
