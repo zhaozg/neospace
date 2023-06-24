@@ -2,6 +2,7 @@
 local vim = vim
 local notify = vim.notify
 local git = require("user.git")
+local fun = require('neospace.fun')
 
 local M = {}
 
@@ -117,24 +118,24 @@ local function directory_delete(path, recursively)
   end
 end
 
-local function chdir_do(dir, fun, callback)
+local function chdir_do(dir, func, callback)
   local async = require("user.async")
-  if type(fun) == "function" then
-    local ret, msg = pcall(fun)
+  if type(func) == "function" then
+    local ret, msg = pcall(func)
     callback(ret, msg)
-  elseif type(fun) == "string" then
-    async.run(fun, {
+  elseif type(func) == "string" then
+    async.run(func, {
       cwd = dir,
       args = {},
     }, callback)
-  elseif type(fun) == "table" then
-    local cmd = table.remove(fun, 1)
+  elseif type(func) == "table" then
+    local cmd = table.remove(func, 1)
     async.run(cmd, {
       cwd = dir,
-      args = fun,
+      args = func,
     }, callback)
   else
-    error("Can't run " .. tostring(fun))
+    error("Can't run " .. tostring(func))
   end
 end
 
@@ -192,11 +193,41 @@ function M.manage(plugins, options)
     if type(plugin.packadd_after) == "string" then
       plugin.packadd_after = { plugin.packadd_after }
     end
+    plugin.packadd_before = plugin.packadd_before or plugin.before or {}
+    if type(plugin.packadd_before) == 'string' then
+      plugin.packadd_before = { plugin.packadd_before }
+    end
+    for _ = 1, #plugin.packadd_before do
+      local before  = plugin.packadd_before[_]
+      if not plugins[before] then
+        local v = fun.filter(function(v)
+          if v.name == before then
+            return v
+          end
+        end, plugins)
+        if v then
+          plugins[before] = v
+          before = v
+        end
+      else
+        before = plugins[before]
+      end
+      if before.packadd_after then
+        before.packadd_after[before.packadd_after + 1] = plugin.name
+      elseif type(before.after) == 'string' then
+        before.after = { before.after, plugin.name }
+      elseif type(before.after) == 'table' then
+        before.after[#before.after + 1] = plugin. name
+      else
+        before.after = plugin.name
+      end
+    end
 
     plugin.install_path = ("%s/%s"):format(plugins_directory, plugin.name)
     if not plugins[plugin.name] then
       plugins[plugin.name] = plugin
     end
+
     if vim.loop.fs_stat(plugin.install_path) then
       try_activate(plugin)
     else
