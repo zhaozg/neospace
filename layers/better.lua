@@ -13,4 +13,11 @@ return {
       vim.notify = require("notify")
     end,
   },
+  {
+    "gregorias/nvim-mapper",
+    config = function()
+      require"nvim-mapper".setup({})
+    end,
+    before = "nvim-telescope/telescope.nvim"
+  }
 }
