@@ -170,6 +170,7 @@ return {
   },
   {
     "ellisonleao/glow.nvim",
+    ft = "markdown",
     init = function()
       vim.g.glow_binary_path = "/usr/local/bin"
       vim.g.glow_use_pager = true
@@ -254,4 +255,22 @@ return {
       })
     end
   },
+  {
+    "jakewvincent/mkdnflow.nvim",
+    ft = "markdown",
+    config = function()
+        require('mkdnflow').setup()
+    end
+  },
+  {
+    "hotoo/pangu.vim",
+    init = function()
+      vim.g.pangu_rule_fullwidth_punctuation = 1
+      vim.g.pangu_rule_duplicate_punctuation = 1
+      vim.g.pangu_rule_fullwidth_alphabet = 1
+      vim.g.pangu_rule_spacing = 1
+      vim.g.pangu_rule_remove_zero_width_whitespace = 1
+    end,
+    ft = "markdown"
+  }
 }

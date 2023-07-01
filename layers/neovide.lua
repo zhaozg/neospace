@@ -1,5 +1,6 @@
 local vim = vim
 local map = require("neospace").map
+local fun = require("neospace.fun")
 
 if vim.fn.exists("g:neovide") == 0 then
   return
@@ -20,10 +21,21 @@ vim.g.neovide_input_use_logo = true
 
 vim.g.gui_font_default_size = 17
 vim.g.gui_font_size = vim.g.gui_font_default_size
-vim.g.gui_font_face = "Hack Nerd Font Mono"
+vim.g.gui_font_face = {
+  "Hack Nerd Font Mono",
+  "霞鹜新晰黑",
+}
 
 local RefreshGuiFont = function()
-  vim.opt.guifont = string.format("%s:h%s", vim.g.gui_font_face, vim.g.gui_font_size)
+  local fonts = {}
+  fun.each(function(v)
+    if type(v)=='table' then
+      v = table.concat(v, ":")
+    end
+    fonts[#fonts+1] = string.format('%s:h%s', v, vim.g.gui_font_size)
+  end, vim.g.gui_font_face)
+
+  vim.opt.guifont = fonts
 end
 
 local ResizeGuiFont = function(delta)
