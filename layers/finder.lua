@@ -1,12 +1,38 @@
 return {
-  "nvim-telescope/telescope.nvim",
+
   "nvim-telescope/telescope-symbols.nvim",
   "nvim-telescope/telescope-media-files.nvim",
+  "nvim-telescope/telescope-file-browser.nvim",
+  "nvim-telescope/telescope-project.nvim",
 
   {
-    "nvim-telescope/telescope-project.nvim",
+    "nvim-telescope/telescope.nvim",
+    after = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope-symbols.nvim",
+      "nvim-telescope/telescope-media-files.nvim",
+      "nvim-telescope/telescope-file-browser.nvim",
+      "nvim-telescope/telescope-project.nvim",
+    },
     config = function()
-      require("telescope").setup({})
+      local project_actions = require("telescope._extensions.project.actions")
+      require("telescope").setup({
+        extensions = {
+          project = {
+            base_dirs = {
+            },
+            hidden_files = true, -- default: false
+            order_by = "asc",
+            search_by = "title",
+            sync_with_nvim_tree = true, -- default false
+            -- default for on_project_selected = find project files
+            on_project_selected = function(prompt_bufnr)
+              -- Do anything you want in here. For example:
+              project_actions.change_working_directory(prompt_bufnr, false)
+            end
+          }
+        }
+      })
       local wk = require("which-key")
       local builtin = require("telescope.builtin")
       local function project(opts)
