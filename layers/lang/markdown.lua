@@ -75,6 +75,8 @@ layer:append("jose-elias-alvarez/null-ls.nvim", function()
     }
 
     null_ls.register({
+      null_ls.builtins.formatting.textlint,
+      null_ls.builtins.diagnostics.textlint,
       lint_md_source,
       fmt_md_source
     })
@@ -171,10 +173,13 @@ return {
   {
     "ellisonleao/glow.nvim",
     ft = "markdown",
-    init = function()
-      vim.g.glow_binary_path = "/usr/local/bin"
-      vim.g.glow_use_pager = true
-    end,
+    config = function()
+      require('glow').setup({
+        install_path = "/usr/local/bin",
+        pager = true,
+        -- your override config
+      })
+    end
   },
   {
     "mickael-menu/zk-nvim",
@@ -259,18 +264,7 @@ return {
     "jakewvincent/mkdnflow.nvim",
     ft = "markdown",
     config = function()
-        require('mkdnflow').setup()
+      require('mkdnflow').setup()
     end
   },
-  {
-    "hotoo/pangu.vim",
-    init = function()
-      vim.g.pangu_rule_fullwidth_punctuation = 1
-      vim.g.pangu_rule_duplicate_punctuation = 1
-      vim.g.pangu_rule_fullwidth_alphabet = 1
-      vim.g.pangu_rule_spacing = 1
-      vim.g.pangu_rule_remove_zero_width_whitespace = 1
-    end,
-    ft = "markdown"
-  }
 }
