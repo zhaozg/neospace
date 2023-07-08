@@ -45,6 +45,7 @@ layer:load("fold")
 layer:load("lsp")
 layer:load("debug")
 layer:load("ai")
+layer:load('mason')
 
 -- language
 layer:load("lang/markdown")
