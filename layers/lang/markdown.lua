@@ -75,6 +75,7 @@ layer:append("jose-elias-alvarez/null-ls.nvim", function()
     }
 
     null_ls.register({
+      null_ls.builtins.formatting.prettier,
       null_ls.builtins.formatting.textlint,
       null_ls.builtins.diagnostics.textlint,
       lint_md_source,

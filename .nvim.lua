@@ -1,25 +1,11 @@
+
+--- do UserInit in neospace, before any layers or modules laod
 function UserInit()
 end
 
+--- do UserConfig in neospace, after all layers and modules load
 function UserConfig()
   local setting = require("neospace.lsp").setting
-  local lsp = require("lspconfig")
-  local options = setting("lua_ls", {
-    settings = {
-      Lua = {
-        runtime = {
-          version = "LuaJIT",
-        },
-        diagnostics = {
-          globals = { "vim" },
-        },
-        format = {
-          format = false,
-        },
-      },
-    },
-  })
-  lsp.lua_ls.setup(options)
 
   local null_ls = require("null-ls")
   null_ls.setup(setting("null-ls", {

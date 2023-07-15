@@ -17,6 +17,10 @@ globals = {
     }
 }
 
+exclude_files = {
+  "lua/neospace/fun.lua"
+}
+
 -- special files {{{
 files["lua/neospace/fun.lua"] = {
     ignore = {"211", "212", "213", "411", "412", "421", "422"}

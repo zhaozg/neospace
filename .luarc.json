@@ -10,7 +10,9 @@
             "after_each",
             "setup",
             "teardown",
-            "finally"
+            "finally",
+            "UserInit",
+            "UserConfig"
         ],
         "disable": [
             "close-non-object"
@@ -26,7 +28,11 @@
             "type-check": "Any",
             "unbalanced": "Any",
             "unused": "Any"
-        }
+        },
+        "ignoreFiles": [
+            "/.luacheckrc",
+            "/lua/neospace/fun.lua"
+        ]
     },
     "runtime": {
         "version": "LuaJIT",
@@ -40,21 +46,18 @@
         "checkThirdParty": false,
         "maxPreload": 2000,
         "preloadFileSize": 1000,
-        "ignoreDir": [
-            "/.luacheckrc"
-        ]
-    },
-    "typeFormat": {
-        "config": {
-            "format_line": "false"
+        "typeFormat": {
+            "config": {
+                "format_line": "false"
+            }
+        },
+        "type": {
+            "castNumberToInteger": false
+        },
+        "doc": {
+            "privateName": [
+                "_*"
+            ]
         }
-    },
-    "type": {
-        "castNumberToInteger": false
-    },
-    "doc": {
-        "privateName": [
-            "_*"
-        ]
     }
 }
