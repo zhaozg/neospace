@@ -103,6 +103,7 @@ return {
 
   {
     "sindrets/diffview.nvim",
+    on = "DiffviewOpen",
     config = function()
       local cb = require("diffview.config").diffview_callback
 
