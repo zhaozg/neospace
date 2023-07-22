@@ -9,15 +9,6 @@ return {
       vim.api.nvim_set_hl(0, 'GitsignsCurrentLineBlame', { fg = 'green' })
 
       signs.setup({
-        signs = {
-          add = { hl = "GitSignsAdd", text = "│", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
-          change = { hl = "GitSignsChange", text = "│", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
-          delete = { hl = "GitSignsDelete", text = "_", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
-          topdelete = { hl = "GitSignsDelete", text = "‾", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
-          changedelete = { hl = "GitSignsChange", text = "~", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
-        },
-        numhl = false,
-        linehl = false,
         on_attach = function(bufnr)
           local gs = signs
           local function lmap(mode, l, r, opts)
@@ -47,7 +38,8 @@ return {
           lmap('n', '<leader>hS', gs.stage_buffer)
           lmap('n', '<leader>hu', gs.undo_stage_hunk)
           lmap('n', '<leader>hR', gs.reset_buffer)
-          lmap('n', '<leader>hp', gs.preview_hunk)
+          lmap('n', '<leader>hp', gs.preview_hunk_inline)
+          lmap('n', '<leader>hP', gs.preview_hunk)
           lmap('n', '<leader>hb', function() gs.blame_line { full = true } end)
           lmap('n', '<leader>hd', gs.diffthis)
           lmap('n', '<leader>hD', function() gs.diffthis('~') end)
@@ -60,22 +52,10 @@ return {
           -- Text object
           lmap({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
         end,
-        watch_gitdir = {
-          interval = 1000,
-          follow_files = true,
-        },
         current_line_blame = true,
-        current_line_blame_opts = {
-          delay = 100,
-          virt_text = true,
-          virt_text_pos = "eol",
-        },
-        sign_priority = 6,
-        update_debounce = 100,
-        status_formatter = nil, -- Use default
-        word_diff = false,
         diff_opts = {
           internal = true, -- If luajit is present
+          algorithm = 'minimal',
         },
       })
     end,
