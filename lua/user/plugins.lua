@@ -29,16 +29,22 @@ local function packadd_do(plugin)
   local _, err = pcall(vim.cmd, cmd)
   if not _ then
     notify(("packadd %s fail with:\n%s\n"):format(plugin.name, err))
-  elseif plugin.packadd_hook then
-    if plugin.packadd_init then
-      local ret, msg = run(plugin.packadd_init)
-      if not ret then
-        notify(("packadd init %s fail: %s"):format(plugin.name, msg))
-      end
+    return
+  end
+
+  if plugin.packadd_init then
+    local ret, msg = run(plugin.packadd_init)
+    if not ret then
+      notify(("packadd init %s fail: %s"):format(plugin.name, msg))
+      return
     end
+  end
+
+  if plugin.packadd_hook then
     local ret, msg = pcall(plugin.packadd_hook)
     if not ret then
       notify(("packadd hook %s fail: %s"):format(plugin.name, msg))
+      return
     end
   end
 end
@@ -52,9 +58,9 @@ local function packadd_ft(plugin)
   })
 end
 
-local function packadd_on(plugin)
+local function packadd_on(plugin, pattern)
   vim.api.nvim_create_autocmd("CmdUndefined", {
-    pattern = plugin.on,
+    pattern = pattern or plugin.on,
     callback = function()
       packadd_do(plugin)
     end,
@@ -65,7 +71,13 @@ local function packadd(plugin)
   if plugin.ft then
     packadd_ft(plugin)
   elseif plugin.on then
-    packadd_on(plugin)
+    if type(plugin.on)=='table' then
+      for i=1, #plugin.on do
+        packadd_on(plugin, plugin.on[i])
+      end
+    else
+      packadd_on(plugin)
+    end
   else
     packadd_do(plugin)
   end
@@ -151,7 +163,8 @@ end
 
 function M.manage(plugins, options)
   options = options or {}
-  local plugins_directory = options.plugins_directory or ("%s/site/pack/user/opt"):format(vim.fn.stdpath("data"))
+  local plugins_directory = options.plugins_directory
+    or ("%s/site/pack/user/opt"):format(vim.fn.stdpath("data"))
   local repo_base = options.repo_base or "https://github.com"
 
   local activated_sources = {}
