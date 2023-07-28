@@ -5,8 +5,7 @@ local o = vim.o
 local fun = require("neospace.fun")
 local neospace = require("neospace")
 
-local ui = {
-
+return  {
   {
     "kyazdani42/nvim-web-devicons",
     config = function()
@@ -283,14 +282,13 @@ local ui = {
       require("satellite").setup({})
     end,
   },
-}
 
-if vim.fn.exists("g:neovide")==0 then
-  ui[#ui + 1] = {
+  "rcarriga/nvim-notify",
+  {
     "folke/noice.nvim",
     after = {
-      "rcarriga/nvim-notify",
       "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify"
     },
     config = function()
       require("noice").setup({
@@ -316,6 +314,5 @@ if vim.fn.exists("g:neovide")==0 then
       })
     end,
   }
-end
+}
 
-return ui
