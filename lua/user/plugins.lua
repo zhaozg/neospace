@@ -3,6 +3,7 @@ local vim = vim
 local notify = vim.notify
 local git = require("user.git")
 local fun = require('neospace.fun')
+local cmp = require('neospace.cmp')
 
 local M = {}
 
@@ -65,6 +66,7 @@ local function packadd_on(plugin, pattern)
       packadd_do(plugin)
     end,
   })
+  cmp:append(pattern or plugin.on)
 end
 
 local function packadd(plugin)

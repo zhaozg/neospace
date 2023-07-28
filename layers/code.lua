@@ -67,6 +67,7 @@ return {
   "sheerun/vim-polyglot",
 
   "hrsh7th/cmp-nvim-lsp",
+  "hrsh7th/cmp-nvim-lua",
   "hrsh7th/cmp-buffer",
   "hrsh7th/cmp-path",
   "hrsh7th/cmp-cmdline",
@@ -100,6 +101,7 @@ return {
       local luasnip = require("luasnip")
       require("luasnip.loaders.from_vscode").lazy_load()
       require("luasnip.loaders.from_snipmate").lazy_load()
+      require('neospace.cmp').active()
 
       local has_words_before = function()
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -186,6 +188,7 @@ return {
         -- ... Your other configuration ...
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
+          { name = 'nvim_lua' },
           { name = "luasnip" },
           { name = "buffer" },
           { name = "doxygen" },
@@ -210,12 +213,12 @@ return {
       })
 
       -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-      -- cmp.setup.cmdline("/", {
-      --   completion = { autocomplete = false },
-      --   sources = {
-      --     { name = "buffer", option = { keyword_pattern = [=[[^[:blank:]].*]=] } },
-      --   },
-      -- })
+      cmp.setup.cmdline("/", {
+        completion = { autocomplete = false },
+        sources = {
+          { name = "buffer", option = { keyword_pattern = [=[[^[:blank:]].*]=] } },
+        },
+      })
 
       -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline(":", {
@@ -225,6 +228,7 @@ return {
           { name = "cmdline" },
           { name = "cmdline_history" },
           { name = "path" },
+          { name = "neospace" },
         }),
       })
     end,
