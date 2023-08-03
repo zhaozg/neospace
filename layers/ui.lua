@@ -283,7 +283,15 @@ return  {
     end,
   },
 
-  "rcarriga/nvim-notify",
+  {
+    "rcarriga/nvim-notify",
+    config = function()
+      require("notify").setup({
+        timeout = 2000,
+        top_down = false
+      })
+    end
+  },
   {
     "folke/noice.nvim",
     after = {
