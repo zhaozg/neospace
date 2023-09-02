@@ -63,26 +63,24 @@ return {
 
   {
     "tpope/vim-fugitive",
+    cmd = { "Git!", "Git", "G" },
     config = function()
-      map('n', '<Leader>gf', ':BCommits<CR>')
       map('n', '<Leader>gb', ':Git blame<CR>')
       map('n', '<Leader>gc', ':Git commit<CR>')
-      map('n', '<Leader>gd', ':Gdiffsplit<CR>')
-      map('n', '<Leader>ge', ':Gedit<CR>')
-      map('n', '<Leader>gl', ':Gclog<CR>')
       map('n', '<Leader>gp', ':Git push<CR>')
-      map('n', '<Leader>gr', ':Gread<CR>')
       map('n', '<Leader>gs', ':Git<CR>')
-      map('n', '<Leader>gw', ':Gwrite<CR>')
+      map('n', '<Leader>gd', ':Gdiffsplit<CR>')
+      map('n', '<Leader>gl', ':Gclog<CR>')
     end,
   },
   {
     "junegunn/gv.vim",
     opt = true,
-    cmd = { "GV", "GV!" },
+    cmd = { "GV", "GV!", "GV?"},
     config = function()
       map('n', '<Leader>gv', ':GV<CR>')
       map('n', '<Leader>gV', ':GV!<CR>')
+      map('n', '<Leader>g?', ':GV?<CR>')
     end,
   },
 }
