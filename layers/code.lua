@@ -87,6 +87,13 @@ return {
   },
 
   {
+    "zbirenbaum/copilot-cmp",  -- need "zbirenbaum/copilot.lua"
+    config = function ()
+      require("copilot_cmp").setup()
+    end
+  },
+
+  {
     "hrsh7th/nvim-cmp",
     after = {
       "L3MON4D3/LuaSnip",
@@ -199,6 +206,7 @@ return {
           { name = "buffer" },
           { name = "path" },
 
+          { name = "copilot", group_index = 2 },
           { name = "codeium" }
         }),
       })
