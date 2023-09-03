@@ -65,4 +65,5 @@ return {
       null_ls.setup()
     end
   },
+  "onsails/lspkind.nvim",
 }

@@ -97,6 +97,7 @@ return {
     "hrsh7th/nvim-cmp",
     after = {
       "L3MON4D3/LuaSnip",
+      "onsails/lspkind.nvim"
     },
     init = function()
       vim.opt.spell = true
@@ -107,6 +108,7 @@ return {
     config = function()
       local cmp = require("cmp")
       local luasnip = require("luasnip")
+      local lspkind = require('lspkind')
       require("luasnip.loaders.from_vscode").lazy_load()
       require("luasnip.loaders.from_snipmate").lazy_load()
       require('neospace.cmp').active()
@@ -209,6 +211,16 @@ return {
           { name = "copilot", group_index = 2 },
           { name = "codeium" }
         }),
+        formatting = {
+          format = lspkind.cmp_format({
+            mode = 'symbol', -- show only symbol annotations
+            maxwidth = 50,   -- prevent the popup from showing more than provided characters
+                             -- (e.g 50 will not show more than 50 characters)
+            ellipsis_char = '...', -- when popup menu exceed maxwidth,
+                                   -- the truncated part would show ellipsis_char instead
+                                   -- (must define maxwidth first)
+          })
+        }
       })
 
       -- Set configuration for specific filetype.
@@ -244,7 +256,19 @@ return {
   },
 
   {
+    "paopaol/cmp-doxygen",
+    after = {
+      "hrsh7th/nvim-cmp",
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-treesitter/nvim-treesitter-textobjects"
+    }
+  },
+
+  {
     "windwp/nvim-autopairs",
+    after = {
+      "hrsh7th/nvim-cmp",
+    },
     config = function()
       local cmp_autopairs = require('nvim-autopairs.completion.cmp')
       local handlers = require('nvim-autopairs.completion.handlers')
