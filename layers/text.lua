@@ -179,5 +179,12 @@ return {
     config = function()
       require("zen-mode").setup()
     end
+  },
+
+  {
+    "chrisgrieser/nvim-various-textobjs",
+    config = function()
+      require("various-textobjs").setup({})
+    end
   }
 }
