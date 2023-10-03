@@ -31,16 +31,13 @@ return {
       vim.opt.listchars:append("eol:↵")
     end,
     config = function()
-      require("indent_blankline").setup({
-        char = "┊",
-        space_char_blankline = " ",
-        enabled = false,
-        show_first_indent_level = false,
-        show_end_of_line = true,
-        buftype_exclude = { "alpha" },
-        show_trailing_blankline_indent = true,
-        show_current_context = true,
-        show_current_context_start = true,
+      require("ibl").setup ({
+        indent = {
+          char = "┊"
+        },
+        exclude = {
+          buftypes = {"alpha"}
+        },
       })
       map("n", "<Leader>ti", "<cmd>IndentBlanklineToggle<CR>")
     end,
