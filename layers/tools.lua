@@ -1,20 +1,11 @@
 return {
   {
-    "blindFS/vim-taskwarrior",
-    cmd = "TW",
+    "zhaozg/taskwarrior.nvim",
+    on = "Task",
+    after = "nvim-telescope/telescope.nvim",
     config = function()
-      vim.cmd([[
-augroup taskwarrior
-  autocmd!
-  autocmd filetype taskedit DisableWhitespace
-augroup END
-      ]])
+      require("taskwarrior_nvim").setup({
+      })
     end,
-  },
-  {
-    "itchyny/calendar.vim",
-    opt = true,
-    enable = false,
-    cmd = { "Calendar" },
   },
 }

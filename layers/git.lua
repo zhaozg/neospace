@@ -63,7 +63,7 @@ return {
 
   {
     "tpope/vim-fugitive",
-    cmd = { "Git!", "Git", "G" },
+    on = { "Git!", "Git", "G" },
     config = function()
       map('n', '<Leader>gb', ':Git blame<CR>')
       map('n', '<Leader>gc', ':Git commit<CR>')
@@ -76,7 +76,7 @@ return {
   {
     "junegunn/gv.vim",
     opt = true,
-    cmd = { "GV", "GV!", "GV?"},
+    on = { "GV", "GV!", "GV?"},
     config = function()
       map('n', '<Leader>gv', ':GV<CR>')
       map('n', '<Leader>gV', ':GV!<CR>')
