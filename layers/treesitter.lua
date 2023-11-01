@@ -18,7 +18,10 @@ return {
           -- false will disable the whole extension
           enable = true,
           -- list of language that will be disabled
-          -- disable = { 'c', 'rust' },
+          disable = function(lang, bufnr)
+            _ = lang -- avoid unused
+            return vim.api.nvim_buf_line_count(bufnr) > 2048
+          end,
           additional_vim_regex_highlighting = false,
         },
 
