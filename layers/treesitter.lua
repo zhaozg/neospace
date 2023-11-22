@@ -56,11 +56,6 @@ return {
           enable = true,
         },
 
-        context_commentstring = {
-          enable = true,
-          enable_autocmd = false,
-        },
-
         textobjects = {
           select = {
             enable = true,
@@ -100,5 +95,11 @@ return {
   {
     "JoosepAlviste/nvim-ts-context-commentstring",
     after = "nvim-treesitter/nvim-treesitter",
+    config = function()
+      require('ts_context_commentstring').setup {
+        enable = true,
+        enable_autocmd = false,
+      }
+    end
   }
 }
