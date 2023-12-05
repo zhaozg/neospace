@@ -58,7 +58,7 @@ return {
     end,
   },
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     after = "nvim-lua/plenary.nvim",
     config = function()
       local null_ls = require("null-ls")

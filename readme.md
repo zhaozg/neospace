@@ -55,4 +55,4 @@ vusted
 
 * [hrsh7th/nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
 * [williamboman/mason.nvim](https://github.com/williamboman/mason.nvim)
-* [jose-elias-alvarez/null-ls.nvim](https://github.com/jose-elias-alvarez/null-ls.nvim)
+* [nvimtools/none-ls.nvim](https://github.com/nvimtools/none-ls.nvim)

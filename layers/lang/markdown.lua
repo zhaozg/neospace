@@ -3,7 +3,7 @@ local g = vim.g
 local lang = require('neospace.lang')
 
 local layer = require("neospace.layer")
-layer:append("jose-elias-alvarez/null-ls.nvim", function()
+layer:append("nvimtools/none-ls.nvim", function()
   local null_ls = require "null-ls"
   local markdownlint = null_ls.builtins.diagnostics.markdownlint.with {
     extra_args = { "--config", "~/.markdownlint.yaml" }
