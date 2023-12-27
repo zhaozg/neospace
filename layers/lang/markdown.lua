@@ -76,8 +76,6 @@ layer:append("nvimtools/none-ls.nvim", function()
 
     null_ls.register({
       null_ls.builtins.formatting.prettier,
-      null_ls.builtins.formatting.textlint,
-      null_ls.builtins.diagnostics.textlint,
       lint_md_source,
       fmt_md_source
     })

@@ -75,6 +75,8 @@ return {
   "L3MON4D3/LuaSnip",
   "saadparwaiz1/cmp_luasnip",
 
+  "ray-x/cmp-treesitter",
+
   "f3fora/cmp-spell",
   {
     "paopaol/cmp-doxygen",
@@ -206,6 +208,8 @@ return {
 
           { name = "buffer" },
           { name = "path" },
+
+          { name = 'treesitter' },
 
           { name = "copilot", group_index = 2 },
           { name = "codeium" }
