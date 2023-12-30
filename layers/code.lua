@@ -197,6 +197,8 @@ return {
         },
         -- ... Your other configuration ...
         sources = cmp.config.sources({
+          { name = "codeium" },
+          { name = "copilot" },
           { name = "nvim_lsp" },
           { name = 'nvim_lua' },
           { name = "luasnip" },
@@ -210,9 +212,6 @@ return {
           { name = "path" },
 
           { name = 'treesitter' },
-
-          { name = "copilot", group_index = 2 },
-          { name = "codeium" }
         }),
         formatting = {
           format = lspkind.cmp_format({
@@ -222,6 +221,10 @@ return {
             ellipsis_char = '...', -- when popup menu exceed maxwidth,
                                    -- the truncated part would show ellipsis_char instead
                                    -- (must define maxwidth first)
+            symbol_map = {
+              Codeium = "",
+              Copilot = ""
+            }
           })
         }
       })
