@@ -1,6 +1,4 @@
-
 local vim = vim
-local g = vim.g
 local map = require("neospace").map
 
 return {
@@ -44,14 +42,10 @@ return {
   },
   "wellle/targets.vim",
   {
-    "AndrewRadev/splitjoin.vim",
-    init = function()
-      g.splitjoin_join_mapping = ""
-      g.splitjoin_split_mapping = ""
-    end,
+    'Wansmer/treesj',
+    after = 'nvim-treesitter/nvim-treesitter',
     config = function()
-      map("n", "<Leader>cJ", "<plug>SplitjoinJoin")
-      map("n", "<Leader>cS", "<Plug>SplitjoinSplit")
+      require('treesj').setup({})
     end,
   },
   "tpope/vim-sleuth",
