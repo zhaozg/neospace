@@ -186,5 +186,20 @@ return {
     config = function()
       require("various-textobjs").setup({})
     end
+  },
+
+  {
+    "monaqa/dial.nvim",
+    config = function ()
+      local manipulate = require("dial.map").manipulate
+      vim.keymap.set("n", "<C-a>",  function() manipulate("increment", "normal")  end)
+      vim.keymap.set("n", "<C-x>",  function() manipulate("decrement", "normal")  end)
+      vim.keymap.set("v", "<C-a>",  function() manipulate("increment", "visual")  end)
+      vim.keymap.set("v", "<C-x>",  function() manipulate("decrement", "visual")  end)
+      vim.keymap.set("n", "g<C-a>", function() manipulate("increment", "gnormal") end)
+      vim.keymap.set("n", "g<C-x>", function() manipulate("decrement", "gnormal") end)
+      vim.keymap.set("v", "g<C-a>", function() manipulate("increment", "gvisual") end)
+      vim.keymap.set("v", "g<C-x>", function() manipulate("decrement", "gvisual") end)
+    end
   }
 }
