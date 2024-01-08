@@ -21,19 +21,16 @@ vim.g.neovide_input_use_logo = true
 
 vim.g.gui_font_default_size = 16.5
 vim.g.gui_font_size = vim.g.gui_font_default_size
-vim.g.guifont_face = {"Hack Nerd Font Mono", "霞鹜文楷等宽"}
+vim.g.guifont_face = "Hack Nerd Font Mono"
+vim.g.guifontwide_face = "LXGW Neo XiHei"
 
 local RefreshGuiFont = function()
-  local fonts
-  if type(vim.g.guifont_face)=='table' then
-    fonts = table.concat(vim.g.guifont_face, ',')
-  else
-    fonts = vim.g.guifont_face
+  if type(vim.g.guifont_face)~='nil' then
+    vim.opt.guifont = string.format('%s:h%s', vim.g.guifont_face, vim.g.gui_font_size)
   end
-  fonts = string.format('%s:h%s', fonts, vim.g.gui_font_size)
-
-  print(vim.inspect(fonts))
-  vim.opt.guifont = fonts
+  if type(vim.g.guifontwide_face)~='nil' then
+    vim.opt.guifontwide = string.format('%s:h%s', vim.g.guifontwide_face, vim.g.gui_font_size)
+  end
 end
 
 local ResizeGuiFont = function(delta)
