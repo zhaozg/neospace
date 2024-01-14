@@ -48,7 +48,6 @@ return {
       require('treesj').setup({})
     end,
   },
-  "tpope/vim-sleuth",
   {
     "norcalli/nvim-colorizer.lua",
     config = function()
