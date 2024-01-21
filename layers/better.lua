@@ -3,6 +3,7 @@ return {
   "tpope/vim-sensible",
   "zhaozg/nvim-defaults",
   "kevinhwang91/promise-async",
+  "nathom/filetype.nvim",
 
   { "nvim-lua/popup.nvim", opt = true },
   { "nvim-lua/neovim-ui", opt = true },
