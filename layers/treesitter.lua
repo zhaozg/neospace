@@ -68,7 +68,7 @@ return {
             },
           },
         },
-        ensure_installed = { "c", "cpp", "lua", "bash", "cmake", "java", "make", "vim", "zig", "yaml", "vue" },
+        ensure_installed = { "c", "cpp", "lua", "bash", "cmake", "java", "make", "vim", "zig", "yaml" },
         -- {'c', 'lua'}
         -- ensure_installed = 'all' -- one of 'all', 'language', or a list of languages
       })
