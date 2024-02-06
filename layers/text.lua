@@ -90,6 +90,22 @@ return {
   {
     "fedepujol/move.nvim",
     config = function()
+      require('move').setup({
+        line = {
+          enable = true, -- Enables line movement
+          indent = true  -- Toggles indentation
+        },
+        block = {
+          enable = true, -- Enables block movement
+          indent = true  -- Toggles indentation
+        },
+        word = {
+          enable = true, -- Enables word movement
+        },
+        char = {
+          enable = true --  Enables  charmovement
+        }
+      })
       map("n", "<C-j>", ":MoveLine(1)<CR>")
       map("n", "<C-k>", ":MoveLine(-1)<CR>")
       map("v", "<C-j>", ":MoveBlock(1)<CR>")
@@ -98,6 +114,8 @@ return {
       map("n", "<C-h>", ":MoveHChar(-1)<CR>")
       map("v", "<C-l>", ":MoveHBlock(1)<CR>")
       map("v", "<C-h>", ":MoveHBlock(-1)<CR>")
+      map("n", "<leader>wf", ":MoveWord(1)<CR>")
+      map("n", "<leader>wb", ":MoveWord(-1)<CR>")
     end,
   },
 
