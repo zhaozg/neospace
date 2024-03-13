@@ -340,12 +340,19 @@ return {
         placeholders_hl = "DiagnosticHint",
       })
 
-      local opts = { noremap = true, silent = true }
-      vim.api.nvim_set_keymap("n", "<Leader>ng", ":lua require('neogen').generate()<CR>", opts)
-      vim.api.nvim_set_keymap("n", "<Leader>nf", ":lua require('neogen').generate({ type = 'func' })<CR>", opts)
-      vim.api.nvim_set_keymap("n", "<Leader>nF", ":lua require('neogen').generate({ type = 'file' })<CR>", opts)
-      vim.api.nvim_set_keymap("n", "<Leader>nt", ":lua require('neogen').generate({ type = 'type' })<CR>", opts)
-      vim.api.nvim_set_keymap("n", "<Leader>nc", ":lua require('neogen').generate({ type = 'class' })<CR>", opts)
+      local generate = require('neogen').generate
+
+      local wk = require("which-key")
+      wk.register({
+        n = {
+          name = "Neogen",
+          g = { generate, "Neogen Smart" },
+          f = { function() generate{ type = 'func'} end, "Neogen Function" },
+          F = { function() generate{ type = 'file'} end, "Neogen File" },
+          t = { function() generate{ type = 'type'} end, "Neogen Type/Mod" },
+          c = { function() generate{ type = 'class'} end, "Neogen Class" },
+        }
+      }, { prefix = "<leader>" })
     end,
   },
 }

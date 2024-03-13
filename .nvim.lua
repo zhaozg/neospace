@@ -10,6 +10,7 @@ function UserConfig()
   local null_ls = require("null-ls")
   null_ls.setup(setting("null-ls", {
     sources = {
+      require("none-ls.diagnostics.luacheck"),
       null_ls.builtins.formatting.stylua,
     },
   }))

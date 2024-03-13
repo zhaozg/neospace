@@ -57,9 +57,13 @@ return {
       saga.setup(opts)
     end,
   },
+  "zhaozg/none-ls-extras.nvim",
   {
     "nvimtools/none-ls.nvim",
-    after = "nvim-lua/plenary.nvim",
+    after = {
+      "nvim-lua/plenary.nvim",
+      "zhaozg/none-ls-extras.nvim",
+    },
     config = function()
       local null_ls = require("null-ls")
       null_ls.setup()

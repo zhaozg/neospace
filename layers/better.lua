@@ -15,13 +15,6 @@ return {
     end,
   },
   {
-    "gregorias/nvim-mapper",
-    config = function()
-      require"nvim-mapper".setup({})
-    end,
-    before = "nvim-telescope/telescope.nvim"
-  },
-  {
     "LunarVim/bigfile.nvim",
     config = function()
       require("bigfile").setup({

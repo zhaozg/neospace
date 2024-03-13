@@ -62,21 +62,8 @@ return {
   {
     "folke/flash.nvim",
     config = function()
-      require('flash').setup()
-
-      local Mapper = require("nvim-mapper")
-      Mapper.map({ "n", "x", "o" }, 's', require("flash").jump,
-        {silent = true},
-        "Flash", "Jump", "Fullscope Jump")
-      Mapper.map({ "n", "x", "o" }, 'S', require("flash").treesitter,
-        {silent = true},
-        "Flash", "Treesitter", "Treesitter Jump")
-
-      Mapper.map({ "n", "x", "o" }, 'R', require("flash").remote,
-        {silent = true},
-        "Flash", "Remote", "Treesitter Jump")
-      --map({ "n", "x", "o" }, "S", require("flash").)
-      --map("o", "r", require("flash").)
+      local flash = require('flash')
+      flash.setup()
     end
   },
 
