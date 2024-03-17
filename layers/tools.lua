@@ -10,10 +10,13 @@ return {
           show_curl_command = true,
           show_http_info = true,
           show_headers = true,
+          formatters = {
+            json = "jq"
+          }
         }
       })
 
-      vim.keymap.set('n', '<CR>', rest.run)
+      vim.keymap.set('n', '<leader>rr', rest.run)
     end
   },
   {
