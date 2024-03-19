@@ -7,7 +7,7 @@ local neospace = require("neospace")
 
 return  {
   {
-    "kyazdani42/nvim-web-devicons",
+    "nvim-tree/nvim-web-devicons",
     config = function()
       require("nvim-web-devicons").setup({
         -- your personnal icons can go here (to override)
@@ -30,7 +30,7 @@ return  {
   },
   {
     "goolord/alpha-nvim",
-    after = "kyazdani42/nvim-web-devicons",
+    after = "nvim-tree/nvim-web-devicons",
     config = function()
       local alpha = require("alpha")
       local startify = require("alpha.themes.startify")
@@ -91,7 +91,7 @@ return  {
   --tabline at top
   {
     "kdheepak/tabline.nvim",
-    after = "kyazdani42/nvim-web-devicons",
+    after = "nvim-tree/nvim-web-devicons",
     config = function()
       local tabline = require("tabline")
       tabline.setup({
@@ -112,8 +112,8 @@ return  {
 
   --tree at left
   {
-    "kyazdani42/nvim-tree.lua",
-    after = "kyazdani42/nvim-web-devicons",
+    "nvim-tree/nvim-tree.lua",
+    after = "nvim-tree/nvim-web-devicons",
     config = function()
       require("nvim-tree").setup({
         -- disables netrw completely
@@ -143,7 +143,7 @@ return  {
   --at right
   {
     "hedyhli/outline.nvim",
-    after = "kyazdani42/nvim-web-devicons",
+    after = "nvim-tree/nvim-web-devicons",
     config = function()
       require("outline").setup({
       })
@@ -153,7 +153,7 @@ return  {
   --statusline at bottom
   {
     "hoob3rt/lualine.nvim",
-    after = { "kyazdani42/nvim-web-devicons", "kdheepak/tabline.nvim" },
+    after = { "nvim-tree/nvim-web-devicons", "kdheepak/tabline.nvim" },
     config = function()
       local tabline = require("tabline")
       local gradle_status = require("lualine.components.gradle_status")
@@ -212,7 +212,7 @@ return  {
 
   {
     "folke/which-key.nvim",
-    after = "kyazdani42/nvim-web-devicons",
+    after = "nvim-tree/nvim-web-devicons",
     config = function()
       local wk = require("which-key")
       wk.register({
