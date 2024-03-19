@@ -58,5 +58,5 @@ map("n", "<Leader>z8", "<cmd>set foldlevel=8<CR>")
 map("n", "<Leader>z9", "<cmd>set foldlevel=9<CR>")
 
 -- toggle
-map("n", "<Leader>tr", "<cmd>setlocal colorcolumn=80<CR>")
-map("n", "<Leader>tt", "<cmd>SymbolsOutline<CR>")
+map("n", "<Leader>tr", "<cmd>setlocal colorcolumn=80<CR>", { desc = "Toggle colorcolumn" })
+map("n", "<Leader>tt", "<cmd>Outline<CR>", { desc = "Toggle Outline" })

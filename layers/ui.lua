@@ -142,10 +142,11 @@ return  {
 
   --at right
   {
-    "simrat39/symbols-outline.nvim",
+    "hedyhli/outline.nvim",
     after = "kyazdani42/nvim-web-devicons",
     config = function()
-      require("symbols-outline").setup({})
+      require("outline").setup({
+      })
     end,
   },
 
