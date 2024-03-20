@@ -4,7 +4,6 @@ return {
   "nvim-telescope/telescope-media-files.nvim",
   "nvim-telescope/telescope-file-browser.nvim",
   "nvim-telescope/telescope-project.nvim",
-  "GustavoKatel/telescope-asynctasks.nvim",
 
   {
     "nvim-telescope/telescope.nvim",
@@ -14,7 +13,6 @@ return {
       "nvim-telescope/telescope-media-files.nvim",
       "nvim-telescope/telescope-file-browser.nvim",
       "nvim-telescope/telescope-project.nvim",
-      "GustavoKatel/telescope-asynctasks.nvim",
     },
     config = function()
       local project_actions = require("telescope._extensions.project.actions")
@@ -40,10 +38,6 @@ return {
       local function project(opts)
         opts = opts or {}
         require("telescope").extensions.project.project(opts)
-      end
-      local function asynctasks(opts)
-        opts = opts or {}
-        require('telescope').extensions.asynctasks.all()
       end
 
       wk.register({
@@ -72,7 +66,6 @@ return {
           N = { ":Telescope notify<CR>", "notify" },
 
           p = { project, "project" },
-          a = { asynctasks, "asynctasks" },
         },
       }, { prefix = "<leader>" })
     end,
