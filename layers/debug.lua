@@ -5,8 +5,13 @@ return {
   },
 
   "mfussenegger/nvim-dap",
+  "nvim-neotest/nvim-nio",
   {
     "rcarriga/nvim-dap-ui",
+    after = {
+      "mfussenegger/nvim-dap",
+      "nvim-neotest/nvim-nio",
+    },
     config = function()
       require("dapui").setup({
         icons = { expanded = "▾", collapsed = "▸" },

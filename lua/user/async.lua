@@ -1,5 +1,4 @@
 local M = {}
-local vim = vim
 local uv = vim and vim.loop or require("luv")
 local co = coroutine
 
