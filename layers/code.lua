@@ -111,6 +111,9 @@ return {
       end
 
       cmp.setup({
+        experimental = {
+          ghost_text = {hlgroup = "Comment"}
+        },
         snippet = {
           expand = function(args)
             require("luasnip").lsp_expand(args.body)
