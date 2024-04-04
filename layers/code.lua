@@ -358,4 +358,15 @@ return {
       }, { prefix = "<leader>" })
     end,
   },
+  {
+    "luckasRanarison/nvim-devdocs",
+    after = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+      require("nvim-devdocs").setup()
+    end
+  }
 }
