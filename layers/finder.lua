@@ -15,9 +15,18 @@ return {
       "nvim-telescope/telescope-project.nvim",
     },
     config = function()
+      require('telescope').load_extension('media_files')
+
       local project_actions = require("telescope._extensions.project.actions")
       require("telescope").setup({
         extensions = {
+          media_files = {
+            -- filetypes whitelist
+            -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
+            filetypes = {"png", "webp", "jpg", "jpeg"},
+            -- find command (defaults to `fd`)
+            find_cmd = "rg"
+          },
           project = {
             base_dirs = {
             },

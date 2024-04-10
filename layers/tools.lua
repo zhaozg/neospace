@@ -8,11 +8,4 @@ return {
       })
     end,
   },
-  {
-    "itchyny/calendar.vim",
-    on = "Calendar",
-    init = function()
-      vim.g.calendar_week_number = 1
-    end
-  }
 }

@@ -84,17 +84,18 @@ end)
 
 return {
   {
-    "ekickx/clipboard-image.nvim",
+    "HakonHarnes/img-clip.nvim",
     ft = { "markdown" },
     config = function()
-      require 'clipboard-image'.setup {
-        markdown = {
-          img_dir = { "%:p:h", "img" },
-          affix = "![](%s)",
+      require 'img-clip'.setup {
+        default = {
+          use_absolute_path = false,
+          relative_to_current_file = true,
+          prompt_for_file_name = false,
+          dir_path = "img",
         }
       }
-      vim.keymap.set('i', "<leader>i", "<ESC>:PasteImg<CR>")
-      vim.keymap.set('n', "<leader>i", ":PasteImg<CR>")
+      vim.keymap.set('n', "<leader>p", "<CMD>PasteImage<CR>")
     end
   },
   {
@@ -107,6 +108,56 @@ return {
         u = { ":UndoTask<CR>", "UndoTask" },
       }, { prefix = "<localleader>" })
     end,
+  },
+
+  -- for telekasten.nvim
+  "renerocksai/calendar-vim",
+  {
+    "renerocksai/telekasten.nvim",
+    config = function()
+      require('telekasten').setup({
+        home = vim.fn.expand("~/Documents/KB"), -- Put the name of your notes directory here
+        image_subdir = vim.fn.expand("<sfile>:p:h")..'/img'
+      })
+
+      local _, wk = pcall(require, "which-key")
+      if _ then
+        local zk = require('telekasten')
+        wk.register({
+          name = "fold/zk",
+          f = { zk.find_notes, "Find Notes"},
+          d = { zk.find_daily_notes, "Find Daily Notes"},
+          g = { zk.search_notes, "Search Notes"},
+          z = { zk.follow_link, "Follow Links"},
+          T = { zk.goto_today, "Goto Today"},
+          W = { zk.goto_thisweek, "Goto thisweek"},
+          w = { zk.find_weekly_notes, "Find Weekly Notes"},
+          n = { zk.new_note, "New Notes"},
+          N = { zk.new_templated_note, "New Templated Notes"},
+          y = { zk.yank_notelink, "Notes Yank"},
+          c = { zk.show_calendar, "Show calendar"},
+          C = { ":CalendarT<CR>", "CalendarT"},
+          i = { zk.paste_img_and_link, "Pasta Image"},
+          t = { zk.toggle_todo, "Toggle Todo"},
+          b = { zk.show_backlinks, "Show backlinks"},
+          F = { zk.find_friends, "Find Friends"},
+          I = { function()
+            zk.insert_img_link({ i = true})
+          end, "Insert Image Link"},
+          p = { zk.preview_img, "Preview Image"},
+          m = { zk.browse_media, "Browse_Media"},
+        }, { prefix = "<leader>z" })
+
+        -- Launch panel if nothing is typed after <leader>z
+        vim.keymap.set("n", "<leader>za", "<cmd>Telekasten panel<CR>")
+
+        vim.keymap.set("n", "<C-t>", "<cmd>lua require('telekasten').show_tags()<CR>")
+        vim.keymap.set("i", "<C-t>", "<cmd>lua require('telekasten').show_tags({i = true})<cr>")
+
+        vim.keymap.set("v", "<leader>zt",
+          "<ESC>:lua require('telekasten').toggle_todo({ v=true })<CR>")
+      end
+    end
   },
   {
     "iamcco/markdown-preview.nvim",
@@ -183,7 +234,7 @@ return {
     end
   },
   {
-    "mickael-menu/zk-nvim",
+    "zk-org/zk-nvim",
     after = "nvim-telescope/telescope.nvim",
     config = function()
       require("zk").setup()
@@ -259,13 +310,6 @@ return {
           }
         }
       })
-    end
-  },
-  {
-    "jakewvincent/mkdnflow.nvim",
-    ft = "markdown",
-    config = function()
-      require('mkdnflow').setup()
     end
   },
 }
