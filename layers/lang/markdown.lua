@@ -93,8 +93,8 @@ return {
           affix = "![](%s)",
         }
       }
-      vim.keymap.set('i', "<C-p>", "<ESC>:PasteImg<CR>")
-      vim.keymap.set('n', "<C-p>", ":PasteImg<CR>")
+      vim.keymap.set('i', "<leader>i", "<ESC>:PasteImg<CR>")
+      vim.keymap.set('n', "<leader>i", ":PasteImg<CR>")
     end
   },
   {
