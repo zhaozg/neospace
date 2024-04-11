@@ -64,7 +64,10 @@ return {
   "hrsh7th/cmp-nvim-lsp-signature-help",
 
   "rafamadriz/friendly-snippets",
-  "L3MON4D3/LuaSnip",
+  {
+    "L3MON4D3/LuaSnip",
+    run = "make install_jsregexp"
+  },
   "saadparwaiz1/cmp_luasnip",
 
   "ray-x/cmp-treesitter",
