@@ -57,11 +57,12 @@ return {
       saga.setup(opts)
     end,
   },
-  "zhaozg/none-ls-extras.nvim",
+  "nvimtools/none-ls-extras.nvim",
   {
     "nvimtools/none-ls.nvim",
     after = {
       "nvim-lua/plenary.nvim",
+      "nvimtools/none-ls-extras.nvim",
       "zhaozg/none-ls-extras.nvim",
     },
     config = function()
