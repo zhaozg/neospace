@@ -6,14 +6,14 @@ but update largely.
 
 ## Howto use
 
-* `:PluginsUpgrade` will update all plugins.
-* `:PluginsPluginsAutoremove` will remove all plugins.
-* Auto install new plugins.
+- `:PluginsUpgrade` will update all plugins.
+- `:PluginsAutoremove` will remove all plugins.
+- Auto install new plugins.
 
 ## Requirements
 
-* [Neovim 0.5.0](https://neovim.io/)
-* [Git](https://git-scm.com/)
+- [Neovim 0.5.0](https://neovim.io/)
+- [Git](https://git-scm.com/)
 
 ## Recommendations
 
