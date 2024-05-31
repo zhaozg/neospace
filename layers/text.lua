@@ -69,8 +69,13 @@ return {
 
   {
     "kylechui/nvim-surround",
+    after = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-treesitter/nvim-treesitter-textobjects"
+    },
     config = function()
-      require("nvim-surround").setup()
+      require("nvim-surround").setup({
+      })
     end,
   },
 
