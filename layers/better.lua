@@ -1,6 +1,7 @@
 return {
   "tpope/vim-repeat",
   "tpope/vim-sensible",
+  "tpope/vim-sleuth",
   "zhaozg/nvim-defaults",
   "kevinhwang91/promise-async",
   "nathom/filetype.nvim",
