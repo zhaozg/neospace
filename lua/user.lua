@@ -53,6 +53,7 @@ local function setup(options)
 
   vim.api.nvim_create_user_command("PluginsUpgrade", manager.upgrade, {})
   vim.api.nvim_create_user_command("PluginsAutoremove", manager.autoremove, {})
+  vim.api.nvim_create_user_command("PluginsInfo", manager.info, {})
   return manager
 end
 

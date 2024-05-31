@@ -314,7 +314,19 @@ function M.manage(plugins, options)
     end
   end
 
-  return { upgrade = upgrade, autoremove = autoremove }
+  local function info()
+    local api = 'https://api.github.com/repos'
+    local entries = scandir(plugins_directory)
+    for _, entry in ipairs(entries) do
+      local subs = scandir(("%s/%s"):format(plugins_directory, entry))
+      for _, sub in ipairs(subs) do
+        local plugin = string.format("%s/%s", entry, sub)
+        print(("%s/%s"):format(api, plugin))
+      end
+    end
+  end
+
+  return { upgrade = upgrade, autoremove = autoremove, info = info }
 end
 
 return M
