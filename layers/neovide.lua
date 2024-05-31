@@ -5,7 +5,6 @@ local fun = require("neospace.fun")
 if vim.fn.exists("g:neovide") == 0 then
   return
 end
-vim.g.neovide_input_macos_alt_is_meta = true
 vim.g.neovide_remember_window_size = true
 vim.g.neovide_fullscreen = true
 vim.g.neovide_hide_mouse_when_typing = true
@@ -18,6 +17,7 @@ vim.g.neovide_cursor_unfocused_outline_width = 0.1
 vim.g.neovide_cursor_antialiasing = false
 vim.g.neovide_cursor_vfx_mode = ""
 vim.g.neovide_input_use_logo = true
+vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
 
 vim.g.gui_font_default_size = 16.5
 vim.g.gui_font_size = vim.g.gui_font_default_size
