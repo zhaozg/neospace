@@ -40,14 +40,6 @@ return {
       map("n", "<Leader>ti", "<cmd>IndentBlanklineToggle<CR>")
     end,
   },
-  "wellle/targets.vim",
-  {
-    'Wansmer/treesj',
-    after = 'nvim-treesitter/nvim-treesitter',
-    config = function()
-      require('treesj').setup({})
-    end,
-  },
   {
     "norcalli/nvim-colorizer.lua",
     config = function()
