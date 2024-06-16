@@ -74,13 +74,6 @@ return {
   },
 
   {
-    "zbirenbaum/copilot-cmp",  -- need "zbirenbaum/copilot.lua"
-    config = function ()
-      require("copilot_cmp").setup()
-    end
-  },
-
-  {
     "hrsh7th/nvim-cmp",
     after = {
       "L3MON4D3/LuaSnip",
@@ -188,7 +181,6 @@ return {
         -- ... Your other configuration ...
         sources = cmp.config.sources({
           { name = "codeium" },
-          { name = "copilot" },
           { name = "nvim_lsp" },
           { name = 'nvim_lua' },
           { name = "luasnip" },
@@ -213,7 +205,6 @@ return {
                                    -- (must define maxwidth first)
             symbol_map = {
               Codeium = "",
-              Copilot = ""
             }
           })
         }

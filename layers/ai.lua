@@ -1,15 +1,4 @@
 return {
-  -- "github/copilot.vim"
-  {
-    "zbirenbaum/copilot.lua",
-    on = "Copilot",
-    config = function()
-      require("copilot").setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-      })
-    end,
-  },
   {
     -- https://zhuanlan.zhihu.com/p/630213524
     "Exafunction/codeium.nvim",
