@@ -215,18 +215,6 @@ return  {
     after = "nvim-tree/nvim-web-devicons",
     config = function()
       local wk = require("which-key")
-      wk.register({
-        a = { name = "align" },
-        b = { name = "buffer" },
-        c = { name = "code" },
-        d = { name = "debug" },
-        f = { name = "find" },
-        g = { name = "git" },
-        t = { name = "toggle" },
-        w = { name = "windows" },
-        x = { name = "text" },
-        z = { name = "fold" },
-      }, { prefix = "<leader>" })
       wk.setup({
         plugins = {
           spelling = {
@@ -240,6 +228,15 @@ return  {
           ["<tab>"] = "TAB",
         },
         ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
+      })
+      wk.add({
+        { "<leader>b", group = "buffer" },
+        { "<leader>c", group = "code" },
+        { "<leader>d", group = "debug" },
+        { "<leader>g", group = "git" },
+        { "<leader>t", group = "toggle" },
+        { "<leader>w", group = "windows" },
+        { "<leader>x", group = "text" },
       })
     end,
   },

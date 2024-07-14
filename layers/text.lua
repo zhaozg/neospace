@@ -22,40 +22,21 @@ return {
     "junegunn/vim-easy-align",
     config = function()
       local wk = require("which-key")
-
-      wk.register({
-        a = {
-          name = "+align",
-          ["a"] = { "<Plug>(EasyAlign)", "EasyAlign" },
-          ["i"] = { "<Plug>(LiveEasyAlign)", "LiveEasyAlign" },
-          ["="] = { "<Plug>(EasyAlign)ip=", "Align =" },
-          ["t"] = { "<Plug>(EasyAlign)ip*|", "AlignTable" },
-          ["|"] = { "<Plug>(EasyAlign)ip|", "Align |" },
-          [":"] = { "<Plug>(EasyAlign)ip:", "Align :" },
-          ["."] = { "<Plug>(EasyAlign)ip.", "Align ." },
-          [","] = { "<Plug>(EasyAlign)ip,", "Align ," },
-          ["&"] = { "<Plug>(EasyAlign)ip&", "Align &" },
-          ["#"] = { "<Plug>(EasyAlign)ip#", "Align #" },
-          ['"'] = { '<Plug>(EasyAlign)ip"', 'Align "' },
-          ["c"] = { "<Plug>(EasyAlign)ip-[ *]+/r0", "AlignCode" },
-        },
-      }, { prefix = "<leader>" })
-
-      wk.register({
-        a = {
-          name = "+align",
-          ["="] = { "<Plug>(EasyAlign)=", "Align =" },
-          ["t"] = { "<Plug>(EasyAlign)*|", "AlignTable" },
-          ["|"] = { "<Plug>(EasyAlign)|", "Align |" },
-          [":"] = { "<Plug>(EasyAlign):", "Align :" },
-          ["."] = { "<Plug>(EasyAlign).", "Align ." },
-          [","] = { "<Plug>(EasyAlign),", "Align ," },
-          ["&"] = { "<Plug>(EasyAlign)&", "Align &" },
-          ["#"] = { "<Plug>(EasyAlign)#", "Align #" },
-          ['"'] = { '<Plug>(EasyAlign)"', 'Align "' },
-          ["c"] = { "<Plug>(EasyAlign)-[ *]+/r0", "AlignCode" },
-        },
-      }, { prefix = "<leader>", mode = "v" })
+      wk.add({
+        { "<leader>a", group = "align" },
+        { "<leader>aa", "<Plug>(EasyAlign)", desc = "EasyAlign", mode= { "n" } },
+        { "<leader>ai", "<Plug>(LiveEasyAlign)", desc = "LiveEasyAlign", mode= { "n" } },
+        { '<leader>a"', '<Plug>(EasyAlign)ip"', desc = 'Align "', mode= { "n", "v" } },
+        { "<leader>a#", "<Plug>(EasyAlign)ip#", desc = "Align #", mode= { "n", "v" } },
+        { "<leader>a&", "<Plug>(EasyAlign)ip&", desc = "Align &", mode= { "n", "v" } },
+        { "<leader>a,", "<Plug>(EasyAlign)ip,", desc = "Align ,", mode= { "n", "v" } },
+        { "<leader>a.", "<Plug>(EasyAlign)ip.", desc = "Align .", mode= { "n", "v" } },
+        { "<leader>a:", "<Plug>(EasyAlign)ip:", desc = "Align :", mode= { "n", "v" } },
+        { "<leader>a=", "<Plug>(EasyAlign)ip=", desc = "Align =", mode= { "n", "v" } },
+        { "<leader>ac", "<Plug>(EasyAlign)ip-[ *]+/r0", desc = "AlignCode", mode= { "n", "v" } },
+        { "<leader>at", "<Plug>(EasyAlign)ip*|", desc = "AlignTable", mode= { "n", "v" } },
+        { "<leader>a|", "<Plug>(EasyAlign)ip|", desc = "Align |", mode= { "n", "v" } },
+      })
     end,
   },
 

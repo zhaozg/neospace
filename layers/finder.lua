@@ -49,34 +49,26 @@ return {
         require("telescope").extensions.project.project(opts)
       end
 
-      wk.register({
-        f = {
-          name = "find", -- optional group name
-
-          b = { builtin.buffers, "buffers" },
-          c = { builtin.commands, "commands" },
-          f = { builtin.find_files, "files" },
-          g = { builtin.live_grep, "grep" },
-          h = { builtin.help_tags, "help" },
-          o = { builtin.oldfiles, "recent", noremap = false },
-          m = { builtin.keymaps, "maps" },
-
-          d = { builtin.lsp_definitions, "definitions" },
-          i = { builtin.lsp_implementations, "implementations" },
-          r = { builtin.lsp_references, "references" },
-          s = { builtin.lsp_workspace_symbols, "symbols" },
-          l = { builtin.lsp_dynamic_workspace_symbols, "lists" },
-
-          C = { builtin.git_commits, "Commits" },
-          B = { builtin.git_bcommits, "Buffer Commits" },
-
-          T = { builtin.treesitter, "treesitter" },
-
-          N = { ":Telescope notify<CR>", "notify" },
-
-          p = { project, "project" },
-        },
-      }, { prefix = "<leader>" })
+      wk.add({
+        { "<leader>f", group = "find" },
+        { "<leader>fb", builtin.buffers, desc="buffers" },
+        { "<leader>fc", builtin.commands, desc="commands" },
+        { "<leader>ff", builtin.find_files, desc="files" },
+        { "<leader>fg", builtin.live_grep, desc="grep" },
+        { "<leader>fh", builtin.help_tags, desc="help" },
+        { "<leader>fo", builtin.oldfiles, desc="recent", noremap = false },
+        { "<leader>fm", builtin.keymaps, desc="maps" },
+        { "<leader>fd", builtin.lsp_definitions, desc="definitions" },
+        { "<leader>fi", builtin.lsp_implementations, desc="implementations" },
+        { "<leader>fr", builtin.lsp_references, desc="references" },
+        { "<leader>fs", builtin.lsp_workspace_symbols, desc="symbols" },
+        { "<leader>fl", builtin.lsp_dynamic_workspace_symbols, desc="lists" },
+        { "<leader>fC", builtin.git_commits, desc="Commits" },
+        { "<leader>fB", builtin.git_bcommits, desc="Buffer Commits" },
+        { "<leader>fT", builtin.treesitter, desc="treesitter" },
+        { "<leader>fN", ":Telescope notify<CR>", desc="notify" },
+        { "<leader>fp", project, desc="project" }
+      })
     end,
   },
 }

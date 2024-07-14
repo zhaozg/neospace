@@ -102,11 +102,11 @@ return {
     "kvrohit/tasks.nvim",
     config = function()
       local wk = require("which-key")
-      wk.register({
-        t = { ":ToggleTask<CR>", "ToggleTask" },
-        x = { ":CancelTask<CR>", "CancelTask" },
-        u = { ":UndoTask<CR>", "UndoTask" },
-      }, { prefix = "<localleader>" })
+      wk.add({
+        { "<localleader>t", ":ToggleTask<CR>", desc = "ToggleTask" },
+        { "<localleader>u", ":UndoTask<CR>", desc = "UndoTask" },
+        { "<localleader>x", ":CancelTask<CR>", desc = "CancelTask" },
+      })
     end,
   },
 
@@ -123,30 +123,29 @@ return {
       local _, wk = pcall(require, "which-key")
       if _ then
         local zk = require('telekasten')
-        wk.register({
-          name = "fold/zk",
-          f = { zk.find_notes, "Find Notes"},
-          d = { zk.find_daily_notes, "Find Daily Notes"},
-          g = { zk.search_notes, "Search Notes"},
-          z = { zk.follow_link, "Follow Links"},
-          T = { zk.goto_today, "Goto Today"},
-          W = { zk.goto_thisweek, "Goto thisweek"},
-          w = { zk.find_weekly_notes, "Find Weekly Notes"},
-          n = { zk.new_note, "New Notes"},
-          N = { zk.new_templated_note, "New Templated Notes"},
-          y = { zk.yank_notelink, "Notes Yank"},
-          c = { zk.show_calendar, "Show calendar"},
-          C = { ":CalendarT<CR>", "CalendarT"},
-          i = { zk.paste_img_and_link, "Pasta Image"},
-          t = { zk.toggle_todo, "Toggle Todo"},
-          b = { zk.show_backlinks, "Show backlinks"},
-          F = { zk.find_friends, "Find Friends"},
-          I = { function()
-            zk.insert_img_link({ i = true})
-          end, "Insert Image Link"},
-          p = { zk.preview_img, "Preview Image"},
-          m = { zk.browse_media, "Browse_Media"},
-        }, { prefix = "<leader>z" })
+        wk.add({
+
+          { "<leader>z", group = "fold/zk" },
+          { "<leader>zf", zk.find_notes, desc="Find Notes"},
+          { "<leader>zd", zk.find_daily_notes, desc="Find Daily Notes"},
+          { "<leader>zg", zk.search_notes, desc="Search Notes"},
+          { "<leader>zz", zk.follow_link, desc="Follow Links"},
+          { "<leader>zT", zk.goto_today, desc="Goto Today"},
+          { "<leader>zW", zk.goto_thisweek, desc="Goto thisweek"},
+          { "<leader>zw", zk.find_weekly_notes, desc="Find Weekly Notes"},
+          { "<leader>zn", zk.new_note, desc="New Notes"},
+          { "<leader>zN", zk.new_templated_note, desc="New Templated Notes"},
+          { "<leader>zy", zk.yank_notelink, desc="Notes Yank"},
+          { "<leader>zc", zk.show_calendar, desc="Show calendar"},
+          { "<leader>zC", ":CalendarT<CR>", desc="CalendarT"},
+          { "<leader>zi", zk.paste_img_and_link, desc="Pasta Image"},
+          { "<leader>zt", zk.toggle_todo, desc="Toggle Todo"},
+          { "<leader>zb", zk.show_backlinks, desc="Show backlinks"},
+          { "<leader>zF", zk.find_friends, desc="Find Friends"},
+          { "<leader>zI", function() zk.insert_img_link({ i = true}) end, desc="Insert Image Link"},
+          { "<leader>zp", zk.preview_img, desc="Preview Image"},
+          { "<leader>zm", zk.browse_media, desc="Browse_Media"},
+        })
 
         -- Launch panel if nothing is typed after <leader>z
         vim.keymap.set("n", "<leader>za", "<cmd>Telekasten panel<CR>")
@@ -214,11 +213,11 @@ return {
     config = function()
       local _, wk = pcall(require, "which-key")
       if _ then
-        wk.register({
-          p = { "<Plug>MarkdownPreview<CR>", "MarkdownPreview" },
-          s = { "<Plug>MarkdownPreviewStop<CR>", "MarkdownPreviewStop" },
-          f = { "<Plug>(EasyAlign)ip*|", "TableFormat" },
-        }, { prefix = "<localleader>" })
+        wk.add({
+          { "<localleader>f", "<Plug>(EasyAlign)ip*|", desc = "TableFormat" },
+          { "<localleader>p", "<Plug>MarkdownPreview<CR>", desc = "MarkdownPreview" },
+          { "<localleader>s", "<Plug>MarkdownPreviewStop<CR>", desc = "MarkdownPreviewStop" },
+        })
       end
     end,
   },

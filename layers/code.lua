@@ -332,16 +332,14 @@ return {
       local generate = require('neogen').generate
 
       local wk = require("which-key")
-      wk.register({
-        n = {
-          name = "Neogen",
-          g = { generate, "Neogen Smart" },
-          f = { function() generate{ type = 'func'} end, "Neogen Function" },
-          F = { function() generate{ type = 'file'} end, "Neogen File" },
-          t = { function() generate{ type = 'type'} end, "Neogen Type/Mod" },
-          c = { function() generate{ type = 'class'} end, "Neogen Class" },
-        }
-      }, { prefix = "<leader>" })
+      wk.add({
+        { "<leader>n", group = "Neogen" },
+        { "<leader>nF", function() generate{ type = 'file'} end, desc = "Neogen File" },
+        { "<leader>nc", function() generate{ type = 'class'} end, desc = "Neogen Class" },
+        { "<leader>nf", function() generate{ type = 'func'} end, desc = "Neogen Function" },
+        { "<leader>ng", generate, desc = "Neogen Smart" },
+        { "<leader>nt", function() generate{ type = 'type'} end, desc = "Neogen Type/Mod" },
+      })
     end,
   },
   {
