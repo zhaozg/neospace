@@ -222,12 +222,23 @@ return  {
             suggestions = 20, -- how many suggestions should be shown in the list?
           },
         },
-        key_labels = {
-          ["<space>"] = "SPC",
-          ["<cr>"] = "RET",
-          ["<tab>"] = "TAB",
+        replace = {
+          key = {
+            {"<Space>", "SPC"},
+            {"<Cr>", "RET"},
+            {"<Tab>", "TAB"},
+          },
+          desc = {
+            { "<Plug>%(?(.*)%)?", "%1" },
+            { "^%+", "" },
+            { "<[cC]md>", "" },
+            { "<[cC][rR]>", "" },
+            { "<[sS]ilent>", "" },
+            { "^lua%s+", "" },
+            { "^call%s+", "" },
+            { "^:%s*", "" },
+          },
         },
-        ignore_missing = false, -- enable this to hide mappings for which you didn't specify a label
       })
       wk.add({
         { "<leader>b", group = "buffer" },
