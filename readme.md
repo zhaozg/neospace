@@ -46,13 +46,13 @@ vusted
 
 ### Soul figures
 
-* [folke](https://github.com/folke)
-* [hrsh7th](https://github.com/hrsh7th)
-* [lewis6991](https://github.com/lewis6991)
-* [tpope](https://github.com/tpope)
+- [folke](https://github.com/folke)
+- [hrsh7th](https://github.com/hrsh7th)
+- [lewis6991](https://github.com/lewis6991)
+- [tpope](https://github.com/tpope)
 
 ### core plugins
 
-* [hrsh7th/nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
-* [williamboman/mason.nvim](https://github.com/williamboman/mason.nvim)
-* [nvimtools/none-ls.nvim](https://github.com/nvimtools/none-ls.nvim)
+- [hrsh7th/nvim-cmp](https://github.com/hrsh7th/nvim-cmp)
+- [williamboman/mason.nvim](https://github.com/williamboman/mason.nvim)
+- [nvimtools/none-ls.nvim](https://github.com/nvimtools/none-ls.nvim)

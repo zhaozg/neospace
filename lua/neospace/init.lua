@@ -54,4 +54,6 @@ M.map = function(bufnr, mode, keys, cmd, options)
   end
 end
 
+M.format = require('neospace.format')
+
 return M
