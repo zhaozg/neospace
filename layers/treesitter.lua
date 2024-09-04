@@ -110,15 +110,15 @@ return {
     after = "nvim-treesitter/nvim-treesitter",
   },
   {
-    "nvim-treesitter/nvim-treesitter-context",
-    after = "nvim-treesitter/nvim-treesitter",
-  },
-  {
     "nvim-treesitter/nvim-treesitter-textobjects",
     after = "nvim-treesitter/nvim-treesitter",
   },
   {
     "nvim-treesitter/nvim-tree-docs",
+    after = "nvim-treesitter/nvim-treesitter",
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-context",
     after = "nvim-treesitter/nvim-treesitter",
   },
   {
