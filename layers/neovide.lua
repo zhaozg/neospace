@@ -19,7 +19,7 @@ vim.g.neovide_cursor_vfx_mode = ""
 vim.g.neovide_input_use_logo = true
 vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
 
-vim.g.gui_font_default_size = 22
+vim.g.gui_font_default_size = 21.5
 vim.g.gui_font_size = vim.g.gui_font_default_size
 vim.g.guifont_face = "Hack Nerd Font Mono"
 vim.g.guifontwide_face = "LXGW Neo XiHei"
