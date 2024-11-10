@@ -152,7 +152,7 @@ return  {
 
   --statusline at bottom
   {
-    "hoob3rt/lualine.nvim",
+    "nvim-lualine/lualine.nvim",
     after = { "nvim-tree/nvim-web-devicons", "kdheepak/tabline.nvim" },
     config = function()
       local tabline = require("tabline")
