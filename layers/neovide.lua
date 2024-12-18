@@ -1,6 +1,6 @@
 local vim = vim
+local neospace = require('neospace')
 local map = require("neospace").map
-local fun = require("neospace.fun")
 
 if vim.fn.exists("g:neovide") == 0 then
   return
@@ -19,7 +19,12 @@ vim.g.neovide_cursor_vfx_mode = ""
 vim.g.neovide_input_use_logo = true
 vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
 
+if neospace.linux then
+vim.g.gui_font_default_size = 11
+else
 vim.g.gui_font_default_size = 21.5
+end
+
 vim.g.gui_font_size = vim.g.gui_font_default_size
 vim.g.guifont_face = "Hack Nerd Font Mono"
 vim.g.guifontwide_face = "LXGW Neo XiHei"
