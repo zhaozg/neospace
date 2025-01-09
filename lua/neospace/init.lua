@@ -9,7 +9,7 @@ M.windows = fn.has("win32") or fn.has("win64")
 
 local v = vim.version()
 -- compat deprecated
-if vim.version.gt(v, {0, 10, 0}) then
+if vim.version.gt(v, {0, 11, 0}) then
   vim.lsp.buf_get_clients = function(bufnr)
     return vim.lsp.get_clients({buffer=bufnr})
   end
