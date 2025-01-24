@@ -1,21 +1,31 @@
 local vim = vim
 local map = require('neospace').map
 
-vim.cmd [[
-let g:better_whitespace_enabled = 1
-let g:strip_whitespace_on_save = 0
-let g:strip_only_modified_lines = 1
-let g:better_whitespace_operator = ""
-let g:show_spaces_that_precede_tabs = 1
-]]
-
 return {
   {
-    "ntpeters/vim-better-whitespace",
+    "cappyzawa/trim.nvim",
     config = function()
-      map('n', "]w", ":NextTrailingWhitespace<CR>")
-      map('n', "[w", ":PrevTrailingWhitespace<CR>")
-    end,
+      require("trim").setup({})
+    end
+  },
+  {
+    'mcauley-penney/visual-whitespace.nvim',
+    config = function()
+      require("visual-whitespace").setup({
+        highlight = { link = "Visual" },
+        space_char = '·',
+        tab_char = '→',
+        nl_char = '↲',
+        cr_char = '←',
+        enabled = true,
+        excluded = {
+          filetypes = {},
+          buftypes = {}
+        }
+      })
+
+      vim.keymap.set('n', "<leader>tw", require("visual-whitespace").toggle, {})
+    end
   },
 
   {

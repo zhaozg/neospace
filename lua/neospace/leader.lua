@@ -43,7 +43,7 @@ map("x", "<Leader>wv", "<C-W>v")
 map("n", "<Leader>xc", "<cmd>nohlsearch<CR>")
 map("n", "<Leader>xd", "<cmd>setlocal ff=dos<CR>")
 map("n", "<Leader>xu", "<cmd>setlocal ff=unix<CR>")
-map("n", "<Leader>xs", "<cmd>StripWhitespace<CR>")
+map("n", "<Leader>xs", "<cmd>Trim<CR>")
 
 -- fold
 map("n", "<Leader>z0", "<cmd>set foldlevel=0<CR>")
