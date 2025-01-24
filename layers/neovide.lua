@@ -19,7 +19,7 @@ vim.g.neovide_cursor_vfx_mode = ""
 vim.g.neovide_input_use_logo = true
 vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
 
-if neospace.linux then
+if neospace.linux == 1 then
 vim.g.gui_font_default_size = 11
 else
 vim.g.gui_font_default_size = 21.5
