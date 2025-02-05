@@ -181,6 +181,7 @@ return {
         -- ... Your other configuration ...
         sources = cmp.config.sources({
           { name = "codeium" },
+          { name = "codecompanion" },
           { name = "nvim_lsp" },
           { name = 'nvim_lua' },
           { name = "luasnip" },
