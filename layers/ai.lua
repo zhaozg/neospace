@@ -45,15 +45,14 @@ return {
           -- end,
           ollama = function()
             return require("codecompanion.adapters").extend("ollama", {
-              name = "deepseek",
-              schema = {
-                model = { default = "deepseek-r1" },
-                -- model = { default = "deepseek-coder", },
-              },
-              -- name = 'codellama',
+              -- name = "deepseek",
               -- schema = {
-              --   model = { default = "codellama" },
+              --   model = { default = "deepseek-r1:1.5b" },
               -- },
+              name = 'qwen',
+              schema = {
+                model = { default = "qwen2.5-coder:3b" },
+              },
             })
           end,
         },
