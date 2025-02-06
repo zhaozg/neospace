@@ -19,30 +19,15 @@ return {
     },
     config = function ()
       require("codecompanion").setup({
+        opts = {
+          log_level = "DEBUG",
+        },
         strategies = {
-          chat = {
-            adapter = "ollama",
-          },
-          inline = {
-            adapter = "ollama",
-          },
-          agent = {
-            adapter = "ollama"
-          },
+          chat = { adapter = "ollama", },
+          inline = { adapter = "ollama", },
+          agent = { adapter = "ollama" },
         },
         adapters = {
-          -- copilot = function()
-          --   return require("codecompanion.adapters").extend("copilot", {
-          --     schema = {
-          --       model = {
-          --         default = "GTP 4o",
-          --       },
-          --       max_tokens = {
-          --         default = 65536,
-          --       },
-          --     },
-          --   })
-          -- end,
           ollama = function()
             return require("codecompanion.adapters").extend("ollama", {
               -- name = "deepseek",
