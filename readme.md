@@ -1,10 +1,10 @@
 # Neospace
 
-当我开始使用 MacBookPro 作为开发工具时， Neovim 发布了 v0.2 版本。
+当我开始使用 MacBookPro 作为开发工具时，Neovim 发布了 v0.2 版本。
 
 出于对 Lua 与控制台 (Console) 的偏爱，我强迫自己尽量使用 Neovim 完成日常工作。
 
-vim 有诸多的优秀插件、Neovim 的发展也导致了大量后起之秀的产生。
+vim 有诸多的优秀插件，Neovim 的发展也导致了大量后起之秀的产生。
 
 如何管理和使用这些插件就成了需要解决的问题。
 
@@ -12,7 +12,7 @@ vim 有诸多的优秀插件、Neovim 的发展也导致了大量后起之秀的
 
 Neospace is a simple Neovim plugins and layers management toolkit.
 
-**!!!** Neospace based on Lua, so not support vim.
+**!!!** Neospace 基于 Lua，因此不支持 vim。
 
 ## Principles
 
@@ -22,7 +22,7 @@ Neospace is a simple Neovim plugins and layers management toolkit.
 
 ## Plugins and Layers
 
-A plugin is git repo to extend the functionality of vim/Neovim.
+A plugin is a git repo to extend the functionality of vim/Neovim.
 
 A layer is a set of function-related, similar purpose plugins of Neovim.
 

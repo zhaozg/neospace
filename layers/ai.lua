@@ -23,9 +23,9 @@ return {
           log_level = "DEBUG",
         },
         strategies = {
-          chat = { adapter = "ollama", },
-          inline = { adapter = "ollama", },
-          agent = { adapter = "ollama" },
+          chat = { adapter = "copilot", },
+          inline = { adapter = "copilot", },
+          agent = { adapter = "copilot" },
         },
         adapters = {
           ollama = function()
