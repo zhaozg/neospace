@@ -43,14 +43,13 @@ return {
         },
         adapters = {
           ollama = function()
+            local name = os.getenv("OLLAMA_NVIM_NAME") or "qwen"
+            local model = os.getenv("OLLAMA_NVIM_MODEL") or "qwen2.5-coder:3b"
+
             return require("codecompanion.adapters").extend("ollama", {
-              -- name = "deepseek",
-              -- schema = {
-              --   model = { default = "deepseek-r1:1.5b" },
-              -- },
-              name = 'qwen',
+              name = name,
               schema = {
-                model = { default = "qwen2.5-coder:3b" },
+                model = { default = model },
               },
             })
           end,
