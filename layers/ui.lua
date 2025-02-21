@@ -260,20 +260,9 @@ return  {
   },
 
   {
-    "rcarriga/nvim-notify",
-    config = function()
-      vim.opt.termguicolors = true
-      require("notify").setup({
-        timeout = 2000,
-        top_down = false
-      })
-    end
-  },
-  {
     "folke/noice.nvim",
     after = {
       "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify"
     },
     config = function()
       require("noice").setup({
@@ -300,4 +289,3 @@ return  {
     end,
   }
 }
-
