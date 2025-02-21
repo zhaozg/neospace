@@ -112,32 +112,12 @@ return  {
 
   --tree at left
   {
-    "nvim-tree/nvim-tree.lua",
-    after = "nvim-tree/nvim-web-devicons",
-    config = function()
-      require("nvim-tree").setup({
-        -- disables netrw completely
-        disable_netrw = true,
-        view = {
-          -- width of the window, can be either a number (columns) or a string in `%`, for left or right side placement
-          width = 30,
-          -- side of the tree, can be one of 'left' | 'right' | 'top' | 'bottom'
-          side = "left",
-        },
-        renderer = {
-          add_trailing = true,
-          group_empty = true,
-          highlight_git = true,
-          icons = {
-            git_placement = "after",
-          },
-          indent_markers = {
-            enable = true,
-          },
-        },
-      })
-      require("neospace").map("", "<leader>tf", "<cmd>NvimTreeToggle<CR>")
-    end,
+    "nvim-neo-tree/neo-tree.nvim",
+    after = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons"
+    }
   },
 
   --at right
