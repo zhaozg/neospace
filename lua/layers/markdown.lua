@@ -2,6 +2,7 @@ local vim = vim
 local g = vim.g
 local lang = require('neospace.lang')
 
+--[=[
 local layer = require("neospace.layer")
 layer:append("nvimtools/none-ls.nvim", function()
   local null_ls = require "null-ls"
@@ -81,6 +82,7 @@ layer:append("nvimtools/none-ls.nvim", function()
     })
   end
 end)
+--]=]
 
 return {
   {
@@ -209,6 +211,10 @@ return {
         "chart=json",
         "sequence-diagrams=sequence",
       }
+
+      if vim.fn.filereadable("~/.markdown.css") then
+        vim.g.mkdp_markdown_css = vim.fn.expand('~/.markdown.css')
+      end
     end,
     config = function()
       local _, wk = pcall(require, "which-key")

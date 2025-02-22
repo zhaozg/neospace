@@ -25,7 +25,6 @@ return {
       statuscolumn = { enabled = true },
       words = { enabled = true },
       zen = { enable = true }
-    })
-    end
+    }
   }
 }

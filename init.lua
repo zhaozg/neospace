@@ -14,9 +14,6 @@ local neospace = require("neospace")
 -- set neospace
 neospace.base = fn.fnamemodify(fn.resolve(fn.expand("<sfile>:p")), ":h")
 
-if neospace.init then
-  neospace.init()
-end
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
@@ -39,9 +36,10 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
--- load private
--- local config_path = vim.fn.stdpath("config")
--- layer:load_private()
+-- load private laoder
+if neospace.load_private then
+  neospace.load_private()
+end
 
 -- deprecated
 vim.treesitter.query.get_query = vim.treesitter.query.get

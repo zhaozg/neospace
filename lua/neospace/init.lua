@@ -21,15 +21,6 @@ if vim.version.gt(v, {0, 11, 0}) then
   end
 end
 
-if vim.fn.filereadable(".nvim.lua") == 1 then
-  local ctx = assert(loadfile(".nvim.lua"))
-  ctx = ctx()
-  if ctx then
-    M.init = ctx.init
-    M.config = ctx.config
-  end
-end
-
 local default_map_opts = { noremap = true, silent = true }
 M.default_map_opts = default_map_opts
 
@@ -55,5 +46,13 @@ M.map = function(bufnr, mode, keys, cmd, options)
 end
 
 M.format = require('neospace.format')
+
+M.load_private = function()
+  vim.opt.rtp:prepend(M.base .. '/private')
+  local priv = M.base .. '/private/lua/init.lua'
+  if vim.fn.filereadable(priv) == 1 then
+    dofile(priv)
+  end
+end
 
 return M
