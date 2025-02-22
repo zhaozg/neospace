@@ -140,7 +140,7 @@ return  {
       local lsp_status = require("lualine.components.lsp_status")
       require("lualine").setup({
         sections = {
-          lualine_a = { "mode", "asyncrun_status" },
+          lualine_a = { "mode" },
           lualine_c = {
             "filename",
             {

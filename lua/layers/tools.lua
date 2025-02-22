@@ -8,4 +8,12 @@ return {
       })
     end,
   },
+  {
+    "rest-nvim/rest.nvim",
+    enabled = false,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "rest-nvim/tree-sitter-http"
+    },
+  }
 }

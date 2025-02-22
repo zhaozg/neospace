@@ -11,6 +11,7 @@ return {
       require("lsp-status").config({
         status_symbol = "ʂ",
       })
+      require("lsp-status").register_progress() -- 注册 LSP 进度事件
     end,
   },
   {
@@ -58,12 +59,13 @@ return {
     end,
   },
   "nvimtools/none-ls-extras.nvim",
+  "gbprod/none-ls-shellcheck.nvim",
+  "gbprod/none-ls-luacheck.nvim",
   {
     "nvimtools/none-ls.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvimtools/none-ls-extras.nvim",
-      "zhaozg/none-ls-extras.nvim",
     },
     config = function()
       local null_ls = require("null-ls")

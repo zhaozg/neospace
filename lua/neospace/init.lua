@@ -47,12 +47,4 @@ end
 
 M.format = require('neospace.format')
 
-M.load_private = function()
-  vim.opt.rtp:prepend(M.base .. '/private')
-  local priv = M.base .. '/private/lua/init.lua'
-  if vim.fn.filereadable(priv) == 1 then
-    dofile(priv)
-  end
-end
-
 return M

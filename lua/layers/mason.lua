@@ -9,8 +9,14 @@ return {
     end,
   },
   {
+    "folke/neoconf.nvim",
+  },
+  {
     "williamboman/mason-lspconfig.nvim",
-    dependencies = "williamboman/mason.nvim",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "folke/neoconf.nvim",
+    },
     config = function()
       require("mason-lspconfig").setup({
         log_level = vim.log.levels.DEBUG,
