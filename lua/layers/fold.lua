@@ -4,8 +4,7 @@ return {
   {
     "kevinhwang91/nvim-ufo",
     dependencies = {
-      'kevinhwang91/promise-async',
-      'nvim-treesitter/nvim-treesitter'
+      'kevinhwang91/promise-async'
     },
     init = function()
       vim.o.foldcolumn = "1" -- '0' is not bad

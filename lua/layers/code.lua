@@ -4,20 +4,10 @@ local map = require("neospace").map
 return {
   {
     "numToStr/Comment.nvim",
-    config = function()
-      require("Comment").setup()
-    end,
   },
   {
     "folke/todo-comments.nvim",
     dependencies = "nvim-lua/plenary.nvim",
-    config = function()
-      require("todo-comments").setup({
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
-      })
-    end,
   },
   {
     "lukas-reineke/indent-blankline.nvim",
@@ -42,9 +32,7 @@ return {
   },
   {
     "norcalli/nvim-colorizer.lua",
-    config = function()
-      require("colorizer").setup()
-    end,
+    opts = {}
   },
 
   "hrsh7th/cmp-nvim-lsp",
@@ -108,7 +96,6 @@ return {
           end,
         },
         mapping = {
-          -- Super-Tab like mapping
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
@@ -178,7 +165,6 @@ return {
             end,
           }),
         },
-        -- ... Your other configuration ...
         sources = cmp.config.sources({
           { name = "codeium" },
           { name = "codecompanion" },
@@ -190,20 +176,15 @@ return {
           { name = "spell" },
           { name = "emoji" },
           { name = 'nvim_lsp_signature_help' },
-
           { name = "buffer" },
           { name = "path" },
-
           { name = 'treesitter' },
         }),
         formatting = {
           format = lspkind.cmp_format({
-            mode = 'symbol', -- show only symbol annotations
-            maxwidth = 50,   -- prevent the popup from showing more than provided characters
-                             -- (e.g 50 will not show more than 50 characters)
-            ellipsis_char = '...', -- when popup menu exceed maxwidth,
-                                   -- the truncated part would show ellipsis_char instead
-                                   -- (must define maxwidth first)
+            mode = 'symbol',
+            maxwidth = 50,
+            ellipsis_char = '...',
             symbol_map = {
               Codeium = "",
             }
@@ -211,17 +192,15 @@ return {
         }
       })
 
-      -- Set configuration for specific filetype.
       cmp.setup.filetype("gitcommit", {
         sources = cmp.config.sources({
-          { name = "cmp_git" }, -- You can specify the `cmp_git` source if you were installed it.
+          { name = "cmp_git" },
           { name = "buffer" },
           { name = "spell" },
           { name = "emoji" },
         }),
       })
 
-      -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline("/", {
         completion = { autocomplete = false },
         sources = {
@@ -229,7 +208,6 @@ return {
         },
       })
 
-      -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline(":", {
         completion = { autocomplete = false },
         mapping = cmp.mapping.preset.cmdline(),
@@ -241,15 +219,6 @@ return {
         }),
       })
     end,
-  },
-
-  {
-    "paopaol/cmp-doxygen",
-    dependencies = {
-      "hrsh7th/nvim-cmp",
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-treesitter/nvim-treesitter-textobjects"
-    }
   },
 
   {
@@ -265,7 +234,6 @@ return {
         'confirm_done',
         cmp_autopairs.on_confirm_done({
           filetypes = {
-            -- "*" is a alias to all filetypes
             ["*"] = {
               ["("] = {
                 kind = {
@@ -281,17 +249,8 @@ return {
                   cmp.lsp.CompletionItemKind.Function,
                   cmp.lsp.CompletionItemKind.Method
                 },
-                -- @param char string
-                -- @param item table item completion
-                -- @param bufnr number buffer number
-                -- @param rules table
-                -- @param commit_character table<string>
-                -- handler = function(char, item, bufnr, rules, commit_character)
-                --   -- Your handler function. Inpect with print(vim.inspect{char, item, bufnr, rules, commit_character})
-                -- end
               }
             },
-            -- Disable for tex
             tex = false
           }
         })
@@ -299,16 +258,14 @@ return {
       local npairs = require("nvim-autopairs")
       npairs.setup({
         check_ts = false,
-        map_cr = true, --  map <CR> on insert mode
-        map_complete = true, -- it will auto insert `(` after select function or method item
+        map_cr = true,
+        map_complete = true,
         ts_config = {
-          lua = { "string" }, -- it will not add pair on that treesitter node
+          lua = { "string" },
           javascript = { "template_string" },
-          java = false, -- don't check treesitter on java
+          java = false,
         },
       })
-      --look at https://github.com/windwp/nvim-autopairs/wiki/Endwise
-      --npairs.add_rules(require('nvim-autopairs.rules.endwise-lua'))
     end,
   },
   {
