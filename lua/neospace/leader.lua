@@ -60,3 +60,4 @@ map("n", "<Leader>z9", "<cmd>set foldlevel=9<CR>")
 -- toggle
 map("n", "<Leader>tr", "<cmd>setlocal colorcolumn=80<CR>", { desc = "Toggle colorcolumn" })
 map("n", "<Leader>tt", "<cmd>Outline<CR>", { desc = "Toggle Outline" })
+map("n", "<Leader>tf", "<cmd>Neotree<CR>", { desc = "Toggle Neotree" })

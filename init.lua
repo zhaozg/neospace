@@ -17,72 +17,45 @@ neospace.base = fn.fnamemodify(fn.resolve(fn.expand("<sfile>:p")), ":h")
 if neospace.init then
   neospace.init()
 end
--- map leader to Space
-vim.cmd("let mapleader = ' '")
-vim.cmd('let maplocalleader = ","')
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
--- active map
-require("neospace.leader")
-
--- active default layer --
-local layer = require("neospace.layer")
-
--- basic
-layer:load("better")
-layer:load("theme")
-layer:load("async")
-layer:load("ui")
-
--- commons
-layer:load("text")
-layer:load("treesitter")
-layer:load("code")
-layer:load("finder")
-layer:load("git")
-layer:load("fold")
-
--- enhance
-layer:load("lsp")
-layer:load("debug")
-layer:load("ai")
-layer:load('mason')
-
--- language
-layer:load("lang/markdown")
-layer:load("lang/diagram")
-layer:load("lang/java")
-
--- misc
-layer:load("tools")
-
-if vim.fn.exists("g:neovide")==1 then
-  layer:load("neovide")
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
 end
 
-layer:load_private()
+vim.opt.rtp:prepend(lazypath)
+
+-- map leader to Space
+vim.g.mapleader = " "
+vim.g.maplocalleader = ","
+
+-- load private
+-- local config_path = vim.fn.stdpath("config")
+-- layer:load_private()
 
 -- deprecated
 vim.treesitter.query.get_query = vim.treesitter.query.get
 vim.treesitter.query.parse_query = vim.treesitter.query.parse
 
--- load plugins
-local user = require("user")
-
-for _, name in pairs(layer.names) do
-  local modules = layer.modules[name]
-  if modules then
-    for _ = 1, #modules do
-      user.use(modules[_])
-    end
-  else
-    print(("Error to load(%s) with %s"):format(name, modules))
-  end
-end
-
-user.setup({
-  loaded = function()
-    if neospace.config then
-      neospace.config()
-    end
-  end,
+-- Setup lazy.nvim
+require("lazy").setup({
+  spec = {
+    -- import your plugins
+    { import = "layers" },
+  },
+  -- Configure any other settings here. See the documentation for more details.
+  -- colorscheme that will be used when installing plugins.
+  install = { colorscheme = { "gruvbox" } },
+  -- automatically check for plugin updates
+  checker = { enabled = true },
 })

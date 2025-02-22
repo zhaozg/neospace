@@ -2,8 +2,8 @@ local vim = vim
 local neospace = require('neospace')
 local map = require("neospace").map
 
-if vim.fn.exists("g:neovide") == 0 then
-  return
+if not vim.fn.exists("g:neovide")==1 then
+  return {}
 end
 vim.g.neovide_remember_window_size = true
 vim.g.neovide_fullscreen = true
@@ -90,3 +90,4 @@ map("i", "<D-z>", "<Esc>ua")
 -- system clipboard }}}
 
 map("n", "<leader>tw", "<cmd>let g:neovide_fullscreen = !g:neovide_fullscreen<cr>", {})
+return {}
