@@ -60,7 +60,7 @@ return {
 
   {
     "kylechui/nvim-surround",
-    after = {
+    dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-treesitter/nvim-treesitter-textobjects"
     },

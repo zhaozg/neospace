@@ -3,14 +3,14 @@ local vim = vim
 return {
   {
     "williamboman/mason.nvim",
-    after = "neovim/nvim-lspconfig",
+    dependencies = "neovim/nvim-lspconfig",
     config = function()
       require("mason").setup()
     end,
   },
   {
     "williamboman/mason-lspconfig.nvim",
-    after = "williamboman/mason.nvim",
+    dependencies = "williamboman/mason.nvim",
     config = function()
       require("mason-lspconfig").setup({
         log_level = vim.log.levels.DEBUG,

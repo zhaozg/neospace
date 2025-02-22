@@ -3,7 +3,7 @@ local vim = vim
 return {
   {
     "kevinhwang91/nvim-ufo",
-    after = {
+    dependencies = {
       'kevinhwang91/promise-async',
       'nvim-treesitter/nvim-treesitter'
     },

@@ -10,7 +10,7 @@ return {
   },
   {
     "folke/todo-comments.nvim",
-    after = "nvim-lua/plenary.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
     config = function()
       require("todo-comments").setup({
         -- your configuration comes here
@@ -67,7 +67,7 @@ return {
   "f3fora/cmp-spell",
   {
     "paopaol/cmp-doxygen",
-    after = {
+    dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-treesitter/nvim-treesitter-textobjects"
     }
@@ -75,7 +75,7 @@ return {
 
   {
     "hrsh7th/nvim-cmp",
-    after = {
+    dependencies = {
       "L3MON4D3/LuaSnip",
       "onsails/lspkind.nvim"
     },
@@ -245,7 +245,7 @@ return {
 
   {
     "paopaol/cmp-doxygen",
-    after = {
+    dependencies = {
       "hrsh7th/nvim-cmp",
       "nvim-treesitter/nvim-treesitter",
       "nvim-treesitter/nvim-treesitter-textobjects"
@@ -254,7 +254,7 @@ return {
 
   {
     "windwp/nvim-autopairs",
-    after = {
+    dependencies = {
       "hrsh7th/nvim-cmp",
     },
     config = function()
@@ -313,7 +313,7 @@ return {
   },
   {
     "johmsalas/text-case.nvim",
-    after = "nvim-telescope/telescope.nvim",
+    dependencies = "nvim-telescope/telescope.nvim",
     config = function()
       require("textcase").setup({})
       require("telescope").load_extension("textcase")
@@ -322,7 +322,7 @@ return {
   },
   {
     "danymat/neogen",
-    after = "nvim-treesitter/nvim-treesitter",
+    dependencies = "nvim-treesitter/nvim-treesitter",
     config = function()
       local neogen = require("neogen")
       neogen.setup({
@@ -345,7 +345,7 @@ return {
   },
   {
     "luckasRanarison/nvim-devdocs",
-    after = {
+    dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope.nvim",
       "nvim-treesitter/nvim-treesitter",

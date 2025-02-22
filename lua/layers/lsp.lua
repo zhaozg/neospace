@@ -6,7 +6,7 @@ return {
   },
   {
     "nvim-lua/lsp-status.nvim",
-    after = "neovim/nvim-lspconfig",
+    dependencies = "neovim/nvim-lspconfig",
     config = function()
       require("lsp-status").config({
         status_symbol = "ʂ",
@@ -15,11 +15,11 @@ return {
   },
   {
     "ray-x/lsp_signature.nvim",
-    after = "neovim/nvim-lspconfig",
+    dependencies = "neovim/nvim-lspconfig",
   },
   {
     "nvimdev/lspsaga.nvim",
-    after = {
+    dependencies = {
       "neovim/nvim-lspconfig",
       "nvim-treesitter/nvim-treesitter"
     },
@@ -60,7 +60,7 @@ return {
   "nvimtools/none-ls-extras.nvim",
   {
     "nvimtools/none-ls.nvim",
-    after = {
+    dependencies = {
       "nvim-lua/plenary.nvim",
       "nvimtools/none-ls-extras.nvim",
       "zhaozg/none-ls-extras.nvim",

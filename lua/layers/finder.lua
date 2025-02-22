@@ -7,7 +7,7 @@ return {
 
   {
     "nvim-telescope/telescope.nvim",
-    after = {
+    dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-symbols.nvim",
       "nvim-telescope/telescope-media-files.nvim",

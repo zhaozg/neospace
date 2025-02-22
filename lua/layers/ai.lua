@@ -2,7 +2,7 @@ return {
   {
     -- https://zhuanlan.zhihu.com/p/630213524
     "Exafunction/codeium.nvim",
-    after = {
+    dependencies = {
         "nvim-lua/plenary.nvim",
         "hrsh7th/nvim-cmp",
     },
@@ -13,7 +13,7 @@ return {
   },
   {
     "olimorris/codecompanion.nvim",
-    after = {
+    dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
     },

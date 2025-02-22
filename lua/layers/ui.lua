@@ -30,7 +30,7 @@ return  {
   },
   {
     "goolord/alpha-nvim",
-    after = "nvim-tree/nvim-web-devicons",
+    dependencies = "nvim-tree/nvim-web-devicons",
     config = function()
       local alpha = require("alpha")
       local startify = require("alpha.themes.startify")
@@ -75,7 +75,7 @@ return  {
   },
   {
     "luukvbaal/statuscol.nvim",
-    after = "kevinhwang91/promise-async",
+    dependencies = "kevinhwang91/promise-async",
     config = function()
       local builtin = require("statuscol.builtin")
       require("statuscol").setup({
@@ -91,7 +91,7 @@ return  {
   --tabline at top
   {
     "kdheepak/tabline.nvim",
-    after = "nvim-tree/nvim-web-devicons",
+    dependencies = "nvim-tree/nvim-web-devicons",
     config = function()
       local tabline = require("tabline")
       tabline.setup({
@@ -113,7 +113,7 @@ return  {
   --tree at left
   {
     "nvim-neo-tree/neo-tree.nvim",
-    after = {
+    dependencies = {
       "MunifTanjim/nui.nvim",
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons"
@@ -123,7 +123,7 @@ return  {
   --at right
   {
     "hedyhli/outline.nvim",
-    after = "nvim-tree/nvim-web-devicons",
+    dependencies = "nvim-tree/nvim-web-devicons",
     config = function()
       require("outline").setup({
       })
@@ -133,7 +133,7 @@ return  {
   --statusline at bottom
   {
     "nvim-lualine/lualine.nvim",
-    after = { "nvim-tree/nvim-web-devicons", "kdheepak/tabline.nvim" },
+    dependencies = { "nvim-tree/nvim-web-devicons", "kdheepak/tabline.nvim" },
     config = function()
       local tabline = require("tabline")
       local gradle_status = require("lualine.components.gradle_status")
@@ -192,7 +192,7 @@ return  {
 
   {
     "folke/which-key.nvim",
-    after = "nvim-tree/nvim-web-devicons",
+    dependencies = "nvim-tree/nvim-web-devicons",
     config = function()
       local wk = require("which-key")
       wk.setup({
@@ -241,7 +241,7 @@ return  {
 
   {
     "folke/noice.nvim",
-    after = {
+    dependencies = {
       "MunifTanjim/nui.nvim",
     },
     config = function()
